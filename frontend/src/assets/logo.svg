@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 219.86 229.94">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f0efef;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        fill: #f280b3;
+      }
+
+      .cls-3, .cls-4 {
+        font-size: 126.47px;
+      }
+
+      .cls-4 {
+        fill: #8886c0;
+      }
+
+      .cls-5 {
+        fill: #fff;
+        font-size: 63.23px;
+      }
+
+      .cls-6 {
+        font-family: Jura-Bold, Jura;
+        font-variation-settings: 'wght' 700;
+        font-weight: 700;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="158.51" y1="21.15" x2="158.51" y2="213.9" gradientUnits="userSpaceOnUse">
+      <stop offset=".49" stop-color="#8886c0"/>
+      <stop offset=".55" stop-color="#d081b7"/>
+      <stop offset=".58" stop-color="#f280b3"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <path class="cls-2" d="M98.13,7.75h115.53c2.88,0,5.21,2.33,5.21,5.21v204.86c0,2.25-1.83,4.07-4.07,4.07h-116.67V7.75h0Z"/>
+      <path class="cls-1" d="M7.51,7.75h90.63v214.14H6.18c-2.56,0-4.64-2.08-4.64-4.64V13.72c0-3.29,2.67-5.97,5.97-5.97Z"/>
+      <text class="cls-6" transform="translate(9.58 103.26) scale(1.11 1)"><tspan class="cls-3" x="0" y="0">A</tspan><tspan class="cls-5" x="84.23" y="0">uto</tspan><tspan class="cls-4" x="-8.66" y="100.12">S</tspan><tspan class="cls-5" x="78.92" y="100.12">hift</tspan></text>
+    </g>
+  </g>
+</svg>

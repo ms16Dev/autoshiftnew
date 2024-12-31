@@ -1,0 +1,131 @@
+<script setup lang="ts">
+
+import ImageLoader from './ImageLoader.vue';
+</script>
+
+<template>
+  <div class="relative group">
+    <div class="absolute inset-px shadow-lg bg-white dark:bg-gray-900  group-hover:bg-pink-50"></div>
+    <div class="relative flex flex-col overflow-hidden rounded-lg">
+      <div class="group flex-col inset-px shadow-md">
+
+
+
+<!-- Cover image-->
+        <div class="overflow-hidden">
+          <image-loader class="w-full transition-transform duration-700  group-hover:scale-110 "/>
+
+        </div>
+<!--Devider-->
+      <div class="w-full border-b-2 border-b-pink-700 "></div>
+      <div class="flex flex-row w-full justify-between -translate-y-1/2">
+
+        <div class="z-10">
+          <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]">$ 12,000</div>
+          <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">USA</p>
+        </div>
+        <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 start-1/2 -translate-x-1/2 overflow-hidden">
+          <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
+        </div>
+
+
+
+
+        <div class="flex flex-col">
+        <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px] ">E-320</div>
+        <div class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">2021</div>
+        </div>
+
+      </div>
+
+      <div class="flex flex-row md:grid md:grid-cols-2 xl:flex w-full justify-between px-3">
+
+
+
+        <div class="flex flex-col items-center justify-center">
+          <i class="w-8 h-8 rounded-full fas fa-tachometer bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
+          <p class="text-pink-500 text-xs font-bold text-center px-2 h-[30px] flex items-center justify-center">78,000Km</p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+          <i class="w-8 h-8 rounded-full fas fa-gears bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
+          <p class="text-pink-500 text-xs font-bold text-center px-2 h-[30px] flex items-center justify-center">Automatic</p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+          <i class="w-8 h-8 rounded-full fas fa-gas-pump bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
+          <p class="text-pink-500 text-xs font-bold text-center px-2 h-[30px] flex items-center justify-center">Hybrid</p>
+        </div>
+
+        <div class="flex flex-col items-center justify-center">
+          <i class="w-8 h-8 rounded-full fas fa-bolt bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
+          <p class="text-pink-500 text-xs font-bold text-center px-2 h-[30px] flex items-center justify-center">4 piston</p>
+        </div>
+
+
+
+      </div>
+
+        <div class="flex items-center justify-between py-2 px-6 bg-pink-100 ">
+          <!-- Seen -->
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-eye text-pink-300"/>
+
+            <span class="text-sm text-gray-700">1.2k</span>
+          </div>
+
+          <!-- Likes -->
+          <div class="flex items-center space-x-2">
+           <i class="fas fa-heart text-pink-300"/>
+            <span class="text-sm text-gray-700">900</span>
+          </div>
+
+          <!-- Shares -->
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-share text-pink-300"/>
+
+            <span class="text-sm text-gray-700">150</span>
+          </div>
+
+          <!-- Comments -->
+          <div class="flex items-center space-x-2">
+            <i class="fas fa-comment text-pink-300"/>
+
+            <span class="text-sm text-gray-700">35</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flex-col ">
+
+        <div class="flex flex-row px-4 my-2 justify-between">
+          <div class="flex text-pink-500 font-bold text-xs">by: Car Care ltd.</div>
+          <div class="flex  text-gray-500 text-xs"> 2 days ago</div>
+        </div>
+
+
+        <div class="hidden flex flex-row bg-pink-50 px-3 w-fit mt-4 m-0.5">
+          <i class="fa fa-leaf text-2xl text-gray-600"/>
+          <p class="w-fit text-gray-600 font-bold px-2 h-[30px]">Luxury</p>
+        </div>
+
+
+        <div class="hidden flex flex-row bg-pink-50 px-3 w-fit m-0.5">
+          <i class="fas fa-life-ring text-2xl text-gray-600"/>
+          <p class="w-fit text-gray-600 font-bold px-2 h-[30px]">Safety</p>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+</template>
+
+<style scoped>
+
+</style>
