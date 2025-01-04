@@ -14,24 +14,17 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequestMapping("/ref-data")
 @RequiredArgsConstructor
-public class RefrenceController {
+public class ReferenceController {
 
     private final ReactiveMongoTemplate mongoTemplate;
 
-    @GetMapping("/makes")
+    @GetMapping("/ref-data")
     public ResponseEntity<Flux<Object>> getCountries() {
         // Query the "countries" collection
         Query query = new Query(); // You can add criteria to filter data if needed
-        Flux<Object> countries = mongoTemplate.find(query, Object.class, "makes");
+        Flux<Object> countries = mongoTemplate.find(query, Object.class, "ref-data");
         return ResponseEntity.ok(countries);
     }
 
-    @GetMapping("/languages")
-    public ResponseEntity<Flux<Object>> getLanguages() {
-        // Query the "languages" collection
-        Query query = new Query(); // You can add criteria to filter data if needed
-        Flux<Object> languages = mongoTemplate.find(query, Object.class, "languages");
-        return ResponseEntity.ok(languages);
-    }
 }
 
