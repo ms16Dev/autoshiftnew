@@ -60,7 +60,7 @@ public class SecurityConfig {
                                 .pathMatchers("/posts/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
-                                .pathMatchers("/ref-data/**").permitAll() // New whitelisted endpoint
+                                .pathMatchers("/ref-data").permitAll() // New whitelisted endpoint
                                 .anyExchange().permitAll()
                 )
                 .addFilterAt(loginFilter, SecurityWebFiltersOrder.AUTHENTICATION)
