@@ -2,11 +2,15 @@
 
 import {ref} from "vue";
 
-defineProps({
+const props = defineProps({
 
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
+  },
+  value: {
+    type: Number,
+    default: 0, // Can be 'top', 'bottom', 'left', 'right'
   },
 });
 
@@ -17,7 +21,7 @@ const formatNumber = (number: number): string => {
 const emit = defineEmits(['close', 'save']);
 
 // Local state for the price input
-const price = ref<number | null>(3500);
+const price = ref<number | null>(props.value);
 
 const decPrice = () => {
   if (price.value !== null) {

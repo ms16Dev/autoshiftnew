@@ -2,18 +2,22 @@
 
 import {ref} from "vue";
 
-defineProps({
+const props = defineProps({
 
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
+  },
+  value: {
+    type: Number,
+    default: 0, // Can be 'top', 'bottom', 'left', 'right'
   },
 });
 
 const emit = defineEmits(['close', 'save']);
 
 // Local state for the price input
-const mileage = ref<number | null>(20000);
+const mileage = ref<number | null>(props.value);
 
 
 

@@ -2,11 +2,15 @@
 
 import {ref} from "vue";
 
-defineProps({
+const props = defineProps({
 
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
+  },
+  value: {
+    type: Number,
+    default: 2024, // Can be 'top', 'bottom', 'left', 'right'
   },
 });
 
@@ -14,7 +18,7 @@ defineProps({
 const emit = defineEmits(['close', 'save']);
 
 // Local state for the price input
-const year = ref<number | null>(2024);
+const year = ref<number | null>(props.value);
 
 const decYear = () => {
   if (year.value !== null) {
