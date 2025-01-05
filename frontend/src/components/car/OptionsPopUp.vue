@@ -41,7 +41,6 @@ const saveOption = (index: number) => {
       <div  v-for="(opt, index) in options" :key="index">
         <OptionItem :option="opt" class="w-full p-2 text-white hover:bg-pink-500" @click="saveOption(index)"></OptionItem>
       </div>
-      <OptionItem class="w-full p-2 text-white hover:bg-pink-500" :option="'X'"  @click="$emit('close')"></OptionItem>
     </div>
 
 
