@@ -13,275 +13,10 @@ import MileagePopUp from "./MileagePopUp.vue";
 import YearPopUp from "./YearPopUp.vue"
 import OptionsPopUp from "./OptionsPopUp.vue";
 import ChipsPopUp from "./ChipsPopUp.vue";
+import ApiService from "../../services/ApiService.ts";
 
-const makes = {
-    "Toyota": [
-  "Yaris",
-  "Corolla",
-  "Camry",
-  "Avalon",
-  "RAV4",
-  "Highlander",
-  "4Runner",
-  "Sequoia",
-  "Tacoma",
-  "Tundra",
-  "Prius",
-  "C-HR",
-  "GR86",
-  "Supra"
-],
-    "Honda": [
-  "Civic",
-  "Accord",
-  "Insight",
-  "CR-V",
-  "HR-V",
-  "Passport",
-  "Pilot",
-  "Ridgeline",
-  "Odyssey"
-],
-    "Mitsubishi": [
-  "Mirage",
-  "Lancer",
-  "Outlander",
-  "Eclipse Cross",
-  "Pajero",
-  "Triton",
-  "ASX",
-  "Delica"
-],
-    "Daewoo": [
-  "Matiz",
-  "Lanos",
-  "Nubira",
-  "Leganza",
-  "Tacuma",
-  "Magnus",
-  "Evanda"
-],
-    "Daihatsu": [
-  "Mira",
-  "Charade",
-  "Terios",
-  "Move",
-  "Sirion",
-  "Copen",
-  "Rocky"
-],
-    "Ford": [
-  "Fiesta",
-  "Focus",
-  "Fusion",
-  "Taurus",
-  "Escape",
-  "Edge",
-  "Explorer",
-  "Expedition",
-  "F-150",
-  "Ranger",
-  "Maverick",
-  "Bronco",
-  "Mustang"
-],
-    "Chevrolet": [
-  "Spark",
-  "Malibu",
-  "Impala",
-  "Equinox",
-  "Trailblazer",
-  "Traverse",
-  "Tahoe",
-  "Suburban",
-  "Colorado",
-  "Silverado",
-  "Corvette",
-  "Camaro",
-  "Bolt EV"
-],
-    "Hyundai": [
-  "Accent",
-  "Elantra",
-  "Sonata",
-  "Ioniq",
-  "Kona",
-  "Tucson",
-  "Santa Fe",
-  "Palisade",
-  "Veloster"
-],
-    "Kia": [
-  "Rio",
-  "Forte",
-  "Optima",
-  "Stinger",
-  "Seltos",
-  "Sportage",
-  "Sorento",
-  "Telluride",
-  "Soul",
-  "Niro"
-],
-    "Nissan": [
-  "Versa",
-  "Sentra",
-  "Altima",
-  "Maxima",
-  "Rogue",
-  "Murano",
-  "Pathfinder",
-  "Armada",
-  "Frontier",
-  "Titan",
-  "Leaf",
-  "GT-R",
-  "Z"
-],
-    "Subaru": [
-  "Impreza",
-  "Legacy",
-  "Outback",
-  "Forester",
-  "Ascent",
-  "WRX",
-  "BRZ"
-],
-    "Volkswagen": [
-  "Jetta",
-  "Passat",
-  "Arteon",
-  "Golf",
-  "Tiguan",
-  "Atlas",
-  "Beetle",
-  "ID.4"
-],
-    "Mazda": [
-  "Mazda3",
-  "Mazda6",
-  "CX-3",
-  "CX-30",
-  "CX-5",
-  "CX-50",
-  "CX-9",
-  "MX-5 Miata"
-],
-    "Suzuki": [
-  "Alto",
-  "Swift",
-  "Ciaz",
-  "Ertiga",
-  "Vitara",
-  "S-Cross",
-  "Jimny",
-  "Baleno"
-],
-    "Isuzu": [
-  "D-Max",
-  "MU-X",
-  "N-Series",
-  "F-Series",
-  "Elf",
-  "Trooper",
-  "Rodeo"
-],
-    "Lexus": [
-  "IS",
-  "ES",
-  "GS",
-  "LS",
-  "UX",
-  "NX",
-  "RX",
-  "GX",
-  "LX",
-  "RC",
-  "LC"
-],
-    "BMW": [
-  "1 Series",
-  "2 Series",
-  "3 Series",
-  "4 Series",
-  "5 Series",
-  "7 Series",
-  "X1",
-  "X3",
-  "X5",
-  "X7",
-  "Z4",
-  "i3",
-  "i4",
-  "i8"
-],
-    "Mercedes-Benz": [
-  "A-Class",
-  "C-Class",
-  "E-Class",
-  "S-Class",
-  "GLA",
-  "GLC",
-  "GLE",
-  "GLS",
-  "G-Class",
-  "AMG GT",
-  "EQB",
-  "EQC",
-  "EQS"
-],
-    "Audi": [
-  "A3",
-  "A4",
-  "A5",
-  "A6",
-  "A7",
-  "A8",
-  "Q3",
-  "Q5",
-  "Q7",
-  "Q8",
-  "e-tron",
-  "R8",
-  "TT"
-],
-    "Tesla": [
-  "Model S",
-  "Model 3",
-  "Model X",
-  "Model Y",
-  "Cybertruck"
-],
-    "Land Rover": [
-  "Discovery",
-  "Range Rover",
-  "Range Rover Sport",
-  "Range Rover Velar",
-  "Defender",
-  "Evoque"
-],
-    "Porsche": [
-  "911",
-  "718 Cayman",
-  "718 Boxster",
-  "Panamera",
-  "Macan",
-  "Cayenne",
-  "Taycan"
-],
-    "Jaguar": [
-  "XE",
-  "XF",
-  "XJ",
-  "E-PACE",
-  "F-PACE",
-  "I-PACE",
-  "F-TYPE"
-]
-}
-type CarMake = keyof typeof makes;
 
-var classes: string[];
+let classes: string[];
 
 
 const pricePopUp = ref(false)
@@ -295,6 +30,8 @@ const typePopUp = ref(false)
 const enginePopUp = ref(false)
 const shapePopUp = ref(false)
 const luxuryPopUp = ref(false)
+const safetyPopUp = ref(false)
+const colorPopUp = ref(false)
 
 
 const price = ref<number | null>(1500);
@@ -307,7 +44,9 @@ const class_ = ref<string | null>('Yaris')
 const type_  = ref<string | null>('Hybrid')
 const engine  = ref<string | null>('4 piston')
 const shape  = ref<string | null>('Sedan')
-const luxury  = ref<string[] | null>([])
+const color = ref<string | null>('Red')
+const luxury = ref<string[]>([]);
+const safety  =  ref<string[]>([]);
 
 const setPrice = (value: number) => {
   price.value = value;
@@ -320,8 +59,8 @@ const togglePrice = () => {
 
 const setMake = (value: Make) =>{
   make.value = value;
-  const mk: CarMake = value.name as CarMake; // Ensure valid keys
-  classes = makes[mk]
+  const item = makedata.value.find((obj) => obj.name_en === value.name);
+  classes = item ? item.class_en : [];
   class_.value = classes[0]
   toggleMake();
 }
@@ -411,6 +150,24 @@ const toggleLuxury = () => {
   luxuryPopUp.value = !luxuryPopUp.value
 }
 
+const setSafety = (value: string[] ) => {
+  safety.value = value
+  toggleSafety()
+}
+
+const toggleSafety = () => {
+  safetyPopUp.value = !safetyPopUp.value
+}
+
+const setColor = (value: string ) => {
+  color.value = value
+  toggleColor()
+}
+
+const toggleColor = () => {
+  colorPopUp.value = !colorPopUp.value
+}
+
 
 const origins = ['American','Korean', 'Gulf', 'Local']
 const gears = ['Auto','Manual']
@@ -428,7 +185,6 @@ const engine_type= [
   "8 piston",
   "12 piston",
 ]
-
 const shapes = [
   "Sedan",
   "SUV",
@@ -447,6 +203,44 @@ const shapes = [
   "Limousine",
 ];
 
+
+const colors = [
+  "White",
+  "Black",
+  "Gray",
+  "Silver",
+  "Blue",
+  "Red",
+  "Brown",
+  "Beige",
+  "Green",
+  "Yellow",
+  "Gold",
+  "Orange"
+]
+
+const makedata = ref<any[]>([]); // Initialize refdata as an empty array
+
+const fetchData = async () => {
+  try {
+    const { data } = await ApiService.get("/ref-data"); // Use await with the async function
+    makedata.value = data;  // Update the refdata without blocking the UI
+
+    makes.value = makedata.value.map((item: any) => ({
+      name: item.name_en,
+      name_ar: item.name_ar,
+      url: item.url,
+    }));
+
+  } catch (error) {
+    // Handle error response
+    console.error(error.response?.data.errors || error);  // You can handle error messages here
+  }
+};
+
+// Call the fetchData function
+fetchData();
+const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of makes
 
 
 </script>
@@ -479,7 +273,7 @@ const shapes = [
 
 
         <div class="flex flex-col">
-        <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="toggleClass">{{class_}}</div>
+        <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="toggleClass">{{class_}}</button>
         <button @click="toggleYear" class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{year}}</button>
         </div>
 
@@ -517,10 +311,10 @@ const shapes = [
             {{shape}}</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="toggleGear">
+        <button class="flex flex-col items-center justify-center"  @click="toggleColor">
           <i class="w-8 h-8 rounded-full fas fa-brush bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{ gear }}</span>
+            {{ color }}</span>
         </button>
 
         <button class="flex flex-col items-center justify-center"  @click="toggleLuxury">
@@ -528,7 +322,7 @@ const shapes = [
           <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Luxury</p>
         </button>
 
-        <button class="flex flex-col items-center justify-center" @click="toggleEngine">
+        <button class="flex flex-col items-center justify-center" @click="toggleSafety">
           <i class="w-8 h-8 rounded-full fas fa-life-ring bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Safety</p>
         </button>
@@ -543,6 +337,7 @@ const shapes = [
     <MakePopUp
         v-if="makePopUp"
         @choice="setMake"
+        :makes="makes"
         position="bottom"></MakePopUp>
 
 
@@ -550,19 +345,22 @@ const shapes = [
         v-if="pricePopUp"
         @close="pricePopUp = false"
         @save="setPrice"
-        position="top"></PricePopUp>
+        position="top"
+        :value="price"></PricePopUp>
 
     <MileagePopUp
         v-if="mileagePopUp"
         @close="mileagePopUp = false"
         @save="setMileage"
-        position="bottom"></MileagePopUp>
+        position="bottom"
+        :value="mileage"></MileagePopUp>
 
     <YearPopUp
         v-if="yearPopUp"
         @close="yearPopUp = false"
         @save="setYear"
-        position="bottom"></YearPopUp>
+        position="bottom"
+        :value="year"></YearPopUp>
 
     <OptionsPopUp
         v-if="originPopUp"
@@ -602,20 +400,28 @@ const shapes = [
         :options="shapes"></OptionsPopUp>
 
 
+    <OptionsPopUp
+        v-if="colorPopUp"
+        @choice="setColor"
+        @close="colorPopUp = false"
+        :options="colors"></OptionsPopUp>
+
+
     <ChipsPopUp
         v-if="luxuryPopUp"
         @choice="setLuxury"
         @close="luxuryPopUp = false"
-        :options="shapes"></ChipsPopUp>
+        :options="shapes"
+        :checked="luxury"></ChipsPopUp>
+
+    <ChipsPopUp
+        v-if="safetyPopUp"
+        @choice="setSafety"
+        @close="safetyPopUp = false"
+        :options="shapes"
+        :checked="safety"></ChipsPopUp>
 
   </div>
-
-
-
-
-
-
-
 
 
 
