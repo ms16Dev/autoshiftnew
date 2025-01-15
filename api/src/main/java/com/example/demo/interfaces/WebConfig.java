@@ -21,7 +21,7 @@ class WebConfig {
         var corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
 
         // Allow specific origins
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
 
         // Allow specific headers (including Authorization, Content-Type, etc.)
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
