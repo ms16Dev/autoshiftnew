@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import ImageLoader from '../ImageLoader.vue';
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
 const formatNumber = (number: number): string => {
   return new Intl.NumberFormat('en-US').format(number);
@@ -17,155 +17,67 @@ import ApiService from "../../services/ApiService.ts";
 
 
 let classes: string[];
-
-
-const pricePopUp = ref(false)
-const makePopUp = ref(false)
-const mileagePopUp = ref(false)
-const yearPopUp = ref(false)
-const originPopUp = ref(false)
-const gearPopUp = ref(false)
-const classPopUp = ref(false)
-const typePopUp = ref(false)
-const enginePopUp = ref(false)
-const shapePopUp = ref(false)
-const luxuryPopUp = ref(false)
-const safetyPopUp = ref(false)
-const colorPopUp = ref(false)
-
-
-const price = ref<number>(1500);
 const make = ref<Make | null>(null);
-const mileage = ref<number>(121000);
-const year = ref<number>(2018);
-const origin = ref<string | null>('Korean');
-const gear = ref<string | null>('Auto')
-const class_ = ref<string | null>('Yaris')
-const type_  = ref<string | null>('Hybrid')
-const engine  = ref<string | null>('4 piston')
-const shape  = ref<string | null>('Sedan')
-const color = ref<string | null>('Red')
-const luxury = ref<string[]>([]);
-const safety  =  ref<string[]>([]);
 
-const setPrice = (value: number) => {
-  price.value = value;
-  togglePrice()
+const state = reactive({
+  price: 1500,
+  mileage: 121000,
+  year: 2018,
+  origin: 'Korean',
+  gear: 'Auto',
+  class: 'Yaris',
+  type: 'Hybrid',
+  engine: '4 piston',
+  shape: 'Sedan',
+  color: 'Red',
+  luxury: [] as string[],
+  safety: [] as string[],
+  makePopUp: false,
+  pricePopUp: false,
+  mileagePopUp: false,
+  yearPopUp: false,
+  originPopUp: false,
+  gearPopUp: false,
+  classPopUp: false,
+  typePopUp: false,
+  enginePopUp: false,
+  shapePopUp: false,
+  luxuryPopUp: false,
+  safetyPopUp: false,
+  colorPopUp: false,
+});
+
+// Type that picks only boolean keys from the state object
+type BooleanKeys<T> = {
+  [K in keyof T]: T[K] extends boolean ? K : never;
+}[keyof T];
+
+// Only allow keys in `state` with boolean values
+const togglePopUp = (key: BooleanKeys<typeof state>) => {
+  state[key] = !state[key];
 };
 
-const togglePrice = () => {
-  pricePopUp.value = !pricePopUp.value;
-}
+// Save handler function for any field
+const handleSave = <T extends keyof typeof state>(field: T) => {
+
+  return (value: typeof state[T]) => {
+    state[field] = value; // Dynamically update the field
+    // Close the corresponding popup by passing to togglePopUp
+    const popupKey = `${field}PopUp` as BooleanKeys<typeof state>;
+    togglePopUp(popupKey); // This will toggle the popup for the corresponding field
+  };
+};
 
 const setMake = (value: Make) =>{
   make.value = value;
   const item = makedata.value.find((obj) => obj.name_en === value.name);
   classes = item ? item.class_en : [];
-  class_.value = classes[0]
+  state.class = classes[0]
   toggleMake();
 }
 
 const toggleMake = () => {
-  makePopUp.value = !makePopUp.value
-}
-
-const setMileage = (value: number) => {
-  mileage.value = value;
-  toggleMileage();
-}
-
-const toggleMileage = () => {
-  mileagePopUp.value = !mileagePopUp.value
-}
-
-const setYear = (value: number) => {
-  year.value = value;
-  toggleYear()
-};
-
-const toggleYear = () => {
-  yearPopUp.value = !yearPopUp.value;
-}
-
-const setOrigin = (value: string) =>{
-  origin.value = value;
-  toggleOrigin();
-}
-
-const toggleOrigin = () => {
-  originPopUp.value = !originPopUp.value
-}
-
-
-const setGear = (value: string) =>{
-  gear.value = value;
-  toggleGear();
-}
-
-const toggleGear = () => {
-  gearPopUp.value = !gearPopUp.value
-}
-
-const setClass = (value: string ) => {
-  class_.value = value
-  toggleClass()
-}
-const toggleClass = () => {
-  classPopUp.value = !classPopUp.value
-}
-
-const setType = (value: string ) => {
-  type_.value = value
-  toggleType()
-}
-const toggleType = () => {
-  typePopUp.value = !typePopUp.value
-}
-
-const setEngine = (value: string ) => {
-  engine.value = value
-  toggleEngine()
-}
-const toggleEngine = () => {
-  enginePopUp.value = !enginePopUp.value
-}
-
-
-
-const setShape = (value: string ) => {
-  shape.value = value
-  toggleShape()
-}
-const toggleShape = () => {
-  shapePopUp.value = !shapePopUp.value
-}
-
-
-const setLuxury = (value: string[] ) => {
-  luxury.value = value
-  toggleLuxury()
-}
-
-const toggleLuxury = () => {
-  luxuryPopUp.value = !luxuryPopUp.value
-}
-
-const setSafety = (value: string[] ) => {
-  safety.value = value
-  toggleSafety()
-}
-
-const toggleSafety = () => {
-  safetyPopUp.value = !safetyPopUp.value
-}
-
-const setColor = (value: string ) => {
-  color.value = value
-  toggleColor()
-}
-
-const toggleColor = () => {
-  colorPopUp.value = !colorPopUp.value
+  state.makePopUp = !state.makePopUp
 }
 
 
@@ -267,15 +179,15 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 
 
         <div class="flex flex-col">
-          <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePrice">$ {{formatNumber(price ?? 0)}}</button>
-          <button class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]" @click="toggleOrigin">{{ origin }}</button>
+          <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('pricePopUp')">$ {{formatNumber(state.price ?? 0)}}</button>
+          <button class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]" @click="togglePopUp('originPopUp')">{{ state.origin }}</button>
         </div>
 
 
 
         <div class="flex flex-col">
-        <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="toggleClass">{{class_}}</button>
-        <button @click="toggleYear" class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{year}}</button>
+        <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('classPopUp')">{{state.class}}</button>
+        <button @click="togglePopUp('yearPopUp')" class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{state.year}}</button>
         </div>
 
       </div>
@@ -284,46 +196,46 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 
 
 
-        <button class="flex flex-col items-center justify-center" @click="toggleMileage">
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
           <i class="w-8 h-8 rounded-full fas fa-tachometer bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{formatNumber(mileage ?? 0) }}</span>
+            {{formatNumber(state.mileage ?? 0) }}</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="toggleGear">
+        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('gearPopUp')">
           <i class="w-8 h-8 rounded-full fas fa-gears bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{ gear }}</span>
+            {{ state.gear }}</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="toggleType">
+        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('typePopUp')">
           <i class="w-8 h-8 rounded-full fas fa-gas-pump bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{ type_ }}</p>
+          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{ state.type }}</p>
         </button>
 
-        <button class="flex flex-col items-center justify-center" @click="toggleEngine">
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('enginePopUp')">
           <i class="w-8 h-8 rounded-full fas fa-bolt bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{engine}}</p>
+          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{state.engine}}</p>
         </button>
 
-        <button class="flex flex-col items-center justify-center" @click="toggleShape">
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('shapePopUp')">
           <i class="w-8 h-8 rounded-full fas fa-car bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{shape}}</span>
+            {{state.shape}}</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="toggleColor">
+        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('colorPopUp')">
           <i class="w-8 h-8 rounded-full fas fa-brush bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{ color }}</span>
+            {{ state.color }}</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="toggleLuxury">
+        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('luxuryPopUp')">
           <i class="w-8 h-8 rounded-full fas fa-leaf bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Luxury</p>
         </button>
 
-        <button class="flex flex-col items-center justify-center" @click="toggleSafety">
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('safetyPopUp')">
           <i class="w-8 h-8 rounded-full fas fa-life-ring bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
           <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Safety</p>
         </button>
@@ -336,91 +248,91 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
     </div>
 
     <MakePopUp
-        v-if="makePopUp"
+        v-if="state.makePopUp"
         @choice="setMake"
         :makes="makes"
         position="bottom"></MakePopUp>
 
 
     <PricePopUp
-        v-if="pricePopUp"
-        @close="pricePopUp = false"
-        @save="setPrice"
+        v-if="state.pricePopUp"
+        @close="state.pricePopUp = false"
+        @save="(value) => handleSave('price')(value)"
         position="top"
-        :value="price"></PricePopUp>
+        :value="state.price"></PricePopUp>
 
     <MileagePopUp
-        v-if="mileagePopUp"
-        @close="mileagePopUp = false"
-        @save="setMileage"
+        v-if="state.mileagePopUp"
+        @close="state.mileagePopUp = false"
+        @save="(value) => handleSave('mileage')(value)"
         position="bottom"
-        :value="mileage"></MileagePopUp>
+        :value="state.mileage"></MileagePopUp>
 
     <YearPopUp
-        v-if="yearPopUp"
-        @close="yearPopUp = false"
-        @save="setYear"
+        v-if="state.yearPopUp"
+        @close="state.yearPopUp = false"
+        @save="(value) => handleSave('year')(value)"
         position="bottom"
-        :value="year"></YearPopUp>
+        :value="state.year"></YearPopUp>
 
     <OptionsPopUp
-        v-if="originPopUp"
-        @choice="setOrigin"
-        @close="originPopUp = false"
+        v-if="state.originPopUp"
+        @choice="(value) => handleSave('origin')(value)"
+        @close="state.originPopUp = false"
         :options="origins"></OptionsPopUp>
 
     <OptionsPopUp
-        v-if="gearPopUp"
-        @choice="setGear"
-        @close="gearPopUp = false"
+        v-if="state.gearPopUp"
+        @choice="(value) => handleSave('gear')(value)"
+        @close="state.gearPopUp = false"
         :options="gears"></OptionsPopUp>
 
     <OptionsPopUp
-        v-if="classPopUp"
-        @choice="setClass"
-        @close="classPopUp = false"
+        v-if="state.classPopUp"
+        @choice="(value) => handleSave('class')(value)"
+        @close="state.classPopUp = false"
         :options="classes"></OptionsPopUp>
 
     <OptionsPopUp
-        v-if="typePopUp"
-        @choice="setType"
-        @close="typePopUp = false"
+        v-if="state.typePopUp"
+        @choice="(value) => handleSave('type')(value)"
+        @close="state.typePopUp = false"
         :options="car_type"></OptionsPopUp>
 
     <OptionsPopUp
-        v-if="enginePopUp"
-        @choice="setEngine"
-        @close="enginePopUp = false"
+        v-if="state.enginePopUp"
+        @choice="(value) => handleSave('engine')(value)"
+        @close="state.enginePopUp = false"
         :options="engine_type"></OptionsPopUp>
 
 
     <OptionsPopUp
-        v-if="shapePopUp"
-        @choice="setShape"
-        @close="shapePopUp = false"
+        v-if="state.shapePopUp"
+        @choice="(value) => handleSave('shape')(value)"
+        @close="state.shapePopUp = false"
         :options="shapes"></OptionsPopUp>
 
 
     <OptionsPopUp
-        v-if="colorPopUp"
-        @choice="setColor"
-        @close="colorPopUp = false"
+        v-if="state.colorPopUp"
+        @choice="(value) => handleSave('color')(value)"
+        @close="state.colorPopUp = false"
         :options="colors"></OptionsPopUp>
 
 
     <ChipsPopUp
-        v-if="luxuryPopUp"
-        @choice="setLuxury"
-        @close="luxuryPopUp = false"
+        v-if="state.luxuryPopUp"
+        @choice="(value) => handleSave('luxury')(value)"
+        @close="state.luxuryPopUp = false"
         :options="shapes"
-        :checked="luxury"></ChipsPopUp>
+        :checked="state.luxury"></ChipsPopUp>
 
     <ChipsPopUp
-        v-if="safetyPopUp"
-        @choice="setSafety"
-        @close="safetyPopUp = false"
+        v-if="state.safetyPopUp"
+        @choice="(value) => handleSave('safety')(value)"
+        @close="state.safetyPopUp = false"
         :options="shapes"
-        :checked="safety"></ChipsPopUp>
+        :checked="state.safety"></ChipsPopUp>
 
   </div>
 
