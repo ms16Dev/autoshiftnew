@@ -10,7 +10,6 @@ defineOptions({
 </script>
 
 <template>
-
   <div class="flex md:flex-row-reverse flex-wrap w-full">
     <div class="w-full md:w-1/5 bg-gray-600 p-4 text-center text-gray-400">
       <CarItem/>
@@ -18,7 +17,7 @@ defineOptions({
     </div>
     <div class="w-full md:w-3/5 bg-gray-500 p-4 text-center text-gray-200">
 
-      <div class="flex-col grid grid-cols-1 xl:grid-cols-2 -px-4 gap-3">
+      <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
         <CarItem/>
         <CarItem/>
@@ -35,10 +34,7 @@ defineOptions({
       <CarItem class="w-1\4"/>
 
     </div>
-  </div>
-
-
-</template>
+  </div></template>
 
 <style scoped>
 

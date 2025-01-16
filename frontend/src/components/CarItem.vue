@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import ImageLoader from './ImageLoader.vue';
 </script>
 
 <template>
@@ -13,7 +12,7 @@ import ImageLoader from './ImageLoader.vue';
 
 <!-- Cover image-->
         <div class="overflow-hidden">
-          <image-loader class="w-full transition-transform duration-700  group-hover:scale-110 "/>
+          <img class="w-full transition-transform duration-700  group-hover:scale-110" src="/car-phldr1.png.png"/>
 
         </div>
 <!--Devider-->
