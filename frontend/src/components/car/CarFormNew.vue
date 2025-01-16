@@ -14,6 +14,7 @@ import YearPopUp from "./YearPopUp.vue"
 import OptionsPopUp from "./OptionsPopUp.vue";
 import ChipsPopUp from "./ChipsPopUp.vue";
 import ApiService from "../../services/ApiService.ts";
+import MultiImageLoader from "../MultiImageLoader.vue";
 
 
 let classes: string[];
@@ -159,7 +160,7 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 </script>
 
 <template>
-  <div class="relative group w-[400px] h-[600px]">
+  <div class="relative group w-[400px] ">
     <div class="absolute inset-px shadow-lg bg-white dark:bg-gray-900  "></div>
     <div class="relative flex flex-col overflow-hidden rounded-lg">
       <div class="group flex-col inset-px shadow-md">
@@ -240,9 +241,15 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
           <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Safety</p>
         </button>
 
+
+
+
       </div>
 
+        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
+
+        <MultiImageLoader />
       </div>
 
     </div>
@@ -333,6 +340,8 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
         @close="state.safetyPopUp = false"
         :options="shapes"
         :checked="state.safety"></ChipsPopUp>
+
+
 
   </div>
 
