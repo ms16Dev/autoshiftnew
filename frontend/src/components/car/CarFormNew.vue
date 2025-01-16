@@ -33,6 +33,7 @@ const state = reactive({
   color: 'Red',
   luxury: [] as string[],
   safety: [] as string[],
+  location: [] as string[],
   makePopUp: false,
   pricePopUp: false,
   mileagePopUp: false,
@@ -46,6 +47,7 @@ const state = reactive({
   luxuryPopUp: false,
   safetyPopUp: false,
   colorPopUp: false,
+  locationPopUp: false,
 });
 
 // Type that picks only boolean keys from the state object
@@ -250,6 +252,26 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 
 
         <MultiImageLoader />
+
+        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
+
+
+        <div class="flex items-start justify-between  m-2">
+          <!-- Location Button -->
+          <button class="flex flex-row items-center " @click="togglePopUp('locationPopUp')">
+            <i class="w-8 h-8 rounded-full fas fa-map bg-pink-300 text-white text-sm p-2 flex items-center justify-center"></i>
+            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Location</span>
+          </button>
+
+          <!-- Save Post Button -->
+          <button
+              class="py-1 px-3 text-lg font-medium bg-pink-600 text-white rounded-md shadow hover:bg-pink-700 focus:outline-none"
+          >
+            Save Post
+          </button>
+        </div>
+
+
       </div>
 
     </div>
@@ -341,12 +363,14 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
         :options="shapes"
         :checked="state.safety"></ChipsPopUp>
 
-
+    <ChipsPopUp
+        v-if="state.locationPopUp"
+        @choice="(value) => handleSave('location')(value)"
+        @close="state.locationPopUp = false"
+        :options="shapes"
+        :checked="state.location"></ChipsPopUp>
 
   </div>
-
-
-
 </template>
 
 <style scoped>
