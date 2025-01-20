@@ -4,7 +4,6 @@ import Home from "../views/Home.vue";
 import Cars from "../views/cars/ListCars.vue";
 import Services from "../views/services/ListServices.vue";
 import More from "../views/More.vue";
-import AddCar from "../views/cars/AddCar.vue";
 import AddCarNew from "../views/cars/AddCarNew.vue";
 import AddPart from "../views/parts/AddPart.vue";
 import AddService from "../views/services/AddService.vue";
@@ -33,7 +32,6 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'cars', name: 'Cars', component: Cars },
             { path: 'services', name: 'Services', component: Services },
             { path: 'more', name: 'More', component: More },
-            { path: 'add-car', name: 'Add Car', component: AddCar },
             { path: 'add-car-new', name: 'Add Car New', component: AddCarNew },
             { path: 'add-part', name: 'Add Part', component: AddPart },
             { path: 'add-service', name: 'Add Service', component: AddService },
