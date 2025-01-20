@@ -33,6 +33,7 @@ withDefaults(defineProps<{
 
 <template>
   <div class="relative group">
+    <RouterLink :to="{ name: 'Home', params: {id: car.id} }">
     <div class="absolute inset-px shadow-lg bg-white dark:bg-gray-900  group-hover:bg-pink-50"></div>
     <div class="relative flex flex-col overflow-hidden rounded-lg">
       <div class="group flex-col inset-px shadow-md">
@@ -140,6 +141,7 @@ withDefaults(defineProps<{
 
 
     </div>
+    </RouterLink>
   </div>
 
 </template>
