@@ -574,6 +574,6 @@ const cars: CarListDto[] = [
 
 ];
 
-export default cars;
 
+export default cars;
 

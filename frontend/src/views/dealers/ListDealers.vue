@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import CarItem from "../../components/CarItem.vue";
-import cars from "../../core/data/CarsData.ts";
+import dealers from "../../core/data/DealersData.ts";
 import {computed, ref} from "vue";
 import TablePagination from "../../components/TablePagenition.vue";
+import DealerItem from "../../components/dealer/DealerItem.vue";
+import CarItem from "../../components/CarItem.vue";
 
 defineOptions({
-  name: 'List-Cars'
+  name: 'list-dealers'
 });
 
 
@@ -15,14 +16,14 @@ const currentPage = ref(1);  // Initialize at page 1
 const itemsPerPage = ref(5); // Number of questions to show per page
 
 const totalPages = computed(() => {
-  return Math.ceil(cars.length / itemsPerPage.value);
+  return Math.ceil(dealers.length / itemsPerPage.value);
 });
 
 // Compute the paginated questions to display based on the current page
-const paginatedCars = computed(() => {
+const paginatedDealers = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage.value;
   const endIndex = startIndex + itemsPerPage.value;
-  return cars.slice(startIndex, endIndex);
+  return dealers.slice(startIndex, endIndex);
 });
 
 const handlePageChange = (page: number) => {
@@ -46,7 +47,7 @@ const handlePageChange = (page: number) => {
 
       <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
-        <car-item v-for="car in paginatedCars" :key="car.id" :car="car"/>
+        <DealerItem v-for="dealer in paginatedDealers" :key="dealer.id" :dealer="dealer"/>
 
 
 
@@ -55,7 +56,7 @@ const handlePageChange = (page: number) => {
       <TablePagination
           :current-page="currentPage"
           :per-page="itemsPerPage"
-          :total="cars.length"
+          :total="dealers.length"
           :total-pages="totalPages"
           @page-change="handlePageChange"
       ></TablePagination>
