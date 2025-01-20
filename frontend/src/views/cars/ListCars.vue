@@ -12,7 +12,7 @@ defineOptions({
 
 
 const currentPage = ref(1);  // Initialize at page 1
-const itemsPerPage = ref(5); // Number of questions to show per page
+const itemsPerPage = ref(15); // Number of questions to show per page
 
 const totalPages = computed(() => {
   return Math.ceil(cars.length / itemsPerPage.value);
@@ -37,8 +37,8 @@ const handlePageChange = (page: number) => {
 </script>
 
 <template>
-  <div class="flex md:flex-row-reverse flex-wrap w-full">
-    <div class="w-full md:w-1/5 bg-gray-200 p-4 text-center text-gray-400">
+  <div class="flex md:flex-row-reverse flex-wrap w-full bg-gray-200">
+    <div class="w-full md:w-1/5 p-4 text-center text-gray-400">
       <CarItem/>
 
     </div>
@@ -63,7 +63,7 @@ const handlePageChange = (page: number) => {
 
     </div>
 
-    <div class="w-full md:w-1/5 bg-gray-200 p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full md:w-1/5  p-4 text-center text-gray-700 fixed sticky">
       <CarItem class="w-1\4"/>
 
     </div>
