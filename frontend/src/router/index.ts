@@ -2,7 +2,6 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import Home from "../views/Home.vue";
 import Cars from "../views/cars/ListCars.vue";
-import Parts from "../views/parts/ListParts.vue";
 import Services from "../views/services/ListServices.vue";
 import More from "../views/More.vue";
 import AddCar from "../views/cars/AddCar.vue";
@@ -32,7 +31,6 @@ const routes: Array<RouteRecordRaw> = [
         children:     [
             { path: 'home', name: 'Home', component: Home },
             { path: 'cars', name: 'Cars', component: Cars },
-            { path: 'parts', name: 'Parts', component: Parts },
             { path: 'services', name: 'Services', component: Services },
             { path: 'more', name: 'More', component: More },
             { path: 'add-car', name: 'Add Car', component: AddCar },

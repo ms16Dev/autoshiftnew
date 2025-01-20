@@ -14,7 +14,6 @@ import IconButtonLink from "./IconButtonLink.vue";
         <div class="flex justify-center h-full md:h-[100px] md:w-full md:flex-col md:absolute md:top-1/2 md:-translate-y-1/2  xl:flex-row xl:h-full xl:justify-center">
           <IconButtonLink :text="'Home'" :icon="['fas', 'fa-home']" target="home" :class="{'bg-pink-600': $route.path === '/'}"/>
           <IconButtonLink :text="'Cars'" :icon="['fas', 'fa-car']" target="cars"  />
-          <IconButtonLink :text="'Upgrades'" :icon="['fas', 'fa-cogs'] "target="parts"  />
           <IconButtonLink :text="'Dealers'" :icon="['fas', 'fa-heartbeat']" target="services"  />
           <IconButtonLink :text="'More'" :icon="['fas', 'fa-ellipsis-h']" target="more" />
         </div>
