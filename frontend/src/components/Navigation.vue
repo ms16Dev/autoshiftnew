@@ -9,7 +9,7 @@ import IconButtonLink from "./IconButtonLink.vue";
            md:w-[80px] md:h-full md:start-0 md:top-1/2 md:transform md:-translate-y-1/2 md:bg-gradient-to-t
            xl:w-2/3 xl:h-[50px] xl:top-12 xl:start-1/2 xl:transform xl:-translate-x-1/2 xl:rounded-full xl:bg-gradient-to-r">
         <router-link to="/" class="hidden translate-x-[40px] xl:-translate-y-[25px]  md:block">
-<!--          <img src="../assets/logo_main.png" alt="Logo" width="100" height="100">-->
+          <img src="../assets/asl.png" alt="Logo" width="150" height="150">
         </router-link>
         <div class="flex justify-center h-full md:h-[100px] md:w-full md:flex-col md:absolute md:top-1/2 md:-translate-y-1/2  xl:flex-row xl:h-full xl:justify-center">
           <IconButtonLink :text="'Home'" :icon="['fas', 'fa-home']" target="home" :class="{'bg-pink-600': $route.path === '/'}"/>
