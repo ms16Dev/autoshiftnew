@@ -4,6 +4,7 @@ import CarItem from "../../components/CarItem.vue";
 import cars from "../../core/data/CarsData.ts";
 import {computed, ref} from "vue";
 import TablePagination from "../../components/TablePagenition.vue";
+import AdItem from "../../components/AdItem.vue";
 
 defineOptions({
   name: 'List-Cars'
@@ -39,7 +40,7 @@ const handlePageChange = (page: number) => {
 <template>
   <div class="flex md:flex-row-reverse flex-wrap w-full bg-gray-200">
     <div class="w-full md:w-1/5 p-4 text-center text-gray-400">
-      <CarItem/>
+      <AdItem/>
 
     </div>
     <div class="w-full md:w-3/5  p-4 text-center text-gray-200">
@@ -64,7 +65,7 @@ const handlePageChange = (page: number) => {
     </div>
 
     <div class="w-full md:w-1/5  p-4 text-center text-gray-700 fixed sticky">
-      <CarItem class="w-1\4"/>
+      <AdItem/>
 
     </div>
   </div></template>
