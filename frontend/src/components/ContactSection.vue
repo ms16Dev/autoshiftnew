@@ -2,7 +2,7 @@
   <div class="relative w-full  h-[300px] mx-auto flex bg-gradient-to-br from-gray-900 via-gray-800 to-black  overflow-hidden shadow-lg  mb-24">
 
     <!-- Left Side (Contact Info / Illustration) -->
-    <div class="w-1/2 flex flex-col items-center justify-center text-gray-900 bg-white">
+    <div class="w-1/2 flex flex-col items-center justify-center text-gray-900 bg-gray-50">
       <h2 class="text-2xl font-bold">Let's Connect</h2>
       <p class="text-sm text-gray-500 mt-2 text-center">Feel free to reach out anytime.</p>
       <div class="mt-4 flex space-x-3">
