@@ -13,12 +13,12 @@
     </div>
 
     <!-- Right Side (Form) -->
-    <div class="w-1/2 p-6 bg-pink-500 backdrop-blur-md flex flex-col justify-center">
+    <div class="w-1/2 p-6 bg-pink-100 backdrop-blur-md flex flex-col justify-center">
       <form @submit.prevent="submitForm" class="space-y-2">
-        <input type="text" v-model="form.name" placeholder="Your Name" class="w-full p-2  border-b border-pink-400 text-gray-900 focus:ring-0 outline-none" required>
-        <input type="email" v-model="form.email" placeholder="Your Email" class="w-full p-2  border-b border-pink-400  text-gray-900 focus:ring-0 outline-none" required>
-        <input type="text" v-model="form.message" placeholder="Your Massage" class="w-full p-2  border-b border-pink-400  text-gray-900 focus:ring-0 outline-none" required>
-        <button type="submit" class="w-full bg-white hover:bg-gray-900 text-pink-700 font-bold py-2 rounded-lg transition shadow-md mt-3">
+        <input type="text" v-model="form.name" placeholder="Your Name" class="w-full p-2  border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
+        <input type="email" v-model="form.email" placeholder="Your Email" class="w-full p-2  border-b border-gray-400  text-gray-900 focus:ring-0 outline-none" required>
+        <input type="text" v-model="form.message" placeholder="Your Massage" class="w-full p-2  border-b border-gray-400  text-gray-900 focus:ring-0 outline-none" required>
+        <button type="submit" class="w-full bg-white hover:bg-pink-300 text-pink-700 font-bold py-2 rounded-lg transition shadow-md mt-3">
           Send 🚀
         </button>
       </form>
