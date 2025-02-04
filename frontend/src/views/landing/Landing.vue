@@ -1,22 +1,23 @@
 <template>
   <div data-aos="fade-up" class="pt-24">
-    <div class="container  px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+    <div class="container  px-3 mx-auto flex flex-wrap flex-col md:flex-row justify-between">
       <div class="flex  flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-        <p class="uppercase tracking-loose w-full">What if there is a place for profiling services you need?</p>
+        <p class="uppercase tracking-loose w-full">Looking for a new car?</p>
         <h1 class="my-4 text-5xl font-bold leading-tight">
-          Get busy doing your work and never worry about logistics anymore!
+          You're at the best place for car deals!
         </h1>
-        <p class="leading-normal text-2xl mb-8">The most sophisticated service profiling web portal is backing you.</p>
-        <a href="/">
+        <p class="leading-normal text-2xl mb-8">AutoShift Car Market </p>
+        <router-link to="/home">
           <button
             class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
           >
             <p>Get Started</p>
           </button>
-        </a>
+        </router-link>
       </div>
-      <div class="w-full md:w-3/5 py-6 text-center">
-        <img class="w-full md:w-4/5 z-50" src="../../assets/imgs/hero.png" />
+      <div class="flex w-full md:w-3/5 py-6 justify-end items-end ">
+        <img class="w-3/2 md:w-3/2 z-50 animate-bump " src="../../assets/asl.png" />
+
       </div>
     </div>
   </div>
@@ -333,3 +334,16 @@ export default defineComponent({
   },
 })
 </script>
+
+
+<style scoped>
+
+@keyframes bump {
+  0% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+  100% { transform: rotate(-1deg); }
+}
+.animate-bump {
+  animation: bump 0.6s ease-in-out infinite;
+}
+</style>

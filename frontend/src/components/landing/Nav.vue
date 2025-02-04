@@ -1,8 +1,11 @@
 <template>
   <nav id="header" class="fixed w-full z-30 top-0 text-white">
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
-      <div class="pl-4 flex items-center">
-        <img src="../../../assets/asl.png" alt="Logo" width="100" height="100">
+      <div class="pl-4 flex items-center ">
+
+
+        <img src="../../assets/asl.png" alt="Logo" width="100" height="100">
+
 
         <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl" href="#">
           AUTOSHIFT
@@ -27,27 +30,27 @@
       >
         <ul class="list-reset lg:flex justify-end flex-1 items-center">
           <li class="mr-3">
-            <a class="inline-block uppercase py-2 px-4 font-medium no-underline" href="#">What</a>
+            <a class="inline-block uppercase py-2 px-4 font-medium no-underline" href="#">Welcome</a>
           </li>
           <li class="mr-3">
             <a
               class="inline-block uppercase no-underline font-medium hover:text-gray-800 hover:text-underline py-2 px-4"
               href="#about"
-              >Why</a
+              >Cars</a
             >
           </li>
           <li class="mr-3">
             <a
               class="inline-block uppercase no-underline font-medium hover:text-gray-800 hover:text-underline py-2 px-4"
               href="#customers"
-              >How</a
+              >Dealers</a
             >
           </li>
           <li class="mr-3">
             <a
               class="inline-block uppercase no-underline font-medium hover:text-gray-800 hover:text-underline py-2 px-4"
               href="#pricing"
-              >Register</a
+              >More</a
             >
           </li>
           <li class="mr-3">
@@ -58,14 +61,14 @@
             >
           </li>
         </ul>
-        <a href="/sign-in">
+        <router-link to="/auth/sign-in">
           <button
             id="navAction"
             class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
           >
             Support
           </button>
-        </a>
+        </router-link>
       </div>
     </div>
     <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />

@@ -19,7 +19,7 @@ import OtpVerify from "../views/auth/OtpVerify.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
-        component: () => import("../views/landing/components/landingLayout.vue"),
+        component: () => import("../layouts/LandingLayout.vue"),
         children:     [
             { path: '', name: 'Landing', component: Landing },
           ]
