@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-// You can add any script if needed, such as tracking scripts or analytics here.
+
 </script>
 
 <style scoped>

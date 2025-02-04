@@ -1,0 +1,54 @@
+
+.gradient {
+@apply  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]
+}
+
+@media (max-width: 768px) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#customers,
+#pricing {
+  scroll-margin-top: 100px;
+}
+
+img {
+  user-select: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+/* Parallax Backgrounds */
+.parallax-bg-1 {
+  background-image: url('https://car-images.bauersecure.com/pagefiles/74108/1752x1168/toyota_hybrids_01.jpg?mode=max&quality=90&scale=down');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.parallax-bg-2 {
+  background-image: url('https://th.bing.com/th/id/OIP.ZAyXhHsIY4fpVbSm3DZKWQHaEK?w=875&h=492&rs=1&pid=ImgDetMain');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.parallax-bg-3 {
+  background-image: url('https://th.bing.com/th/id/R.80dbc6f688f302d511616b8d063a1b9c?rik=anvTJW1eD7YTqA&pid=ImgRaw&r=0');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Mobile Fix for Parallax */
+@media (max-width: 768px) {
+  .parallax-bg-1, .parallax-bg-2, .parallax-bg-3 {
+    background-attachment: scroll;
+  }
+}

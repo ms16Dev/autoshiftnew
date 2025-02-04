@@ -12,13 +12,16 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@heroicons/vue": "^2.1.5",
     "@tailwindcss/forms": "^0.5.9",
+    "aos": "^2.3.4",
     "axios": "^1.7.9",
+    "gsap": "^3.12.7",
     "tailwind-scrollbar": "^3.1.0",
     "vue": "^3.5.12",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@vitejs/plugin-vue": "^5.1.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",

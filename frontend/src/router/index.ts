@@ -8,7 +8,7 @@ import AddCarNew from "../views/cars/AddCarNew.vue";
 import AddPart from "../views/parts/AddPart.vue";
 import AddService from "../views/services/AddService.vue";
 import SignUp from "../views/auth/SignUp.vue";
-import Landing from "../views/Landing.vue";
+import Landing from "../views/landing/Landing.vue";
 import SignIn from "../views/auth/SignIn.vue";
 import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
@@ -19,7 +19,7 @@ import OtpVerify from "../views/auth/OtpVerify.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: "/",
-        component: () => import("../layouts/LandingLayout.vue"),
+        component: () => import("../views/landing/components/landingLayout.vue"),
         children:     [
             { path: '', name: 'Landing', component: Landing },
           ]
