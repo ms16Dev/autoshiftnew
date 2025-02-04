@@ -72,6 +72,5 @@
 </script>
 
 <style scoped>
-/* Font Awesome Icons */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
 </style>
