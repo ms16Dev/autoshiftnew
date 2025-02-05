@@ -53,10 +53,8 @@ const recentPosts = [
       <div class="flex-col w-full  gap-3">
 
 
-        <h1>Recent </h1>
 
-
-        <Carousel :slides="slidesData" />
+        <Carousel :slides="slidesData" dir="ltr" />
 
 
         <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Featured Cars</h1>
