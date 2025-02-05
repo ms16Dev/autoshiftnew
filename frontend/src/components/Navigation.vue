@@ -11,8 +11,8 @@ import UserMenuButton from "./UserMenuButton.vue";
 
 <template>
       <div class="fixed z-50 bottom-0 w-full h-[50px] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-80
-           md:w-[80px] md:h-full md:left-0 md:top-1/2 md:transform md:-translate-y-1/2 md:bg-gradient-to-t   start-auto md:start-0 xl:start-auto
-           xl:w-2/3 xl:h-[50px] xl:top-12 xl:left-1/2 xl:transform xl:-translate-x-1/2 xl:rounded-full xl:bg-gradient-to-r">
+           md:w-[80px] md:h-full md:left-0 md:top-1/2 md:transform md:-translate-y-1/2 md:bg-gradient-to-t   start-auto md:start-0
+           xl:w-2/3 xl:h-[50px] xl:top-12 ltr:xl:left-1/2 rtl:xl:right-1/2 xl:transform rtl:xl:translate-x-1/2 ltr:xl:-translate-x-1/2 xl:rounded-full xl:bg-gradient-to-r">
         <router-link to="/" class="hidden w-fit xl:pl-8  md:block  xl:-translate-y-[15px]">
           <img src="../assets/asl.png" alt="Logo" width="120" height="120">
         </router-link>
