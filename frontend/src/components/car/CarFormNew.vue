@@ -176,7 +176,7 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
       <div class="w-full border-b-2 border-b-pink-700 "></div>
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
-        <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 start-1/2 -translate-x-1/2 overflow-hidden">
+        <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
           <img :src="`/public/carmakes/${make?.url ?? '2.png'} `">
         </button>
 

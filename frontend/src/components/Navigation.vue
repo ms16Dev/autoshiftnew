@@ -22,7 +22,7 @@ import FAB from "./FAB.vue";
           <IconButtonLink :text="'Dealers'" :icon="['fas', 'fa-heartbeat']" target="dealers"  />
           <IconButtonLink :text="'More'" :icon="['fas', 'fa-ellipsis-h']" target="more" />
         </div>
-        <div class="absolute left-0 top-0 hidden xl:block">
+        <div class="absolute ltr:right-0 rtl:left-0 top-0 hidden xl:block">
           <FAB icon="fas fa-user" text="Mohammed" ></FAB>
 
         </div>
@@ -30,7 +30,5 @@ import FAB from "./FAB.vue";
 </template>
 
 <style scoped>
-.router-link-active{
- @apply bg-pink-600
-}
+
 </style>
