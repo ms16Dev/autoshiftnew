@@ -5,6 +5,7 @@
 
 import IconButtonLink from "./IconButtonLink.vue";
 import FAB from "./FAB.vue";
+import UserMenuButton from "./UserMenuButton.vue";
 
 
 </script>
@@ -22,8 +23,8 @@ import FAB from "./FAB.vue";
           <IconButtonLink :text="'Dealers'" :icon="['fas', 'fa-heartbeat']" target="dealers"  />
           <IconButtonLink :text="'More'" :icon="['fas', 'fa-ellipsis-h']" target="more" />
         </div>
-        <div class="absolute ltr:right-0 rtl:left-0 top-0 hidden xl:block">
-          <FAB icon="fas fa-user" text="Mohammed" ></FAB>
+        <div class="absolute end-0 top-0 hidden xl:block">
+          <UserMenuButton icon="fas fa-user" text="" ></UserMenuButton>
 
         </div>
       </div>
