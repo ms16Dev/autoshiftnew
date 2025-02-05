@@ -39,7 +39,7 @@ const toggleMenu = () => {
     <!-- Action button -->
     <button
         @click="toggleMenu"
-        class="flex items-center space-x-2 px-4 py-2 bg-gray-50 text-white hover:transform
+        class="flex items-center space-x-2 px-3 py-2 bg-gray-50 text-white hover:transform
                transition-transform duration-900 ease-in-out hover:bg-pink-600 hover:scale-110 rounded-full shadow-lg"
     >
       <img src="/vite.svg">

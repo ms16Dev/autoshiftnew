@@ -51,13 +51,29 @@ watch(currentLang, (newLang) => {
 
 <template>
   <div
-      :class="[
-      'absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-80 rounded-lg shadow-lg ring-1 ring-gray-300 z-50',
-      position === 'bottom' ? 'mt-2 top-full end-0' : '',
-      position === 'top' ? 'mb-2 bottom-full end-0' : '',
-      position === 'left' ? 'mr-2 right-full top-0' : '',
-      position === 'right' ? 'ml-2 left-full top-0' : '',
-    ]"
+      class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 bottom-full  end-0 md:block xl:hidden "
+  >
+    <ul class="divide-y divide-gray-200">
+      <!-- Render each IconButtonLink as a menu item -->
+      <li v-for="(item, index) in items" :key="index" class="p-2">
+        <IconButtonLink v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      </li>
+      <li>
+        <div class="flex flex-row justify-between">
+          <button @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+            En
+          </button>
+          <button @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+            ع
+          </button>
+        </div>
+
+      </li>
+    </ul>
+
+  </div>
+  <div
+      class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 top-full md:hidden xl:block"
   >
     <ul class="divide-y divide-gray-200">
       <!-- Render each IconButtonLink as a menu item -->
