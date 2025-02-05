@@ -31,11 +31,11 @@ const addComment = () => {
 
 <template>
   <div class="w-full  bg-white p-4 shadow mt-4 ">
-    <h2 class="text-xl text-gray-600 text-left font-semibold mb-4">Comments</h2>
+    <h2 class="text-xl text-gray-600 text-start font-semibold mb-4">Comments</h2>
 
     <!-- Comment List -->
     <div v-if="comments.length">
-      <div v-for="comment in comments" :key="comment.id" class="border-b py-2 text-left">
+      <div v-for="comment in comments" :key="comment.id" class="border-b py-2 text-start">
         <p class="text-sm text-gray-600">{{ comment.user }} - <span class="text-xs">{{ comment.date }}</span></p>
         <p class="text-gray-800">{{ comment.text }}</p>
       </div>
