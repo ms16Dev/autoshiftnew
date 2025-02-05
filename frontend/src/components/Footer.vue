@@ -52,7 +52,7 @@
       </div>
 
       <!-- Social Media Icons -->
-      <div class="flex justify-center space-x-6 mb-6">
+      <div class="flex justify-center gap-6 mb-6">
         <a href="#" class="text-xl hover:text-pink-500"><i class="fab fa-facebook"></i></a>
         <a href="#" class="text-xl hover:text-pink-500"><i class="fab fa-twitter"></i></a>
         <a href="#" class="text-xl hover:text-pink-500"><i class="fab fa-instagram"></i></a>
