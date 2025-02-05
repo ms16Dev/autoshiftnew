@@ -25,8 +25,12 @@ import { ref, watch } from "vue";
 
 const currentLang = ref(localStorage.getItem("lang") || "en");
 
-const toggleLanguage = () => {
-  currentLang.value = currentLang.value === "en" ? "ar" : "en";
+const toggleLanguage = (lang: string) => {
+  if (currentLang.value === lang) {
+    return; // Do nothing if the selected language is already active
+  }
+
+  currentLang.value = lang; // Set the selected language
 
   // Update `html` direction
   document.documentElement.lang = currentLang.value;
@@ -34,7 +38,6 @@ const toggleLanguage = () => {
 
   // Save preference
   localStorage.setItem("lang", currentLang.value);
-
 };
 
 // Apply saved language on load
@@ -63,10 +66,10 @@ watch(currentLang, (newLang) => {
       </li>
       <li>
         <div class="flex flex-row justify-between">
-          <button @click="() => { toggleLanguage(); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
             En
           </button>
-          <button @click="() => { toggleLanguage(); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
             ع
           </button>
         </div>
