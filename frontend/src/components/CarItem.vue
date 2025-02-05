@@ -53,7 +53,7 @@ withDefaults(defineProps<{
           <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]">$ {{ car.price }}</div>
           <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">{{ car.origin }}</p>
         </div>
-        <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 start-1/2 -translate-x-1/2 overflow-hidden">
+        <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
           <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
         </div>
 
