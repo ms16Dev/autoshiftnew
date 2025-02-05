@@ -16,13 +16,13 @@
     <!-- Navigation Buttons -->
     <button
         @click="scrollLeft"
-        class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-pink-500 text-white p-2 rounded-full shadow-md"
+        class="absolute start-2 top-1/2 transform -translate-y-1/2 bg-pink-500 text-white p-2 rounded-full shadow-md"
     >
       ❮
     </button>
     <button
         @click="scrollRight"
-        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-pink-500 text-white p-2 rounded-full shadow-md"
+        class="absolute end-2 top-1/2 transform -translate-y-1/2 bg-pink-500 text-white p-2 rounded-full shadow-md"
     >
       ❯
     </button>

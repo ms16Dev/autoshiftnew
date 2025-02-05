@@ -3,7 +3,7 @@
       class="flex flex-col md:flex-row md:justify-center items-center w-full mt-4"
   >
     <div class="flex items-center">
-      <ul class="flex space-x-2">
+      <ul class="flex space-x-2 rtl:flex-row-reverse">
         <li
             class="page-item"
             :class="{ 'opacity-50 pointer-events-none': isInFirstPage }"
