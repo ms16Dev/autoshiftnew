@@ -8,7 +8,7 @@ defineProps({
     default: () => [
       { text: 'Profile', icon: 'fas fa-user', target: '/add-car-new' },
       { text: 'Settings', icon: 'fas fa-cogs', target: '/add-part' },
-      { text: 'Logout', icon: 'fas fa-close', target: '/add-service' },
+      { text: 'Logout', icon: 'fas fa-sign-out', target: '/add-service' },
     ],
   },
   position: {
@@ -60,10 +60,10 @@ watch(currentLang, (newLang) => {
       </li>
       <li>
         <div class="flex flex-row justify-between">
-          <button @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
             En
           </button>
-          <button @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
             ع
           </button>
         </div>
@@ -82,10 +82,10 @@ watch(currentLang, (newLang) => {
       </li>
       <li>
         <div class="flex flex-row justify-between">
-          <button @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
             En
           </button>
-          <button @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1">
+          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
             ع
           </button>
         </div>
