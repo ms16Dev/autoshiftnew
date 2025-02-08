@@ -3,14 +3,14 @@
 
     <div class="bg-white opacity-85 p-10">
       <!-- Header -->
-      <h2 class="text-3xl font-bold text-gray-800">Advertise With Us 🚀</h2>
-      <p class="text-md text-gray-600 mt-2 max-w-lg text-lg">
+      <h2 class="text-2xl font-bold text-purple-600">Advertise With Us 🚀</h2>
+      <p class="text-md text-gray-600 mt-2 max-w-lg ">
         Get **free space** to showcase your business to thousands of potential customers.
         Take advantage of our platform to increase your visibility and attract new clients!
       </p>
 
       <!-- CTA Button -->
-      <button class="mt-6 bg-white hover:bg-gray-200 text-gray-900 font-bold py-3 px-6 rounded-lg transition shadow-md">
+      <button class="mt-6 bg-white hover:bg-gray-200 text-purple-600 font-bold py-3 px-6 rounded-lg transition shadow-md">
         Get Your Free Ad Space 📢
       </button>
     </div>
