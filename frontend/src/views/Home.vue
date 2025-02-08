@@ -7,6 +7,7 @@ import Carousel from "../components/Carousel.vue";
 import RecentCars from "../components/RecentCars.vue";
 import ContactSection from "../components/ContactSection.vue";
 import FeaturedDealers from "../components/FeaturedDealers.vue";
+import BrandsSlider from "../components/BrandsSlider.vue";
 
 defineOptions({
   name: 'Home'
@@ -30,6 +31,65 @@ const slidesData = [
     subtitle: "Responsive Design",
     description: "Donec facilisis metus nec est luctus, et consequat mauris aliquet.",
     image: "https://cdn.dribbble.com/users/5571397/screenshots/12253619/shot-cropped-1592978684837.png",
+  },
+
+];
+
+const brands = [
+  {
+    image: "/carmakes/1.png",
+  },
+  {
+
+    image: "/carmakes/2.png",
+  },
+  {
+
+    image: "/carmakes/3.png",
+  },
+  {
+
+    image: "/carmakes/4.png",
+  },
+  {
+
+    image: "/carmakes/6.png",
+  },
+  {
+
+    image: "/carmakes/7.png",
+  },
+  {
+
+    image: "/carmakes/8.png",
+  },
+  {
+
+    image: "/carmakes/9.png",
+  },
+  {
+
+    image: "/carmakes/10.png",
+  },
+  {
+
+    image: "/carmakes/11.png",
+  },
+  {
+
+    image: "/carmakes/12.png",
+  },
+  {
+
+    image: "/carmakes/13.png",
+  },
+  {
+
+    image: "/carmakes/14.png",
+  },
+  {
+
+    image: "/carmakes/15.png",
   },
 
 ];
@@ -62,6 +122,8 @@ const recentPosts = [
         <RecentCars :posts="recentPosts" />
 
 
+
+
         <div class="flex justify-end">
           <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
             Find more ..
@@ -79,6 +141,13 @@ const recentPosts = [
             Find more ..
           </router-link>
         </div>
+
+
+        <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Brands</h1>
+
+        <BrandsSlider :slides="brands" dir="ltr" />
+
+
 
 
         <ContactSection class="mt-12"/>
