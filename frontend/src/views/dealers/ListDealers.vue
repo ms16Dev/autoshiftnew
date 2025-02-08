@@ -4,7 +4,6 @@ import dealers from "../../core/data/DealersData.ts";
 import {computed, ref} from "vue";
 import TablePagination from "../../components/TablePagenition.vue";
 import DealerItem from "../../components/dealer/DealerItem.vue";
-import CarItem from "../../components/CarItem.vue";
 import AdItem from "../../components/AdItem.vue";
 
 defineOptions({

@@ -15,6 +15,7 @@ import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
 import OtpVerify from "../views/auth/OtpVerify.vue";
+import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -37,6 +38,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'add-car-new', name: 'Add Car New', component: AddCarNew },
             { path: 'add-part', name: 'Add Part', component: AddPart },
             { path: 'add-service', name: 'Add Service', component: AddService },
+            { path: 'profile', name: 'profile', component: ProfileOverviewVue },
         ]
     },
 
