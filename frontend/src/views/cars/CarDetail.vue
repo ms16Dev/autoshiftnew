@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import AdItem from "../../components/AdItem.vue";
 import Comments from "../../components/Comments.vue";
+import UserView from "../../components/UserView.vue";
+import ImageViewer from "../../components/ImageViewer.vue";
+import IconButton from "../../components/IconButton.vue";
+import IconButtonH from "../../components/IconButtonH.vue";
+import ChipItemCheckedSm from "../../components/car/ChipItemCheckedSm.vue";
 
 
 defineOptions({
@@ -26,116 +31,70 @@ defineOptions({
           <span>2024 -</span>
           <span>Korean</span>
         </div>
-        <div class="flex flex-wrap text-xl text-gray-500  col-span-2 text-center">
-            <div class="w-12 h-12 rounded-full border-2 border-pink-900 overflow-hidden">
-              <img src="/vite.svg">
-            </div>
-          <span>Al Najm Cars</span>
-          <span> - Sana'a -</span>
-          <span> 2 days ago </span>
+        <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center  items-center gap-2">
+          <UserView :user="{ id: 1, name: 'John Doe', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
+          <span> - 2 days ago</span>
         </div>
 
-<!--        Image Viewer-->
 
-        <div class="w-full col-span-2 h-[460px]">
-          <img src="/car-phldr.png" class="w-full h-full object-cover">
+        <ImageViewer class="w-full col-span-2 mb-8"
+            :coverPhoto="'/car-phldr.png'"
+            :imageList="[
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
+            ]"
+        />
+
+        <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">Specifications</h1>
+
+        <div class="flex justify-center items-center flex-wrap col-span-2 gap-3">
+          <IconButton icon="fa-tachometer" label="gfdgfd" />
+          <IconButton icon="fa-gears" label="hfghfg" />
+          <IconButton icon="fa-gas-pump" label="ghfhgf" />
+          <IconButton icon="fa-bolt" label="sfdsfsd" />
+          <IconButton icon="fa-car" label="reddddd" />
+          <IconButton icon="fa-brush" label="dfsdsf" />
         </div>
-        <div class="flex flex-wrap col-span-2 gap-3">
-          <img src="/car-phldr.png" width="80" height="80"/>
-          <img src="/car-phldr.png" width="80" height="80"/>
-          <img src="/car-phldr.png" width="80" height="80"/>
-          <img src="/car-phldr.png" width="80" height="80"/>
-          <img src="/car-phldr.png" width="80" height="80"/>
-          <img src="/car-phldr.png" width="80" height="80"/>
-
-        </div>
-
-        <div class="flex flex-wrap col-span-2 gap-3">
-          <button class="flex flex-col items-center justify-center" >
-            <i class="w-16 h-16 rounded-full fas fa-tachometer bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-           gfdgfd</span>
-          </button>
-
-          <button class="flex flex-col items-center justify-center"  >
-            <i class="w-16 h-16 rounded-full fas fa-gears bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-           hfghfg</span>
-          </button>
-
-          <button class="flex flex-col items-center justify-center" hfghfghfgh>
-            <i class="w-16 h-16 rounded-full fas fa-gas-pump bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">ghfhgf</p>
-          </button>
-
-          <button class="flex flex-col items-center justify-center" >
-            <i class="w-16 h-16 rounded-full fas fa-bolt bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">sfdsfsd</p>
-          </button>
-
-          <button class="flex flex-col items-center justify-center" >
-            <i class="w-16 h-16 rounded-full fas fa-car bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">reddddd
-            </span>
-          </button>
-
-          <button class="flex flex-col items-center justify-center" >
-            <i class="w-16 h-16 rounded-full fas fa-brush bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-           dfsdsf</span>
-          </button>
 
 
-        </div>
+
 
 
         <div class="flex flex-col items-start col-span-2">
-          <button class="flex flex-row items-center justify-center p-4" >
-            <i class="w-16 h-16 rounded-full fas fa-leaf bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <p class="text-pink-500 text-xl font-bold text-center px-2 h-[30px] flex items-center justify-center">Luxury</p>
-          </button>
-          <div class="flex flex-wrap col-span-2">
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
+
+          <IconButtonH icon="fa-leaf" label="Luxury" />
+          <div class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm option="jsajd;aslkdaskdask;l"/>
+            <ChipItemCheckedSm option="jsakdask;l"/>
+            <ChipItemCheckedSm option="jsajd;aslkdask;l"/>
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+          </div>
+
+          <IconButtonH icon="fa-life-ring" label="Safety" />
+          <div class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+            <ChipItemCheckedSm option="jsajd;aslk"/>
+
           </div>
 
 
-          <button class="flex flex-row items-center justify-center p-4" >
-            <i class="w-16 h-16 rounded-full fas fa-life-ring bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <p class="text-pink-500 text-xl font-bold text-center px-2 h-[30px] flex items-center justify-center">Safety</p>
-          </button>
-          <div class="flex flex-wrap col-span-2">
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
-            <button class="text-gray-400 text-lg bg-pink-100 rounded-full m-1 p-1">
-              <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
-              <span class=" font-medium">dsaads</span>
-            </button>
-          </div>
-
-
-          <button class="flex flex-row items-center justify-center p-4" >
-            <i class="w-16 h-16 rounded-full fas fa-life-ring bg-pink-300 text-white text-xl p-2  flex items-center justify-center"></i>
-            <p class="text-pink-500 text-xl font-bold text-center px-2 h-[30px] flex items-center justify-center">Seller notes</p>
-          </button>
-
-          <p class="text-gray-400 text-lg">
+          <IconButtonH icon="fa-info" label="Notes" />
+          <p class="text-gray-400 text-lg mb-12">
             Lorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg eryw
 
           </p>
@@ -147,15 +106,6 @@ defineOptions({
 
 
         </div>
-
-
-
-
-
-
-
-
-
 
 
 
