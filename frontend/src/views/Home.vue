@@ -6,6 +6,7 @@ import AdItem from "../components/AdItem.vue";
 import Carousel from "../components/Carousel.vue";
 import RecentCars from "../components/RecentCars.vue";
 import ContactSection from "../components/ContactSection.vue";
+import FeaturedDealers from "../components/FeaturedDealers.vue";
 
 defineOptions({
   name: 'Home'
@@ -70,11 +71,11 @@ const recentPosts = [
 
 
         <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Featured Dealers</h1>
-        <RecentCars :posts="recentPosts" />
+        <FeaturedDealers :posts="recentPosts" />
 
 
         <div class="flex justify-end">
-          <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
+          <router-link to="dealers" class="py-2  text-pink-500 font-extrabold">
             Find more ..
           </router-link>
         </div>
