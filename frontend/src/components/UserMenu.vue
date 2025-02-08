@@ -81,7 +81,7 @@ watch(currentLang, (newLang) => {
         <IconButtonLink v-bind="item" class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li>
-        <div class="flex flex-row justify-between">
+        <div class="flex flex-row justify-between p-2">
           <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
             En
           </button>
