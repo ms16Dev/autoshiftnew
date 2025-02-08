@@ -51,7 +51,7 @@ watch(currentLang, (newLang) => {
 
 <template>
   <div
-      class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 bottom-full  end-0 md:block xl:hidden "
+      class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 bottom-full  end-0 md:block xl:hidden "
   >
     <ul class="divide-y divide-gray-200">
       <!-- Render each IconButtonLink as a menu item -->

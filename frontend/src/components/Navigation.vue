@@ -22,7 +22,7 @@ import UserMenuButton from "./UserMenuButton.vue";
           <IconButtonLink :text="'Dealers'" :icon="['fas', 'fa-heartbeat']" target="dealers"  />
           <IconButtonLink :text="'More'" :icon="['fas', 'fa-ellipsis-h']" target="more" />
         </div>
-        <div class="absolute md:end-0 xl:top-0 hidden md:block md:bottom-2">
+        <div class="absolute md:end-0 xl:top-0 hidden md:block md:bottom-2 ltr:md:-translate-x-3 rtl:md:translate-x-3 ltr:lg:-translate-x-0 rtl:lg:translate-x-0">
           <UserMenuButton icon="fas fa-user" text="" ></UserMenuButton>
 
         </div>
