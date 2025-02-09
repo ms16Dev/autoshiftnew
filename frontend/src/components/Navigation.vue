@@ -7,7 +7,7 @@ import UserMenuButton from "./UserMenuButton.vue";
 </script>
 
 <template>
-      <div class="fixed z-50 bottom-0 w-full h-[50px] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-80
+      <div class="fixed z-50 bottom-0 w-full h-[50px] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-95
            md:w-[80px] md:h-full md:left-0 md:top-1/2 md:transform md:-translate-y-1/2 md:bg-gradient-to-t   start-auto md:start-0
            xl:w-2/3 xl:h-[50px] xl:top-12 ltr:xl:left-1/2 rtl:xl:right-1/2 xl:transform rtl:xl:translate-x-1/2 ltr:xl:-translate-x-1/2 xl:rounded-full xl:bg-gradient-to-r">
         <router-link to="/" class="hidden w-fit xl:pl-8  md:block  xl:-translate-y-[15px]">
@@ -27,6 +27,18 @@ import UserMenuButton from "./UserMenuButton.vue";
               :class="{ '!bg-pink-600': $route.path.startsWith('/cars') }"
 
           />
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:-translate-x-1/2 rtl:translate-x-14"
+               :class="{ 'xl:hidden': !$route.path.match(/^\/cars\/[\w-]+$/) || $route.path === '/cars/add-car'}"
+
+          >> Car Details
+
+          </div>
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:-translate-x-16 rtl:translate-x-16"
+               :class="{ 'xl:hidden': $route.path !== '/cars/add-car' }"
+
+          >> Add Car
+
+          </div>
           <IconButtonLink
               :text="'Dealers'"
               :icon="['fas', 'fa-heartbeat']"
@@ -34,6 +46,10 @@ import UserMenuButton from "./UserMenuButton.vue";
               :class="{ '!bg-pink-600': $route.path.startsWith('/dealers') }"
 
           />
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:translate-x-1/2 rtl:-translate-x-1/2"
+               :class="{ 'xl:hidden': !$route.path.match(/^\/dealers\/[\w-]+$/) }"
+          >> Dealer Profile
+          </div>
           <IconButtonLink
               :text="'More'"
               :icon="['fas', 'fa-ellipsis-h']"
