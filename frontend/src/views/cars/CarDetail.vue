@@ -6,6 +6,7 @@ import ImageViewer from "../../components/ImageViewer.vue";
 import IconButton from "../../components/IconButton.vue";
 import IconButtonH from "../../components/IconButtonH.vue";
 import ChipItemCheckedSm from "../../components/car/ChipItemCheckedSm.vue";
+import SharePost from "../../components/SharePost.vue";
 
 
 defineOptions({
@@ -31,10 +32,14 @@ defineOptions({
           <span>2024 -</span>
           <span>Korean</span>
         </div>
-        <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center  items-center gap-2">
+        <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center items-center gap-2">
           <UserView :user="{ id: 1, name: 'John Doe', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
-          <span> - 2 days ago</span>
+          <span class="text-sm">2 days ago</span>
+          <div class="ml-auto">
+            <SharePost />
+          </div>
         </div>
+
 
 
         <ImageViewer class="w-full col-span-2 mb-8"
