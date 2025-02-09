@@ -6,9 +6,9 @@ defineProps({
   items: {
     type: Array as () => IconButtonLinkProps[],
     default: () => [
-      { text: 'Profile', icon: 'fas fa-user', target: '/add-car-new' },
-      { text: 'Settings', icon: 'fas fa-cogs', target: '/add-part' },
-      { text: 'Logout', icon: 'fas fa-sign-out', target: '/add-service' },
+      { text: 'Profile', icon: 'fas fa-user', target: '/dealers/1' },
+      { text: 'Settings', icon: 'fas fa-cogs', target: '/settings' },
+      { text: 'Logout', icon: 'fas fa-sign-out', target: '/auth/logout' },
     ],
   },
   position: {
