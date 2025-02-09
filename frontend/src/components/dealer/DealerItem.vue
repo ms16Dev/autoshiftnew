@@ -1,23 +1,21 @@
 <script setup lang="ts">
 import {defineProps, withDefaults} from "vue";
-import DealerListDto from "../../core/models/DealerListDto.ts";
+import {DealerListDto} from "../../core/models/DealerListDto";
 
 
 // Define props with defaults
-withDefaults(defineProps<{
-  dealer: DealerListDto;
-}>(), {
-  dealer: {
+withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
+  dealer: () => ({
     id: 1,
     coverImage: "/car_plchldr1.jpg",
     logo: "/car_plchldr1.jpg",
     name: "kdjsdldfj",
-    address: "Sana'a  ",
+    address: "Sana'a",
     title: "dasdsdasd",
     subtitle: "dsadsadsad",
     likes: 900,
     date_joined: "2 days ago",
-  }
+  })
 });
 </script>
 

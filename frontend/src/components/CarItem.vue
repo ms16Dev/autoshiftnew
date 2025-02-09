@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { defineProps, withDefaults } from "vue";
-import CarListDto from "../core/models/CarListDto.ts";
+import type { CarListDto } from '../core/models/CarListDto';
+
 
 
 
 // Define props with defaults
-withDefaults(defineProps<{
-  car: CarListDto;
-}>(), {
-  car: {
+withDefaults(defineProps<{ car?: CarListDto }>(), {
+  car: () => ({
     id: 1,
     coverImage: "/car_plchldr1.jpg",
     price: "12,000",
@@ -26,7 +25,7 @@ withDefaults(defineProps<{
     comments: 35,
     dealer: "Car Care Ltd.",
     date_created: "2 days ago",
-  }
+  }),
 });
 </script>
 

@@ -32,7 +32,7 @@ const defaultAvatar = 'https://via.placeholder.com/150?text=User'; // Placeholde
 
 const goToProfile = () => {
   if (props.user.id) {
-    router.push(`/profile/${props.user.id}`);
+    router.push(`/dealers/${props.user.id}`);
   }
 };
 </script>

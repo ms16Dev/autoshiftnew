@@ -1,5 +1,5 @@
 // Define CarListDto interface
-export default interface DealerListDto {
+export  interface DealerListDto {
     id: number;
     coverImage: string;
     logo: string;

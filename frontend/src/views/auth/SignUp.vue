@@ -5,10 +5,6 @@ defineOptions({
   name: 'Sign-Up'
 })
 
-import { ref } from 'vue';
-import ImageLoader from '../../components/ImageLoader.vue';
-
-const userType = ref('');
 
 function submitForm(){
 

@@ -1,4 +1,4 @@
-import CarListDto from "../models/CarListDto.ts";
+import {CarListDto} from "../models/CarListDto";
 
 const cars: CarListDto[] = [
     {

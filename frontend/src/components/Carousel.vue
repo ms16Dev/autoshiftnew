@@ -38,7 +38,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import {ref, onMounted, onUnmounted, defineComponent} from "vue";
+
+defineComponent()
 
 const props = defineProps({
   slides: {

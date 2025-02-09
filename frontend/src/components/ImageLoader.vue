@@ -1,29 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const image = ref(null);
-const fileInput = ref(null);
+const image = ref<string | null>(null);  // For holding the image URL
+const fileInput = ref<HTMLInputElement | null>(null);  // For the file input
 
+// Handle image click to trigger file input
 function handleImageClick() {
-  fileInput.value.click();
+  fileInput.value?.click();  // Use optional chaining to safely call click
 }
 
-function onFileChange(event) {
-  const file = event.target.files[0];
+// Handle file change event when a user selects a file
+function onFileChange(event: Event) {
+  const target = event.target as HTMLInputElement;  // Type assertion
+  const file = target.files ? target.files[0] : null;  // Ensure files is not null
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      image.value = e.target.result;
+      image.value = e.target?.result as string;  // Ensure the result is a string (image URL)
     };
     reader.readAsDataURL(file);
   }
 }
 
+// Remove the image and reset the file input
 function removeImage() {
-  image.value = null;
-  fileInput.value.value = null; // Reset the file input
+  image.value = null;  // Clear the image preview
+  if (fileInput.value) {
+    fileInput.value.value = '';  // Reset the file input value (ensure fileInput is not null)
+  }
 }
 </script>
+
 
 
 <template>

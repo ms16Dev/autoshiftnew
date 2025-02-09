@@ -1,5 +1,5 @@
 // Define CarListDto interface
-export default interface CarListDto {
+export interface CarListDto {
     id: number;
     coverImage: string;
     price: string;

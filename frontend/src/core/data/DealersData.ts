@@ -1,4 +1,4 @@
-import DealerListDto from "../models/DealerListDto.ts";
+import {DealerListDto} from "../models/DealerListDto.ts";
 
 
 const dealers: DealerListDto[] = [
