@@ -5,10 +5,9 @@ defineProps({
   items: {
     type: Array as () => IconButtonLinkProps[],
     default: () => [
-      { text: 'Car', icon: 'fas fa-car', target: '/add-car-new' },
-      { text: 'Part', icon: 'fas fa-cogs', target: '/add-part' },
-      { text: 'Service', icon: 'fas fa-box', target: '/add-service' },
-      { text: 'Landing', icon: 'fas fa-rocket', target: '/' },
+      { text: 'Car', icon: 'fas fa-car', target: '/cars/add-car' },
+      { text: 'Part', icon: 'fas fa-cogs', target: '/home' },
+      { text: 'Service', icon: 'fas fa-box', target: '/home' },
     ],
   },
   position: {

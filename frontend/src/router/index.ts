@@ -6,8 +6,6 @@ import CarDetails from "../views/cars/CarDetail.vue";
 import Dealers from "../views/dealers/ListDealers.vue";
 import More from "../views/More.vue";
 import AddCarNew from "../views/cars/AddCarNew.vue";
-import AddPart from "../views/parts/AddPart.vue";
-import AddService from "../views/services/AddService.vue";
 import SignUp from "../views/auth/SignUp.vue";
 import Landing from "../views/landing/Landing.vue";
 import SignIn from "../views/auth/SignIn.vue";
@@ -30,16 +28,28 @@ const routes: Array<RouteRecordRaw> = [
         path: "/",
         component: () => import("../layouts/DefaultLayout.vue"),
         children:     [
-            { path: 'home', name: 'Home', component: Home },
-            { path: 'cars', name: 'Cars', component: Cars },
-            { path: 'car-details', name: 'car-details', component: CarDetails },
-            { path: 'dealers', name: 'dealers', component: Dealers },
-            { path: 'more', name: 'More', component: More },
-            { path: 'add-car-new', name: 'Add Car New', component: AddCarNew },
-            { path: 'add-part', name: 'Add Part', component: AddPart },
-            { path: 'add-service', name: 'Add Service', component: AddService },
-            { path: 'profile', name: 'profile', component: ProfileOverviewVue },
-        ]
+            { path: 'home', name: 'home', component: Home },
+
+            {
+                path: "cars",
+                children: [
+                    { path: "", name: "cars", component: Cars }, // /cars (default list page)
+                    { path: "list", name: "cars-list", component: Cars }, // /cars/list
+                    { path: "add-car", name: "add-car", component: AddCarNew }, // /cars/add-car
+                    { path: ":id", name: "car-details", component: CarDetails }, // /cars/:id
+                ],
+            },
+            {
+                path: "dealers",
+                children: [
+                    { path: "", name: 'dealers', component: Dealers },
+                    { path: ":id", name: 'profile', component: ProfileOverviewVue },
+                ],
+            },
+
+            { path: 'more', name: 'more', component: More },
+
+         ]
     },
 
     {

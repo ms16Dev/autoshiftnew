@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-
-
-
 import IconButtonLink from "./IconButtonLink.vue";
 import UserMenuButton from "./UserMenuButton.vue";
 
@@ -17,10 +14,33 @@ import UserMenuButton from "./UserMenuButton.vue";
           <img src="../assets/asl.png" alt="Logo" width="120" height="120">
         </router-link>
         <div class="flex justify-center h-full md:h-[100px] md:w-full md:flex-col md:absolute md:top-1/2 md:-translate-y-1/2  xl:flex-row xl:h-full xl:justify-center">
-          <IconButtonLink :text="'Home'" :icon="['fas', 'fa-home']" target="home" :class="{'bg-pink-600': $route.path === '/'}"/>
-          <IconButtonLink :text="'Cars'" :icon="['fas', 'fa-car']" target="cars"  />
-          <IconButtonLink :text="'Dealers'" :icon="['fas', 'fa-heartbeat']" target="dealers"  />
-          <IconButtonLink :text="'More'" :icon="['fas', 'fa-ellipsis-h']" target="more" />
+          <IconButtonLink
+              :text="'Home'"
+              :icon="['fas', 'fa-home']"
+              target="/home"
+              :class="{ '!bg-pink-600': $route.path === '/home' }"
+          />
+          <IconButtonLink
+              :text="'Cars'"
+              :icon="['fas', 'fa-car']"
+              target="/cars"
+              :class="{ '!bg-pink-600': $route.path.startsWith('/cars') }"
+
+          />
+          <IconButtonLink
+              :text="'Dealers'"
+              :icon="['fas', 'fa-heartbeat']"
+              target="/dealers"
+              :class="{ '!bg-pink-600': $route.path.startsWith('/dealers') }"
+
+          />
+          <IconButtonLink
+              :text="'More'"
+              :icon="['fas', 'fa-ellipsis-h']"
+              target="/more"
+              :class="{ '!bg-pink-600': $route.path === '/more' }"
+
+          />
         </div>
         <div class="absolute md:end-0 xl:top-0 hidden md:block md:bottom-2 ltr:md:-translate-x-3 rtl:md:translate-x-3 ltr:lg:-translate-x-0 rtl:lg:translate-x-0">
           <UserMenuButton icon="fas fa-user" text="" ></UserMenuButton>
