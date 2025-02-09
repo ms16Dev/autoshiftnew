@@ -18,7 +18,7 @@
         <input type="text" v-model="form.name" placeholder="Your Name" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
         <input type="email" v-model="form.email" placeholder="Your Email" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
         <input type="text" v-model="form.message" placeholder="Your Message" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
-        <button type="submit" class="w-full bg-white hover:bg-pink-300 text-pink-700 font-bold py-2 rounded-lg transition shadow-md mt-3">
+        <button type="submit" class="w-full bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 rounded-lg transition shadow-md mt-3">
           Send 🚀
         </button>
       </form>

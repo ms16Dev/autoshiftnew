@@ -33,8 +33,8 @@ withDefaults(defineProps<{ car?: CarListDto }>(), {
 <template>
   <div class="relative group">
     <RouterLink :to="{ name: 'car-details', params: {id: car.id} }">
-    <div class="absolute inset-px shadow-lg bg-white dark:bg-gray-900  group-hover:bg-pink-50"></div>
-    <div class="relative flex flex-col overflow-hidden rounded-lg">
+    <div class="absolute inset-px shadow-lg bg-white dark:bg-gray-900  group-hover:bg-purple-50"></div>
+    <div class="relative flex flex-col overflow-hidden">
       <div class="group flex-col inset-px shadow-md">
 
 
@@ -49,7 +49,7 @@ withDefaults(defineProps<{ car?: CarListDto }>(), {
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <div class="z-10">
-          <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]">$ {{ car.price }}</div>
+          <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px]">$ {{ car.price }}</div>
           <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">{{ car.origin }}</p>
         </div>
         <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
@@ -60,7 +60,7 @@ withDefaults(defineProps<{ car?: CarListDto }>(), {
 
 
         <div class="flex flex-col">
-        <div class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px] ">{{car.class}}</div>
+        <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px] ">{{car.class}}</div>
         <div class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{ car.year }}</div>
         </div>
 
@@ -71,7 +71,7 @@ withDefaults(defineProps<{ car?: CarListDto }>(), {
 
 
         <div class="flex flex-col items-center justify-center">
-          <i class="w-8 h-8 rounded-full fas fa-tachometer bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
+          <i class="w-8 rounded-full fas fa-tachometer bg-pink-300 text-white text-sm p-2 h-[30px] flex items-center justify-center"></i>
           <p class="text-pink-500 text-xs font-bold text-center px-2 h-[30px] flex items-center justify-center">
             {{ car.mileage }}</p>
         </div>
