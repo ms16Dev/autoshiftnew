@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .logout(ServerHttpSecurity.LogoutSpec::disable)
                 .securityContextRepository(serverSecurityContextRepository)
                 .authorizeExchange(it ->
-                        it.pathMatchers("/", "/login", "/logout").permitAll()
+                        it.pathMatchers("/", "/auth/login", "/auth/logout").permitAll()
                                 .pathMatchers(HttpMethod.GET, "/posts/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/posts/**").hasRole("ADMIN")
                                 .pathMatchers("/posts/**").authenticated()
@@ -101,7 +101,7 @@ public class SecurityConfig {
                         })
                         .map(request -> new UsernamePasswordAuthenticationToken(request.username(), request.password()))
         );
-        filter.setRequiresAuthenticationMatcher(pathMatchers(HttpMethod.POST, "/login"));
+        filter.setRequiresAuthenticationMatcher(pathMatchers(HttpMethod.POST, "/auth/login"));
         filter.setAuthenticationSuccessHandler((webFilterExchange, authentication) -> {
             webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
             var user = (UserDetails) authentication.getPrincipal();
@@ -134,7 +134,7 @@ public class SecurityConfig {
             webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
             return webFilterExchange.getExchange().getResponse().setComplete();
         });
-        filter.setRequiresLogoutMatcher(pathMatchers(HttpMethod.POST, "/logout"));
+        filter.setRequiresLogoutMatcher(pathMatchers(HttpMethod.POST, "/auth/logout"));
         return filter;
     }
 
@@ -161,3 +161,7 @@ public class SecurityConfig {
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException(username)));
     }
 }
+
+
+
+
