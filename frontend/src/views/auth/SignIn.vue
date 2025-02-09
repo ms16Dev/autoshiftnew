@@ -1,37 +1,75 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import ApiService from "../../services/ApiService.ts";
+import {UserLoginDto} from "../../core/models/UserLoginDto.ts";
+import {useAuthStore} from "../../stores/auth.ts";
+import router from "../../router";
+import Swal from 'sweetalert2';
+
 
 // Define reactive form fields
 const username = ref('');
 const password = ref('');
 
-// Login function
-function login() {
-  // Pass email and password as an object to the API service
-  const values = {
+
+const store = useAuthStore();
+
+const onSubmitLogin = async () => {
+
+  const login: UserLoginDto = {
     username: username.value,
-    password: password.value,
+    password: password.value
   };
 
-  // Send the login request
-  return ApiService.post("/login", values)
-      .then(({ data }) => {
-        // Handle success response
-        alert('Logged in successfully!');
-        console.log(data);  // or handle authentication as needed
-      })
-      .catch(({ response }) => {
-        // Handle error response
-        alert('Login failed');
-        console.error(response.data.errors);  // You can handle error messages here
-      });
-}
+  console.log(login)
+  // Clear existing errors
+  // await store.logout();
+
+
+  // Send login request
+  await store.login(login);
+  const error = Object.values(store.errors);
+
+  if (error.length === 0) {
+    Swal.fire({
+      text: "Login Successful",
+      icon: "success",
+      buttonsStyling: false,
+      confirmButtonText: "Ok",
+      heightAuto: false,
+      customClass: {
+        confirmButton: "btn fw-semibold btn-light-primary",
+      },
+    }).then(() => {
+      // Go to page after successfully login
+      router.push({ name: "home" });
+    });
+  } else {
+    Swal.fire({
+      text: error[0] as string,
+      icon: "error",
+      buttonsStyling: false,
+      confirmButtonText: "Try again!",
+      heightAuto: false,
+      customClass: {
+        confirmButton: "btn fw-semibold btn-light-danger",
+      },
+    }).then(() => {
+      store.errors = {};
+    });
+  }
+
+};
+
+
+
+
+
+
 </script>
 
 <template>
   <div class="relative group px-6 max-w-xl mx-auto">
-    <form @submit.prevent="login" class="relative flex flex-col p-6 space-y-6 overflow-hidden rounded-lg bg-white shadow-lg">
+    <form @submit.prevent="onSubmitLogin" class="relative flex flex-col p-6 space-y-6 overflow-hidden rounded-lg bg-white shadow-lg">
 
       <!-- Email Input -->
       <div class="flex flex-col">

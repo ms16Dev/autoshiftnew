@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
 import IconButtonLink, { IconButtonLinkProps } from './IconButtonLink.vue';
+import {useAuthStore} from "../stores/auth.ts";
+
+const store =  useAuthStore();
 
 defineProps({
   items: {
@@ -53,6 +56,12 @@ watch(currentLang, (newLang) => {
   <div
       class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 bottom-full  end-0 md:block xl:hidden "
   >
+
+    <div class="flex-col p-2">
+      <h1 class="text-white text-lg">{{store.userInfo.username}}</h1>
+      <h1 class="text-white text-lg">{{store.userInfo.email}}</h1>
+    </div>
+
     <ul class="divide-y divide-gray-200">
       <!-- Render each IconButtonLink as a menu item -->
       <li v-for="(item, index) in items" :key="index" class="p-2">
@@ -75,6 +84,11 @@ watch(currentLang, (newLang) => {
   <div
       class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 top-full md:hidden xl:block"
   >
+    <div class="flex-col p-2">
+      <h1 class="text-white text-lg">{{store.userInfo.username}}</h1>
+      <h1 class="text-white text-lg">{{store.userInfo.email}}</h1>
+    </div>
+
     <ul class="divide-y divide-gray-200">
       <!-- Render each IconButtonLink as a menu item -->
       <li v-for="(item, index) in items" :key="index" class="p-2">

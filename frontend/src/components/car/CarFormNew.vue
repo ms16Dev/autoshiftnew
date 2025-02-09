@@ -13,7 +13,7 @@ import MileagePopUp from "./MileagePopUp.vue";
 import YearPopUp from "./YearPopUp.vue"
 import OptionsPopUp from "./OptionsPopUp.vue";
 import ChipsPopUp from "./ChipsPopUp.vue";
-import ApiService from "../../services/ApiService.ts";
+import ApiService from "../../core/services/ApiService.ts";
 import MultiImageLoader from "../MultiImageLoader.vue";
 
 

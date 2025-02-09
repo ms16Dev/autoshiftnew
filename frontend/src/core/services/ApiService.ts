@@ -58,10 +58,11 @@ class ApiService {
    * @description Send a POST HTTP request
    * @param resource API endpoint
    * @param params Request body
+   * @param config
    * @returns Axios response promise
    */
-  public static post(resource: string, params: any) {
-    return ApiService.axiosInstance.post(resource, params);
+  public static post(resource: string, params: any, config: object = {}) {
+    return ApiService.axiosInstance.post(resource, params, config);
   }
 
   /**
