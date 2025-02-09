@@ -14,6 +14,7 @@ import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
 import OtpVerify from "../views/auth/OtpVerify.vue";
 import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
+import NotFound from "../views/NotFound.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -48,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
             },
 
             { path: 'more', name: 'more', component: More },
+            {
+                path: '/:pathMatch(.*)*',  // This is the wildcard path for unmatched routes
+                name: 'NotFound',
+                component: NotFound,
+            },
 
          ]
     },
