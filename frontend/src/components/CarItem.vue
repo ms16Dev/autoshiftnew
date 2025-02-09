@@ -98,27 +98,27 @@ withDefaults(defineProps<{ car?: CarListDto }>(), {
 
         <div class="flex items-center justify-between py-2 px-6 bg-pink-100 ">
           <!-- Seen -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-2">
             <i class="fas fa-eye text-pink-300"/>
 
             <span class="text-sm text-gray-700">{{ car.seen }}</span>
           </div>
 
           <!-- Likes -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-2">
            <i class="fas fa-heart text-pink-300"/>
             <span class="text-sm text-gray-700">{{ car.likes }}</span>
           </div>
 
           <!-- Shares -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-2">
             <i class="fas fa-share text-pink-300"/>
 
             <span class="text-sm text-gray-700">{{ car.shares }}</span>
           </div>
 
           <!-- Comments -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-2">
             <i class="fas fa-comment text-pink-300"/>
 
             <span class="text-sm text-gray-700">{{ car.comments }}</span>

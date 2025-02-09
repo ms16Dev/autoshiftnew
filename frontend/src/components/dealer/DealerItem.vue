@@ -51,13 +51,13 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
 
 
             <!-- Likes -->
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center gap-2">
               <i class="fas fa-map-marker text-pink-300"/>
               <span class="text-sm text-gray-700">{{ dealer.name }}</span>
             </div>
 
             <!-- Name -->
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center gap-2">
               <i class="fas fa-heart text-pink-300"/>
               <span class="text-sm text-gray-700">{{ dealer.likes }}</span>
             </div>
