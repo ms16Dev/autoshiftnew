@@ -6,8 +6,13 @@
     <!-- User Avatar -->
     <img :src="user.avatar || defaultAvatar" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
 
-    <!-- User Name -->
-    <span class="text-pink-500 font-lg font-extrabold">{{ user.name }}</span>
+    <div class="flex flex-col items-start">
+      <!-- User Name -->
+      <span class="text-pink-500 font-lg font-extrabold">{{ user.name }}</span>
+      <!-- Date -->
+      <span class="text-gray-500 text-sm ">{{ user.date }}</span>
+    </div>
+
   </div>
 </template>
 
@@ -22,6 +27,7 @@ const props = defineProps({
     required: true,
     default: () => ({
       name: 'User Name',
+      date: "2days ago",
       avatar: '',
       id: null
     })

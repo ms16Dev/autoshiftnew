@@ -33,8 +33,7 @@ defineOptions({
           <span>Korean</span>
         </div>
         <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center items-center gap-2">
-          <UserView :user="{ id: 1, name: 'John Doe', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
-          <span class="text-sm">2 days ago</span>
+          <UserView :user="{ id: 1, name: 'John Doe', date: '3 weeks ago', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
           <div class="ml-auto">
             <SharePost />
           </div>
