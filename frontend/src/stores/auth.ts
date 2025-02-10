@@ -9,17 +9,8 @@ export const useAuthStore = defineStore(
     "auth",
     () => {
         const errors = ref<Record<string, any>>({});
-        const isAuthenticated = ref<boolean>(false); // We will rely on session cookies now
-        const userInfo = ref<UserDto>({
-            id: 1,
-            username: "John",
-            email: "john.doe@example.com",
-            active: true,
-            roles: [
-                "ROLE_USER",
-                "ROLE_ADMIN"
-            ],
-        });
+        const isAuthenticated = ref<boolean>(false);
+        const userInfo = ref<UserDto | null>(null);
 
         const setAuth = (authUser: UserDto) => {
             isAuthenticated.value = true;
@@ -33,18 +24,15 @@ export const useAuthStore = defineStore(
 
         const purgeAuth = () => {
             isAuthenticated.value = false;
+            userInfo.value = null;
             errors.value = {};
-            // No need to manage tokens with Redis session
         };
 
         const login = async (credentials: UserLoginDto) => {
             try {
-                // Send the credentials to backend for authentication
                 const { data } = await ApiService.post("auth/login", credentials, {
-                    withCredentials: true // Ensure cookies (session) are sent with the request
+                    withCredentials: true,
                 });
-
-                // Backend manages session and sets the session cookie automatically
                 setAuth(data);
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
@@ -53,7 +41,7 @@ export const useAuthStore = defineStore(
 
         const logout = async () => {
             try {
-                await ApiService.post("auth/logout", {}); // Call to logout endpoint
+                await ApiService.post("auth/logout", {});
                 purgeAuth();
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
@@ -86,6 +74,29 @@ export const useAuthStore = defineStore(
             }
         };
 
+        /** Check if the session is still valid and update the store */
+        const checkSession = async () => {
+            try {
+                const { data } = await ApiService.get("auth/session", "");
+                if (data) {
+                    setAuth(data);
+                } else {
+                    purgeAuth();
+                }
+            } catch (error) {
+                purgeAuth();
+            }
+        };
+
+        /** Role-based authorization */
+        const hasRole = (role: string) => {
+            return userInfo.value?.roles.includes(role) ?? false;
+        };
+
+        const hasAnyRole = (roles: string[]) => {
+            return roles.some((role) => userInfo.value?.roles.includes(role));
+        };
+
         return {
             errors,
             isAuthenticated,
@@ -95,9 +106,12 @@ export const useAuthStore = defineStore(
             register,
             forgotPassword,
             updatePassword,
+            checkSession,
+            hasRole,
+            hasAnyRole,
         };
     },
     {
-        persist: true, // Enable persistence (you can persist `userInfo`, etc.)
+        persist: true, // Persist authentication state
     }
 );

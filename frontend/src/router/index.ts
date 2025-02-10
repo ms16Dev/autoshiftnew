@@ -15,6 +15,7 @@ import ResetPassword from "../views/auth/ResetPassword.vue";
 import OtpVerify from "../views/auth/OtpVerify.vue";
 import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
 import NotFound from "../views/NotFound.vue";
+import {useAuthStore} from "../stores/auth.ts";
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -44,7 +45,12 @@ const routes: Array<RouteRecordRaw> = [
                 path: "dealers",
                 children: [
                     { path: "", name: 'dealers', component: Dealers },
-                    { path: ":id", name: 'profile', component: ProfileOverviewVue },
+                    {
+                        path: ":id",
+                        name: 'profile',
+                        component: ProfileOverviewVue,
+                        meta: { requiresAuth: true },
+                    },
                 ],
             },
 
@@ -78,5 +84,21 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
+
+router.beforeEach((to, from, next) => {
+    console.log("Navigating from:", from.path);
+    console.log("Navigating to:", to.path);
+
+    const authStore = useAuthStore();
+
+    if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+        next("/auth/sign-in");
+    } else if (Array.isArray(to.meta.roles) && !authStore.hasAnyRole(to.meta.roles)) {
+        next("/home"); // Redirect unauthorized users
+    } else {
+        next();
+    }
+});
+
 
 export default router;
