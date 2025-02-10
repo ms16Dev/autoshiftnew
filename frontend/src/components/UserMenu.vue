@@ -11,7 +11,6 @@ defineProps({
     default: () => [
       { text: 'Profile', icon: 'fas fa-user', target: '/dealers/1' },
       { text: 'Settings', icon: 'fas fa-cogs', target: '/settings' },
-      { text: 'Logout', icon: 'fas fa-sign-out', target: '/auth/logout' },
     ],
   },
   position: {
@@ -20,7 +19,7 @@ defineProps({
   },
 });
 
-defineEmits(['close']);
+const emit = defineEmits(['close']);
 
 
 
@@ -50,6 +49,11 @@ watch(currentLang, (newLang) => {
 }, { immediate: true });
 
 
+const logout = () => {
+  store.logout();
+  emit('close');
+}
+
 </script>
 
 <template>
@@ -58,21 +62,25 @@ watch(currentLang, (newLang) => {
   >
 
     <div class="flex-col p-2">
-      <h1 class="text-white text-lg">{{store.userInfo.username}}</h1>
-      <h1 class="text-white text-lg">{{store.userInfo.email}}</h1>
+      <h1 class="text-white text-center">{{store?.userInfo?.name}}</h1>
     </div>
 
     <ul class="divide-y divide-gray-200">
-      <!-- Render each IconButtonLink as a menu item -->
-      <li v-for="(item, index) in items" :key="index" class="p-2">
-        <IconButtonLink v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      <li v-if="store.isAuthenticated" v-for="(item, index) in items" :key="index" class="p-2">
+        <IconButtonLink  v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      </li>
+      <li v-if="store.isAuthenticated">
+        <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
+      </li>
+      <li v-if="!store.isAuthenticated">
+        <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" text="Login" icon="fas fa-sign-in"/>
       </li>
       <li>
-        <div class="flex flex-row justify-between">
-          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
+        <div class="flex flex-row justify-between p-2">
+          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
             En
           </button>
-          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
+          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
             ع
           </button>
         </div>
@@ -85,21 +93,26 @@ watch(currentLang, (newLang) => {
       class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 top-full md:hidden xl:block"
   >
     <div class="flex-col p-2">
-      <h1 class="text-white text-lg">{{store.userInfo.username}}</h1>
-      <h1 class="text-white text-lg">{{store.userInfo.email}}</h1>
+      <h1 class="text-white text-lg">{{store?.userInfo?.name}}</h1>
+      <h1 class="text-white text-lg">{{store?.userInfo?.roles}}</h1>
     </div>
 
     <ul class="divide-y divide-gray-200">
-      <!-- Render each IconButtonLink as a menu item -->
-      <li v-for="(item, index) in items" :key="index" class="p-2">
-        <IconButtonLink v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      <li v-if="store.isAuthenticated" v-for="(item, index) in items" :key="index" class="p-2">
+        <IconButtonLink  v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      </li>
+      <li v-if="store.isAuthenticated">
+        <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
+      </li>
+      <li v-if="!store.isAuthenticated">
+        <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" text="Login" icon="fas fa-sign-in"/>
       </li>
       <li>
         <div class="flex flex-row justify-between p-2">
-          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
+          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
             En
           </button>
-          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed">
+          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
             ع
           </button>
         </div>
