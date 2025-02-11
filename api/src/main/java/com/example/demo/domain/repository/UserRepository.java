@@ -7,11 +7,9 @@ package com.example.demo.domain.repository;
 
 
 import com.example.demo.domain.model.User;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
 /**
- *
  * @author hantsy
  */
 public interface UserRepository {

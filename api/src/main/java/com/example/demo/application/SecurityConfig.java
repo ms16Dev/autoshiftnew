@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .logout(ServerHttpSecurity.LogoutSpec::disable)
                 .securityContextRepository(serverSecurityContextRepository)
                 .authorizeExchange(it ->
-                        it.pathMatchers("/", "/auth/login", "/auth/logout").permitAll()
+                        it.pathMatchers("/", "/auth/login", "/auth/logout", "/auth/register","/auth/public-key").permitAll()
                                 .pathMatchers(HttpMethod.GET, "/posts/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/posts/**").hasRole("ADMIN")
                                 .pathMatchers("/posts/**").authenticated()
