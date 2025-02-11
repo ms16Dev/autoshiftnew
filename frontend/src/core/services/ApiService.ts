@@ -32,6 +32,9 @@ class ApiService {
   public static get(resource: string, slug = "") {
     return ApiService.axiosInstance.get(`${resource}/${slug}`);
   }
+  public static get1(resource: string) {
+    return ApiService.axiosInstance.get(`${resource}`);
+  }
 
   public static post(resource: string, params: any, config: object = {}) {
     return ApiService.axiosInstance.post(resource, params, config);

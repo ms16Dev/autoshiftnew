@@ -50,8 +50,11 @@ export const useAuthStore = defineStore(
 
         const register = async (credentials: UserRegisterDto) => {
             try {
-                await ApiService.post("auth/signup", credentials);
+                console.log("Registering with:", credentials);  // Add a log here
+                await ApiService.post("auth/register", credentials);
             } catch (error: any) {
+                console.error("Error during registration:", error);  // Log any errors
+
                 setError(error.response?.data?.errors || {});
             }
         };
@@ -88,6 +91,20 @@ export const useAuthStore = defineStore(
             }
         };
 
+
+        /** Fetch the public key from the backend */
+        const fetchPublicKey = async (): Promise<string> => {
+            try {
+                const { data } = await ApiService.get1("auth/public-key");
+                console.log("Public Key from backend:", data); // Debugging line
+                return data;
+            } catch (error: any) {
+                setError(error.response?.data?.errors || {});
+                throw new Error("Failed to fetch public key");
+            }
+        };
+
+
         /** Role-based authorization */
         const hasRole = (role: string) => {
             return userInfo.value?.roles.includes(role) ?? false;
@@ -109,6 +126,7 @@ export const useAuthStore = defineStore(
             checkSession,
             hasRole,
             hasAnyRole,
+            fetchPublicKey
         };
     },
     {
