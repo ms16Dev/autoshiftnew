@@ -15,10 +15,16 @@ import OptionsPopUp from "./OptionsPopUp.vue";
 import ChipsPopUp from "./ChipsPopUp.vue";
 import ApiService from "../../core/services/ApiService.ts";
 import MultiImageLoader from "../MultiImageLoader.vue";
+import {Car} from "../../types/Car.ts";
+import axios from "axios";
+import {useAuthStore} from "../../stores/auth.ts";
 
 
 let classes: string[];
 const make = ref<Make | null>(null);
+const formData1 = ref(new FormData());
+const formData = ref(new FormData());
+
 
 const state = reactive({
   price: 1500,
@@ -73,11 +79,12 @@ const handleSave = <T extends keyof typeof state>(field: T) => {
 
 const setMake = (value: Make) =>{
   make.value = value;
-  const item = makedata.value.find((obj) => obj.name_en === value.name);
+  const item = make_data.value.find((obj) => obj.name_en === value.name);
   classes = item ? item.class_en : [];
   state.class = classes[0]
   toggleMake();
 }
+
 
 const toggleMake = () => {
   state.makePopUp = !state.makePopUp
@@ -87,13 +94,13 @@ const toggleMake = () => {
 const origins = ['American','Korean', 'Gulf', 'Local']
 const gears = ['Auto','Manual']
 const car_type = [
+  "Hybrid",
   "Petrol",
   "Diesel",
-  "Hybrid",
-  "Electric",
+  "Gas",
+  "Electric"
 ]
 const engine_type= [
-  "2 piston",
   "3 piston",
   "4 piston",
   "6 piston",
@@ -104,20 +111,12 @@ const shapes = [
   "Sedan",
   "SUV",
   "Hatchback",
-  "Coupe",
   "Convertible",
   "Pickup",
   "Van",
   "Minivan",
-  "Crossover",
-  "Off-Road",
-  "Compact",
-  "Roadster",
-  "Supercar",
-  "Microcar",
   "Limousine",
 ];
-
 
 const colors = [
   "White",
@@ -131,17 +130,18 @@ const colors = [
   "Green",
   "Yellow",
   "Gold",
-  "Orange"
+  "Orange",
+  "Custom"
 ]
 
-const makedata = ref<any[]>([]); // Initialize refdata as an empty array
+const make_data = ref<any[]>([]); // Initialize refdata as an empty array
 
 const fetchData = async () => {
   try {
     const { data } = await ApiService.get("/ref-data"); // Use await with the async function
-    makedata.value = data;  // Update the refdata without blocking the UI
+    make_data.value = data;  // Update the refdata without blocking the UI
 
-    makes.value = makedata.value.map((item: any) => ({
+    makes.value = make_data.value.map((item: any) => ({
       name: item.name_en,
       name_ar: item.name_ar,
       url: item.url,
@@ -158,6 +158,70 @@ const fetchData = async () => {
 fetchData();
 const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of makes
 
+const saveCar = async () => {
+  console.log("Cover image  = = = = =",formData1.value)
+  console.log("other images  = = = = =",formData.value)
+
+  try {
+    const response1 = await axios.post('http://localhost:8080/media/image', formData1.value, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    console.log("Upload success:", response1.data);
+    const coverUrl = response1.data.urls[0]
+
+    const response = await axios.post('http://localhost:8080/media/image', formData.value, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log("Upload success:", response.data);
+    const imageUrls = response.data.urls
+
+    const authStore = useAuthStore();
+
+
+    const car: Car = {
+      coverImage: coverUrl,
+      price: state.price,
+      origin: state.origin,
+      make: make.value?.name!!,
+      model: state.class,
+      year: state.year,
+      mileage: state.mileage,
+      gear: state.gear,
+      type: state.type,
+      engine: state.engine,
+      shape: state.shape,
+      color: state.color,
+      luxury: state.luxury,
+      safety: state.safety,
+      location: state.location,
+      sold: false,
+      stars: 0,
+      description: "N/A",
+      images: imageUrls,
+      user: authStore.userInfo?.name!!
+    };
+
+
+    try {
+      const response = await ApiService.post("/cars", car);
+      console.log(response.data);
+    } catch (err) {
+      const error = err as any;
+      console.error(error.response?.data.errors || error);
+    }
+
+
+  } catch (err) {
+    const error = err as any;
+    console.error(error.response?.data.errors || error);
+  }
+}
+
 
 </script>
 
@@ -169,7 +233,7 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 
 <!-- Cover image-->
         <div class="overflow-hidden">
-          <image-loader class="w-full"/>
+          <image-loader @file-selected="(value) => formData1 = value"  class="w-full"/>
 
         </div>
 <!--Devider-->
@@ -251,7 +315,8 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
         <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
 
-        <MultiImageLoader />
+        <MultiImageLoader @save="(value) => formData = value"
+        />
 
         <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
@@ -265,6 +330,7 @@ const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of 
 
           <!-- Save Post Button -->
           <button
+              @click="saveCar"
               class="py-1 px-3 text-lg font-medium bg-pink-600 text-white rounded-md shadow hover:bg-pink-700 focus:outline-none"
           >
             Save Post

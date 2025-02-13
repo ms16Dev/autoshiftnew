@@ -37,7 +37,12 @@ const routes: Array<RouteRecordRaw> = [
                 children: [
                     { path: "", name: "cars", component: Cars }, // /cars (default list page)
                     { path: "list", name: "cars-list", component: Cars }, // /cars/list
-                    { path: "add-car", name: "add-car", component: AddCarNew }, // /cars/add-car
+                    { path: "add-car",
+                        name: "add-car",
+                        component: AddCarNew,
+                        meta: { requiresAuth: true },
+
+                    }, // /cars/add-car
                     { path: ":id", name: "car-details", component: CarDetails }, // /cars/:id
                 ],
             },

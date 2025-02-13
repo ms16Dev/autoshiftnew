@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const images = ref<string[]>([]); // Array to store multiple images
+const emit = defineEmits(['save']);
+
+const images = ref<{ url: string, file: File }[]>([]); // Store file and preview URL
 const fileInput = ref<HTMLInputElement | null>(null);
 
 function handleImageClick() {
@@ -13,22 +15,35 @@ function onFileChange(event: Event) {
   const files = target.files;
 
   if (files && files.length > 0) {
+    const formData = new FormData(); // Create FormData object
+
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target?.result) {
-          images.value.push(e.target.result as string);
+          images.value.push({ url: e.target.result as string, file });
         }
       };
       reader.readAsDataURL(file);
+      formData.append("file", file); // Append files to FormData
     });
+
+    emit('save', formData); // Emit FormData
   }
   target.value = ""; // Reset file input
 }
 
 function removeImage(index: number) {
   images.value.splice(index, 1); // Remove the image at the specified index
+
+  // Recreate FormData and emit the updated list
+  const formData = new FormData();
+  images.value.forEach(({ file }) => {
+    formData.append("files", file);
+  });
+  emit('save', formData);
 }
+
 </script>
 
 <template>
@@ -41,6 +56,7 @@ function removeImage(index: number) {
     >
       More Images
     </button>
+
     <!-- Image Preview Container -->
     <div class="flex gap-3 w-full h-[100px] overflow-x-scroll">
       <div
@@ -50,7 +66,7 @@ function removeImage(index: number) {
       >
         <!-- Selected Image -->
         <img
-            :src="image"
+            :src="image.url"
             alt="Selected"
             class="object-cover w-full h-full"
         />
@@ -64,7 +80,6 @@ function removeImage(index: number) {
         </button>
       </div>
     </div>
-
 
     <!-- Hidden File Input -->
     <input
