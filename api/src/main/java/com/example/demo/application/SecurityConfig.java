@@ -56,7 +56,10 @@ public class SecurityConfig {
                 .authorizeExchange(it ->
                         it.pathMatchers("/", "/auth/login", "/auth/logout", "/auth/register","/auth/public-key").permitAll()
                                 .pathMatchers(HttpMethod.GET, "/posts/**").permitAll()
+                                .pathMatchers(HttpMethod.POST, "/posts/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/posts/**").hasRole("ADMIN")
+                                .pathMatchers(HttpMethod.GET, "/cars/**").permitAll()
+                                .pathMatchers(HttpMethod.DELETE, "/cars/**").hasRole("ADMIN")
                                 .pathMatchers("/posts/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)

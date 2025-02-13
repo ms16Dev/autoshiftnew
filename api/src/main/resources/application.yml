@@ -13,6 +13,9 @@ spring:
     default-property-inclusion: non_null
     serialization:
       indent-output: true
+  web:
+    resources:
+      static-locations: file:./images/
 logging:
   level:
     root: INFO
