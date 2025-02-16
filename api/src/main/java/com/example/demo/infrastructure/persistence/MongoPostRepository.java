@@ -9,13 +9,14 @@ import com.mongodb.client.result.DeleteResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Repository
 @Slf4j
@@ -30,20 +31,34 @@ public class MongoPostRepository implements PostRepository {
 
     @Override
     public Flux<PostSummary> findByKeyword(String keyword, int offset, int limit) {
+        Query query = new Query();
+
+        // Apply keyword filter only if provided
+        if (keyword != null && !keyword.isBlank()) {
+            query.addCriteria(Criteria.where("title").regex(".*" + keyword + ".*", "i"));
+        }
+
+        // Apply pagination
+        query.skip(offset).limit(limit);
+
         return mongoTemplate
-                .find(
-                        query(where("title").regex(".*" + keyword + ".*", "i"))
-                                .skip(offset)
-                                .limit(limit),
-                        Post.class
-                )
+                .find(query, Post.class)
                 .map(it -> new PostSummary(it.getId(), it.getTitle(), it.getCreatedDate()));
     }
 
+
     @Override
     public Mono<Long> countByKeyword(String keyword) {
-        return mongoTemplate.count(query(where("title").regex(".*" + keyword + ".*", "i")), Post.class);
+        Query query = new Query();
+
+        // Apply keyword filter only if provided
+        if (keyword != null && !keyword.isBlank()) {
+            query.addCriteria(Criteria.where("title").regex(".*" + keyword + ".*", "i"));
+        }
+
+        return mongoTemplate.count(query, Post.class);
     }
+
 
     @Override
     public Mono<Post> findById(String id) {
@@ -90,14 +105,16 @@ public class MongoPostRepository implements PostRepository {
 
     @Override
     public Mono<Boolean> addComment(String id, String content) {
-        var comment = mongoTemplate.insert(Comment.builder().content(content).build());
-        return comment.flatMap(c -> mongoTemplate.update(Post.class)
-                .matching(where("id").is(id))
-                .apply(new Update().push("comments", c))
-                .all()
-                .map(result -> result.getModifiedCount() == 1L)
-        );
+        return mongoTemplate.insert(Comment.builder().content(content).build()) // Insert the comment
+                .map(Comment::getId) // Extract the comment ID
+                .flatMap(commentId -> mongoTemplate.update(Post.class)
+                        .matching(where("id").is(id))
+                        .apply(new Update().push("comments", commentId)) // Push only the ID
+                        .all()
+                        .map(result -> result.getModifiedCount() == 1L)
+                );
     }
+
 
     @Override
     public Mono<Boolean> removeComment(String id, String commentId) {
