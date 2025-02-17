@@ -31,7 +31,7 @@ const loading = ref(true);
 
 // Get the car ID from the route params
 const route = useRoute();
-const carId = route.params.id;
+const carId = route.params.id as string;
 
 // Fetch car details from the backend
 const fetchCarDetails = async () => {
@@ -155,7 +155,7 @@ const toggleLike = async () => {
           </p>
 
 
-          <Comments></Comments>
+          <Comments :carId="carId"></Comments>
 
 
 
