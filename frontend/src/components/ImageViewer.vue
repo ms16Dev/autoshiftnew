@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 
 // Props definition
 const props = defineProps({
@@ -52,9 +52,18 @@ const setImage = (imageUrl) => {
   currentImage.value = 'http://localhost:8080'+imageUrl;
 };
 
+// Watch for changes in coverPhoto and update currentImage when it becomes available
+watch(() => props.coverPhoto, (newCover) => {
+  if (newCover) {
+    setImage(newCover);
+  }
+}, { immediate: true });
+
 onMounted(() => {
-  // Set the cover photo as the current image when the component is mounted
- setImage('http://localhost:8080'+props.coverPhoto);
+  // Ensure the cover image is set on mount if it's already available
+  if (props.coverPhoto) {
+    setImage(props.coverPhoto);
+  }
 });
 </script>
 
