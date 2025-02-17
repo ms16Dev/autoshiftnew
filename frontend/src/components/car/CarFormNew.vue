@@ -40,6 +40,7 @@ const state = reactive({
   luxury: [] as string[],
   safety: [] as string[],
   location: [] as string[],
+  description: '',
   makePopUp: false,
   pricePopUp: false,
   mileagePopUp: false,
@@ -188,6 +189,7 @@ const saveCar = async () => {
       price: state.price,
       origin: state.origin,
       make: make.value?.name!!,
+      makeUrl: make.value?.url!!,
       model: state.class,
       year: state.year,
       mileage: state.mileage,
@@ -201,9 +203,9 @@ const saveCar = async () => {
       location: state.location,
       sold: false,
       stars: 0,
-      description: "N/A",
+      description: state.description,
       images: imageUrls,
-      user: authStore.userInfo?.name!!
+      createdBy: authStore.userInfo?.name!!
     };
 
 
@@ -312,6 +314,15 @@ const saveCar = async () => {
 
       </div>
 
+        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
+
+
+        <h3 class="text-pink-500">Enter description (optional)</h3>
+        <textarea
+            v-model="state.description"
+            class="w-3/4 h-24 border-2 border-pink-700 rounded-md p-2 m-2 focus:ring-pink-700 focus:border-pink-700 focus:outline-none resize-y"
+            placeholder="Description"
+        ></textarea>
         <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
 

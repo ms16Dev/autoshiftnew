@@ -1,56 +1,55 @@
 <script setup lang="ts">
-
 import CarItem from "../../components/CarItem.vue";
-import cars from "../../core/data/CarsData.ts";
-import {computed, ref} from "vue";
+import { computed, ref, onMounted } from "vue";
 import TablePagination from "../../components/TablePagenition.vue";
 import AdItem from "../../components/AdItem.vue";
+import apiService from "../../core/services/ApiService.ts";
+import { CarListDto } from "../../core/models/CarListDto.ts";
 
 defineOptions({
-  name: 'List-Cars'
+  name: "List-Cars",
 });
 
+const cars = ref<CarListDto[]>([]);
+const currentPage = ref(1);
+const itemsPerPage = ref(15);
+const loading = ref(true);
 
-
-const currentPage = ref(1);  // Initialize at page 1
-const itemsPerPage = ref(15); // Number of questions to show per page
-
-const totalPages = computed(() => {
-  return Math.ceil(cars.length / itemsPerPage.value);
+onMounted(async () => {
+  try {
+    const response = await apiService.get1("cars");
+    cars.value = response.data.data || [];
+    console.log("Fetched cars:", cars.value);
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    cars.value = [];
+  } finally {
+    loading.value = false;
+  }
 });
 
-// Compute the paginated questions to display based on the current page
+const totalPages = computed(() => Math.ceil(cars.value.length / itemsPerPage.value));
+
 const paginatedCars = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage.value;
-  const endIndex = startIndex + itemsPerPage.value;
-  return cars.slice(startIndex, endIndex);
+  return cars.value.slice(startIndex, startIndex + itemsPerPage.value);
 });
 
 const handlePageChange = (page: number) => {
-
-
-  currentPage.value = page;  // Update current page
+  currentPage.value = page;
 };
-
-
-
-
 </script>
 
 <template>
   <div class="flex md:flex-row-reverse flex-wrap w-full bg-gray-200">
     <div class="w-full md:w-1/5 p-4 text-center text-gray-400">
-      <AdItem/>
-
+      <AdItem />
     </div>
-    <div class="w-full md:w-3/5  p-4 text-center text-gray-200">
 
-      <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
-
-        <car-item v-for="car in paginatedCars" :key="car.id" :car="car"/>
-
-
-
+    <div class="w-full md:w-3/5 p-4 text-center text-gray-200">
+      <div v-if="loading" class="text-center text-gray-600">Loading cars...</div>
+      <div v-else class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4 gap-3">
+        <CarItem v-for="car in paginatedCars" :key="car.id" :car="car" />
       </div>
 
       <TablePagination
@@ -59,17 +58,13 @@ const handlePageChange = (page: number) => {
           :total="cars.length"
           :total-pages="totalPages"
           @page-change="handlePageChange"
-      ></TablePagination>
-
-
+      />
     </div>
 
-    <div class="w-full md:w-1/5  p-4 text-center text-gray-700 fixed sticky">
-      <AdItem/>
-
+    <div class="w-full md:w-1/5 p-4 text-center text-gray-700 fixed sticky">
+      <AdItem />
     </div>
-  </div></template>
+  </div>
+</template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

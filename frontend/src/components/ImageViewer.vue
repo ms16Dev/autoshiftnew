@@ -9,7 +9,7 @@
     <div class="thumbnails flex mt-4 justify-start overflow-x-auto max-w-full space-x-2">
       <!-- Cover photo -->
       <img
-          :src="coverPhoto"
+          :src="'http://localhost:8080'+coverPhoto"
           alt="Cover Image"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-cover"
           @click="setImage(coverPhoto)"
@@ -19,7 +19,7 @@
       <img
           v-for="(image, index) in imageList"
           :key="index"
-          :src="image"
+          :src="'http://localhost:8080'+image"
           alt="Thumbnail"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-cover"
           @click="setImage(image)"
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 
 // Props definition
 const props = defineProps({
@@ -49,8 +49,13 @@ const currentImage = ref(props.coverPhoto);
 
 // Method to change the current image when a thumbnail is clicked
 const setImage = (imageUrl) => {
-  currentImage.value = imageUrl;
+  currentImage.value = 'http://localhost:8080'+imageUrl;
 };
+
+onMounted(() => {
+  // Set the cover photo as the current image when the component is mounted
+ setImage('http://localhost:8080'+props.coverPhoto);
+});
 </script>
 
 <style scoped>

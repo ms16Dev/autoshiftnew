@@ -4,6 +4,7 @@ export interface Car {
     price: number;
     origin: string;
     make: string;
+    makeUrl: string;
     model: string;
     year: number;
     mileage: number;
@@ -19,5 +20,5 @@ export interface Car {
     stars: number;
     description: string;
     images: string[];
-    user:string;
+    createdBy:string;
 }

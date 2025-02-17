@@ -7,11 +7,47 @@ import IconButton from "../../components/IconButton.vue";
 import IconButtonH from "../../components/IconButtonH.vue";
 import ChipItemCheckedSm from "../../components/car/ChipItemCheckedSm.vue";
 import SharePost from "../../components/SharePost.vue";
+import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
+import apiService from "../../core/services/ApiService.ts";
+import {Car} from "../../types/Car.ts";
 
 
 defineOptions({
   name: 'car-details'
 });
+
+const formatNumber = (number: number): string => {
+  return new Intl.NumberFormat('en-US').format(number);
+};
+
+
+// Car details state
+const car = ref<Car | null>(null);
+const loading = ref(true);
+
+// Get the car ID from the route params
+const route = useRoute();
+const carId = route.params.id;
+
+// Fetch car details from the backend
+const fetchCarDetails = async () => {
+  try {
+    const response = await apiService.get1(`cars/${carId}`);
+    car.value = response.data;
+  } catch (error) {
+    console.error('Error fetching car details:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+onMounted(() => {
+  fetchCarDetails();
+});
+
+
 </script>
 
 <template>
@@ -27,10 +63,10 @@ defineOptions({
 <!--        Headline-->
 
         <div class="flex flex-wrap text-3xl text-pink-500 font-extrabold col-span-2 text-center">
-          <span>Toyota -</span>
-          <span>Yaris -</span>
-          <span>2024 -</span>
-          <span>Korean</span>
+          <span>{{ car?.make }} -</span>
+          <span>{{ car?.model }} -</span>
+          <span>{{ car?.year }} -</span>
+          <span>{{ car?.origin }}</span>
         </div>
         <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center items-center gap-2">
           <UserView :user="{ id: 1, name: 'John Doe', date: '3 weeks ago', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
@@ -42,34 +78,20 @@ defineOptions({
 
 
         <ImageViewer class="w-full col-span-2 mb-8"
-            :coverPhoto="'/car-phldr.png'"
-            :imageList="[
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-                'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg',
-            ]"
+            :coverPhoto="car?.coverImage"
+            :imageList="car?.images"
         />
 
         <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">Specifications</h1>
 
         <div class="flex justify-center items-center flex-wrap col-span-2 gap-3">
-          <IconButton icon="fa-tachometer" label="gfdgfd" />
-          <IconButton icon="fa-gears" label="hfghfg" />
-          <IconButton icon="fa-gas-pump" label="ghfhgf" />
-          <IconButton icon="fa-bolt" label="sfdsfsd" />
-          <IconButton icon="fa-car" label="reddddd" />
-          <IconButton icon="fa-brush" label="dfsdsf" />
+
+          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km'" />
+          <IconButton icon="fa-gears" :label="car?.gear" />
+          <IconButton icon="fa-gas-pump" :label="car?.type" />
+          <IconButton icon="fa-bolt" :label="car?.engine" />
+          <IconButton icon="fa-car" :label="car?.shape" />
+          <IconButton icon="fa-brush" :label="car?.color" />
         </div>
 
 
@@ -79,28 +101,18 @@ defineOptions({
         <div class="flex flex-col items-start col-span-2">
 
           <IconButtonH icon="fa-leaf" label="Luxury" />
-          <div class="flex flex-wrap col-span-2 mb-8">
-            <ChipItemCheckedSm option="jsajd;aslkdaskdask;l"/>
-            <ChipItemCheckedSm option="jsakdask;l"/>
-            <ChipItemCheckedSm option="jsajd;aslkdask;l"/>
-            <ChipItemCheckedSm option="jsajd;aslk"/>
+          <div v-for="(luxuryItem, index) in car?.luxury" :key="index" class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm :option="luxuryItem" />
           </div>
 
           <IconButtonH icon="fa-life-ring" label="Safety" />
-          <div class="flex flex-wrap col-span-2 mb-8">
-            <ChipItemCheckedSm option="jsajd;aslk"/>
-            <ChipItemCheckedSm option="jsajd;aslk"/>
-            <ChipItemCheckedSm option="jsajd;aslk"/>
-            <ChipItemCheckedSm option="jsajd;aslk"/>
-            <ChipItemCheckedSm option="jsajd;aslk"/>
-
+          <div v-for="(safetytem, index) in car?.safety" :key="index" class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm :option="safetytem" />
           </div>
-
 
           <IconButtonH icon="fa-info" label="Notes" />
           <p class="text-gray-400 text-lg mb-12">
-            Lorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg erywLorem ipsum dolar lkdjsakds; dsa d sads sadsad sd sadqwerwq tg eryw
-
+            {{ car?.description }}
           </p>
 
 
