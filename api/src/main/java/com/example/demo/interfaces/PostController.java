@@ -16,6 +16,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.created;
 import static org.springframework.http.ResponseEntity.noContent;
@@ -87,9 +89,10 @@ public class PostController {
     }
 
     @GetMapping("/{id}/comments")
-    public Flux<Comment> getCommentsOf(@PathVariable("id") String id) {
-        return this.posts.findById(id)
-            .flatMapMany(p -> Flux.fromIterable(p.getComments()));
+    public Flux<Comment> getCommentsOf(@PathVariable("id") String postId) {
+        return posts.findById(postId)
+                .flatMapMany(post -> Flux.fromIterable(post.getComments()))
+                .flatMap(comments::findById);
     }
 
     @PostMapping("/{id}/comments")

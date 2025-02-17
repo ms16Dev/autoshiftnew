@@ -5,16 +5,14 @@ export interface CarListDto {
     price: string;
     origin: string;
     make: string;
-    class: string;
+    makeUrl: string;
+    model: string;
     year: string;
-    mileage: string;
-    gear: string;
-    type: string;
-    engine: string;
-    seen: number;
-    likes: number;
-    shares: number;
-    comments: number;
-    dealer: string;
-    date_created: string;
+    seenCount: number;
+    likeCount: number;
+    shareCount: number;
+    commentCount: number;
+    description: string;
+    createdBy: string;
+    createdDate: string;
 }

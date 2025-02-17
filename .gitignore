@@ -21,3 +21,4 @@ api/target/*
 *.njsproj
 *.sln
 *.sw?
+/images/

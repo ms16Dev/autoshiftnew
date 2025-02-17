@@ -60,6 +60,7 @@ public class SecurityConfig {
                                 .pathMatchers(HttpMethod.DELETE, "/posts/**").hasRole("ADMIN")
                                 .pathMatchers(HttpMethod.GET, "/cars/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/cars/**").hasRole("ADMIN")
+                                .pathMatchers(HttpMethod.GET, "/images/**").permitAll()
                                 .pathMatchers("/posts/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)

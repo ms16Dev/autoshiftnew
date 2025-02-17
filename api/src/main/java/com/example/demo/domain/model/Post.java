@@ -33,9 +33,8 @@ public class Post implements Serializable {
     @Builder.Default
     private Status status = DRAFT;
 
-    @DocumentReference
-    @Builder.Default
-    List<Comment> comments = Collections.emptyList();
+
+    List<String> comments = Collections.emptyList();
 
 //    @Version
 //    @Builder.Default
