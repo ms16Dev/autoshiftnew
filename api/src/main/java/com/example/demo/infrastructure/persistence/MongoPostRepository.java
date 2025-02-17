@@ -117,13 +117,15 @@ public class MongoPostRepository implements PostRepository {
 
 
     @Override
-    public Mono<Boolean> removeComment(String id, String commentId) {
-        var comment = mongoTemplate.findById(commentId, Comment.class);
-        return comment.flatMap(c -> mongoTemplate.update(Post.class)
-                .matching(where("id").is(id))
-                .apply(new Update().pull("comments", c))
-                .all()
-                .map(result -> result.getModifiedCount() == 1L)
+    public Mono<Boolean> removeComment(String postId, String commentId) {
+        return mongoTemplate.updateFirst(
+                Query.query(Criteria.where("id").is(postId)),
+                new Update().pull("comments", commentId), // Remove the ID, not the whole object
+                Post.class
+        ).flatMap(updateResult ->
+                mongoTemplate.remove(Query.query(Criteria.where("id").is(commentId)), Comment.class)
+                        .map(deleteResult -> updateResult.getModifiedCount() == 1L && deleteResult.getDeletedCount() == 1L)
         );
     }
+
 }
