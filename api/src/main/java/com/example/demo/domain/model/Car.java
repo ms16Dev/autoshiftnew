@@ -5,12 +5,13 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "cars")
 @Data
@@ -34,6 +35,9 @@ public class Car implements Serializable {
 
     @NotBlank
     private String make;
+
+    @NotBlank
+    private String makeUrl;
 
     @NotBlank
     private String model;
@@ -71,23 +75,25 @@ public class Car implements Serializable {
     @Builder.Default
     private Boolean sold = false;
 
-    @Builder.Default
-    private Integer stars = 0;
+    private int stars = 0;
 
-    @DocumentReference
-    @Builder.Default
-    List<Stats> stats = Collections.emptyList();
+    List<String> comments = Collections.emptyList();
 
-    @DocumentReference
-    @Builder.Default
-    List<Comment> comments = Collections.emptyList();
+    private int seenCount = 0;
+
+    private int likeCount = 0;
+
+    private int shareCount = 0;
+
+    private Set<String> likedBy = new HashSet<>();
+
+    private Set<String> sharedBy = new HashSet<>();
 
     private String description;
 
     @Builder.Default
     private String[] images = new String[]{};
 
-    @CreatedBy
     private String createdBy;
 
     @CreatedDate
@@ -96,6 +102,4 @@ public class Car implements Serializable {
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
-    @LastModifiedBy
-    private String lastModifiedBy;
 }
