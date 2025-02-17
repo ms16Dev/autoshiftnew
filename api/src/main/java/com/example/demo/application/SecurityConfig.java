@@ -62,6 +62,7 @@ public class SecurityConfig {
                                 .pathMatchers(HttpMethod.DELETE, "/cars/**").hasRole("ADMIN")
                                 .pathMatchers(HttpMethod.GET, "/images/**").permitAll()
                                 .pathMatchers("/posts/**").authenticated()
+                                .pathMatchers("/cars/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
                                 .pathMatchers("/ref-data").permitAll() // New whitelisted endpoint

@@ -49,6 +49,19 @@ class ApiService {
   }
 
   private static setInterceptors() {
+    // Request Interceptor - Attach `X-AUTH-TOKEN` to every request
+    ApiService.axiosInstance.interceptors.request.use(
+        (config) => {
+          const authToken = localStorage.getItem("X-AUTH-TOKEN");
+          if (authToken) {
+            config.headers["X-AUTH-TOKEN"] = authToken;
+          }
+          return config;
+        },
+        (error) => Promise.reject(error)
+    );
+
+    // Response Interceptor - Handle 401 errors (session expiration)
     ApiService.axiosInstance.interceptors.response.use(
         (response) => response, // Pass through successful responses
         (error) => {
@@ -56,13 +69,17 @@ class ApiService {
             // Handle session expiration
             alert("Your session has expired. Please log in again.");
 
-            // Redirect to login page (adjust route accordingly)
+            // Clear stored token
+            localStorage.removeItem("X-AUTH-TOKEN");
+
+            // Redirect to login page
             window.location.href = "/auth/sign-in";
           }
           return Promise.reject(error);
         }
     );
   }
+
 }
 
 export default ApiService;

@@ -30,14 +30,31 @@ export const useAuthStore = defineStore(
 
         const login = async (credentials: UserLoginDto) => {
             try {
-                const { data } = await ApiService.post("auth/login", credentials, {
-                    withCredentials: true,
+                const response = await ApiService.post("auth/login", credentials, {
+                    withCredentials: true,  // Ensures cookies are sent if needed
                 });
-                setAuth(data);
+
+                // Convert headers to lowercase keys for reliable access
+                const headers = response.headers;
+                console.log("Headers:", headers);
+                const authToken = headers["x-auth-token"] || headers["X-Auth-Token"] || headers["X_AUTH_TOKEN"];
+
+                if (authToken) {
+                    // Store the token in localStorage
+                    localStorage.setItem("X-AUTH-TOKEN", authToken);
+                    console.log("Token stored:", authToken);
+                } else {
+                    console.warn("No auth token received!");
+                }
+
+                // Set authentication state
+                setAuth(response.data);
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
             }
         };
+
+
 
         const logout = async () => {
             try {

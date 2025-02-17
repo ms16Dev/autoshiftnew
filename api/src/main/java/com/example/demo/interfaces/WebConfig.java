@@ -24,13 +24,17 @@ class WebConfig {
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
 
         // Allow specific headers (including Authorization, Content-Type, etc.)
-        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Auth-Token"));
 
         // Allow specific methods (GET, POST, PUT, DELETE, OPTIONS)
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         // Allow credentials if necessary (e.g., cookies, authentication)
         corsConfiguration.setAllowCredentials(true);
+
+        // 🔥 Explicitly expose the 'X-Auth-Token' header 🔥
+        corsConfiguration.setExposedHeaders(List.of("X-Auth-Token"));
+
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
