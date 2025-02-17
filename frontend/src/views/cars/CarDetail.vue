@@ -117,20 +117,20 @@ const toggleLike = async () => {
 
 
         <ImageViewer class="w-full col-span-2 mb-8"
-            :coverPhoto="car?.coverImage"
-            :imageList="car?.images"
+             :coverPhoto="car?.coverImage || ''"
+             :imageList="car?.images || []"
         />
 
         <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">Specifications</h1>
 
         <div class="flex justify-center items-center flex-wrap col-span-2 gap-3">
 
-          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km'" />
-          <IconButton icon="fa-gears" :label="car?.gear" />
-          <IconButton icon="fa-gas-pump" :label="car?.type" />
-          <IconButton icon="fa-bolt" :label="car?.engine" />
-          <IconButton icon="fa-car" :label="car?.shape" />
-          <IconButton icon="fa-brush" :label="car?.color" />
+          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km' || ''" />
+          <IconButton icon="fa-gears" :label="car?.gear || ''" />
+          <IconButton icon="fa-gas-pump" :label="car?.type || ''" />
+          <IconButton icon="fa-bolt" :label="car?.engine || ''" />
+          <IconButton icon="fa-car" :label="car?.shape || ''" />
+          <IconButton icon="fa-brush" :label="car?.color || ''" />
         </div>
 
 
