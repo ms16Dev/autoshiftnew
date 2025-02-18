@@ -174,6 +174,14 @@ public class MongoCarRepository implements CarRepository {
     }
 
     @Override
+    public Mono<Boolean> hasLikedCar(String carId, String username) {
+        return mongoTemplate.exists(
+                Query.query(Criteria.where("id").is(carId).and("likedBy").is(username)),
+                Car.class
+        );
+    }
+
+    @Override
     public Mono<Boolean> shareCar(String carId, String username) {
         return mongoTemplate.updateFirst(
                 Query.query(Criteria.where("id").is(carId).and("sharedBy").not().elemMatch(Criteria.where("$eq").is(username))),

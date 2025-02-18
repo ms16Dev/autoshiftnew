@@ -11,6 +11,8 @@ import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
 import {Car} from "../../types/Car.ts";
+import {useAuthStore} from "../../stores/auth.ts";
+import axios from "axios";
 
 
 defineOptions({
@@ -21,6 +23,7 @@ const formatNumber = (number: number): string => {
   return new Intl.NumberFormat('en-US').format(number);
 };
 
+const authStore = useAuthStore();
 
 // Car details state
 const car = ref<Car | null>(null);
@@ -28,7 +31,7 @@ const loading = ref(true);
 
 // Get the car ID from the route params
 const route = useRoute();
-const carId = route.params.id;
+const carId = route.params.id as string;
 
 // Fetch car details from the backend
 const fetchCarDetails = async () => {
@@ -45,7 +48,36 @@ const fetchCarDetails = async () => {
 
 onMounted(() => {
   fetchCarDetails();
+  fetchLikeStatus();
 });
+
+const hasLiked = ref(false);
+
+const fetchLikeStatus = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/cars/${carId}/hasLiked`, {
+      params: { username: authStore.userInfo?.name },
+    });
+    hasLiked.value = response.data;
+    console.log("hasLiked", response.data);
+  } catch (error) {
+    console.error("Error fetching like status:", error);
+  }
+};
+
+const toggleLike = async () => {
+  try {
+    const response = await axios.post(`/cars/${carId}/like`, {
+      username: authStore.userInfo?.name,
+    });
+
+    if (response.data) {
+      hasLiked.value = !hasLiked.value;
+    }
+  } catch (error) {
+    console.error("Error toggling like:", error);
+  }
+};
 
 
 </script>
@@ -73,25 +105,32 @@ onMounted(() => {
           <div class="ltr:ml-auto rtl:mr-auto ">
             <SharePost />
           </div>
+          <button
+              @click="toggleLike"
+              class="flex-row px-3 text-white text-sm font-bold py-2 rounded-lg transition shadow-md bg-pink-500 hover:bg-pink-700"
+          >
+            <i :class="hasLiked ? 'fas fa-thumbs-down text-white' : 'fas fa-thumbs-up text-white'"></i>
+            {{ hasLiked ? 'Unlike' : 'Like' }}
+          </button>
         </div>
 
 
 
         <ImageViewer class="w-full col-span-2 mb-8"
-            :coverPhoto="car?.coverImage"
-            :imageList="car?.images"
+             :coverPhoto="car?.coverImage || ''"
+             :imageList="car?.images || []"
         />
 
         <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">Specifications</h1>
 
         <div class="flex justify-center items-center flex-wrap col-span-2 gap-3">
 
-          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km'" />
-          <IconButton icon="fa-gears" :label="car?.gear" />
-          <IconButton icon="fa-gas-pump" :label="car?.type" />
-          <IconButton icon="fa-bolt" :label="car?.engine" />
-          <IconButton icon="fa-car" :label="car?.shape" />
-          <IconButton icon="fa-brush" :label="car?.color" />
+          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km' || ''" />
+          <IconButton icon="fa-gears" :label="car?.gear || ''" />
+          <IconButton icon="fa-gas-pump" :label="car?.type || ''" />
+          <IconButton icon="fa-bolt" :label="car?.engine || ''" />
+          <IconButton icon="fa-car" :label="car?.shape || ''" />
+          <IconButton icon="fa-brush" :label="car?.color || ''" />
         </div>
 
 
@@ -116,7 +155,7 @@ onMounted(() => {
           </p>
 
 
-          <Comments></Comments>
+          <Comments :carId="carId"></Comments>
 
 
 

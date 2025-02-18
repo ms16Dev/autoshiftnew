@@ -9,7 +9,7 @@
             :class="{ 'opacity-50 pointer-events-none': isInFirstPage }"
         >
           <a
-              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-300"
+              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-900 hover:cursor-pointer"
               @click="onClickFirstPage"
           >
             <i class="fas fa-angle-double-left" />
@@ -21,7 +21,7 @@
             :class="{ 'opacity-50 pointer-events-none': isInFirstPage }"
         >
           <a
-              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-300"
+              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-900 hover:cursor-pointer"
               @click="onClickPreviousPage"
           >
             <i class="fas fa-angle-left" />
@@ -34,7 +34,7 @@
             class="page-item"
         >
           <a
-              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-300"
+              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-900 hover:cursor-pointer"
               :class="{ 'bg-pink-700 text-white': isPageActive(page.name) }"
 
               @click="onClickPage(page.name)"
@@ -48,7 +48,7 @@
             :class="{ 'opacity-50 pointer-events-none': isInLastPage }"
         >
           <a
-              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-300"
+              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-900 hover:cursor-pointer"
               @click="onClickNextPage"
           >
             <i class="fas fa-angle-right" />
@@ -60,7 +60,7 @@
             :class="{ 'opacity-50 pointer-events-none': isInLastPage }"
         >
           <a
-              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-300"
+              class="page-link p-2 border rounded text-white bg-pink-500 hover:bg-pink-900 hover:cursor-pointer"
               @click="onClickLastPage"
           >
             <i class="fas fa-angle-double-right" />
@@ -191,5 +191,8 @@ export default defineComponent({
 <style >
 .pagination .page-item .page-link i {
   font-size: 1.5rem;
+
 }
+
+
 </style>

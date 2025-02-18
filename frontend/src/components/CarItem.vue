@@ -99,7 +99,7 @@ const formattedCreatedDate = computed(() => {
 
           <!-- Likes -->
           <div class="flex items-center gap-2">
-           <i class="fas fa-heart text-pink-300"/>
+           <i class="fas fa-thumbs-up text-pink-300"/>
             <span class="text-sm text-gray-700">{{ car.likeCount }}</span>
           </div>
 

@@ -95,5 +95,10 @@ public class CarController {
                 .map(saved -> noContent().build());
     }
 
+    @GetMapping("/{carId}/hasLiked")
+    public Mono<Boolean> hasLikedCar(@PathVariable String carId, @RequestParam String username) {
+        return cars.hasLikedCar(carId, username);
+    }
+
 
 }

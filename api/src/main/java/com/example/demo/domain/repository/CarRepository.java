@@ -36,5 +36,7 @@ public interface CarRepository {
 
     Mono<Boolean> unLikeCar(String carId, String username);
 
+    Mono<Boolean> hasLikedCar(String carId, String username);
+
     Mono<Boolean> shareCar(String carId, String username);
 }
