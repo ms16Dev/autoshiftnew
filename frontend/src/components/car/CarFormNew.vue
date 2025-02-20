@@ -232,12 +232,33 @@ const saveCar = async () => {
         <IconButton label="Luxury" icon="fas fa-leaf"  @click="togglePopUp('luxuryPopUp')"/>
         <IconButton label="Safety" icon="fas fa-life-ring"  @click="togglePopUp('safetyPopUp')"/>
         <IconButton label="Location" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
+        <IconButton label="Description" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
+
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
+          <i class="w-8 h-8 rounded-full fas fa-star bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
+          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
+            Star</span>
+        </button>
+
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
+          <i class="w-8 h-8 rounded-full fas fa-thumbtack bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
+          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
+            Feature</span>
+        </button>
+
+
+
 
 
 
       </div>
 
-        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
+        <div class="w-full border-b-2 border-b-pink-700 mt-4 "></div>
+        <div class="flex row-auto w-full  justify-center">
+          <h4 class="w-fit p-1 text-pink-500 text-sm bg-white rounded-full border-2 border-pink-700 -translate-y-1/2 ">Add more images</h4>
+
+
+        </div>
 
 
 
@@ -248,7 +269,7 @@ const saveCar = async () => {
         <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
 
-        <div class="flex items-start justify-between  m-2">
+        <div class="flex items-start justify-end  m-2">
           <!-- Location Button -->
 
 
