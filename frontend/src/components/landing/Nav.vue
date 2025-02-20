@@ -72,64 +72,103 @@
             Support
           </button>
         </router-link>
+
+        <div class="flex flex-row justify-between p-2">
+          <button
+              v-if="currentLang !== 'en'"
+              @click="() => { toggleLanguage('en'); $emit('close'); }"
+              class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 p-1"
+          >
+            English
+          </button>
+
+          <button
+              v-if="currentLang !== 'ar'"
+              @click="() => { toggleLanguage('ar'); $emit('close'); }"
+              class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 p-1"
+          >
+            العربية
+          </button>
+        </div>
+
       </div>
     </div>
     <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
-export default defineComponent({
-  name: 'LayoutNav',
-  data() {
-    return {
-      scrollY: 0,
-      mobileSidebar: false,
-    }
-  },
+const scrollY = ref(0)
+const mobileSidebar = ref(false)
 
-  watch: {
-    scrollY(newValue: number) {
-      const navaction = document.getElementById('navAction')
-      const header = document.getElementById('header')
-      const toToggle = document.querySelector('.toggleColour')
-      if (newValue > 10) {
-        navaction?.classList.remove('bg-white')
-        navaction?.classList.add('gradient')
-        navaction?.classList.remove('text-[#170F4F]')
-        navaction?.classList.add('text-white')
-        header?.classList.add('bg-white')
-        header?.classList.add('navbar-active')
-        toToggle?.classList.add('text-purple-800')
-        toToggle?.classList.remove('text-white')
-      } else {
-        navaction?.classList.add('bg-white')
-        navaction?.classList.remove('gradient')
-        navaction?.classList.add('text-[#170F4F]')
-        navaction?.classList.remove('text-white')
-        header?.classList.remove('bg-white')
-        header?.classList.remove('navbar-active')
-        toToggle?.classList.remove('text-purple-800')
-        toToggle?.classList.add('text-white')
-      }
-    },
-  },
-  mounted() {
-    this.scrollY = window.scrollY
-    document.getElementById('main-css')?.remove()
+const handleScroll = () => {
+  scrollY.value = window.scrollY
+}
 
-    // Listen to the scroll event to update the scrollY property dynamically
-    window.addEventListener('scroll', this.handleScroll)
-  },
+watch(scrollY, (newValue) => {
+  const navaction = document.getElementById('navAction')
+  const header = document.getElementById('header')
+  const toToggle = document.querySelector('.toggleColour')
 
-  methods: {
-    handleScroll() {
-      this.scrollY = window.scrollY
-    },
-  },
+  if (newValue > 10) {
+    navaction?.classList.remove('bg-white')
+    navaction?.classList.add('gradient')
+    navaction?.classList.remove('text-[#170F4F]')
+    navaction?.classList.add('text-white')
+    header?.classList.add('bg-white', 'navbar-active')
+    toToggle?.classList.add('text-purple-800')
+    toToggle?.classList.remove('text-white')
+  } else {
+    navaction?.classList.add('bg-white')
+    navaction?.classList.remove('gradient')
+    navaction?.classList.add('text-[#170F4F]')
+    navaction?.classList.remove('text-white')
+    header?.classList.remove('bg-white', 'navbar-active')
+    toToggle?.classList.remove('text-purple-800')
+    toToggle?.classList.add('text-white')
+  }
 })
+
+onMounted(() => {
+  scrollY.value = window.scrollY
+  document.getElementById('main-css')?.remove()
+
+  // Attach scroll event listener
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  // Clean up the scroll event listener
+  window.removeEventListener('scroll', handleScroll)
+})
+
+
+
+const currentLang = ref(localStorage.getItem("lang") || "en");
+
+const toggleLanguage = (lang: string) => {
+  if (currentLang.value === lang) {
+    return; // Do nothing if the selected language is already active
+  }
+
+  currentLang.value = lang; // Set the selected language
+
+  // Update `html` direction
+  document.documentElement.lang = currentLang.value;
+  document.documentElement.dir = currentLang.value === "ar" ? "rtl" : "ltr";
+
+  // Save preference
+  localStorage.setItem("lang", currentLang.value);
+};
+
+// Apply saved language on load
+watch(currentLang, (newLang) => {
+  document.documentElement.lang = newLang;
+  document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+}, { immediate: true });
+
 </script>
 
 <style scoped>
