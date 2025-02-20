@@ -37,7 +37,14 @@ const saveOption = (index: number) => {
     ]"
   >
 
-    <div class="h-full flex-col grid grid-cols-1 overflow-y-scroll scrollbar-none ">
+    <div class="flex items-center h-24">
+      <button @click="emit('close')" class="w-24 h-24 hover:bg-pink-500 flex items-center justify-center">
+        <span class="fas fa-arrow-left text-white text-2xl"></span>
+      </button>
+      <h1 class="text-white text-2xl text-center">Select an option</h1>
+    </div>
+
+    <div class=" flex-col grid grid-cols-1 overflow-y-scroll scrollbar-none ">
       <div  v-for="(opt, index) in options" :key="index">
         <OptionItem :option="opt" class="w-full p-2 text-white hover:bg-pink-500" @click="saveOption(index)"></OptionItem>
       </div>
