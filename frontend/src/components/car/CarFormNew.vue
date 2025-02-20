@@ -255,7 +255,7 @@ const saveCar = async () => {
 
         <div class="w-full border-b-2 border-b-pink-700 mt-4 "></div>
         <div class="flex row-auto w-full  justify-center">
-          <h4 class="w-fit p-1 text-pink-500 text-sm bg-white rounded-full border-2 border-pink-700 -translate-y-1/2 ">Add more images</h4>
+          <h4 class="w-fit px-1 text-pink-500 text-sm bg-white rounded-full border-2 border-pink-700 -translate-y-1/2 ">Add more images</h4>
 
 
         </div>
