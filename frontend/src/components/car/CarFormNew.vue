@@ -18,6 +18,7 @@ import MultiImageLoader from "../MultiImageLoader.vue";
 import {Car} from "../../types/Car.ts";
 import axios from "axios";
 import {useAuthStore} from "../../stores/auth.ts";
+import { origins, gears, car_type, engine_type, shapes, colors } from '../../core/data/carOoptions';
 
 
 let classes: string[];
@@ -90,50 +91,6 @@ const setMake = (value: Make) =>{
 const toggleMake = () => {
   state.makePopUp = !state.makePopUp
 }
-
-
-const origins = ['American','Korean', 'Gulf', 'Local']
-const gears = ['Auto','Manual']
-const car_type = [
-  "Hybrid",
-  "Petrol",
-  "Diesel",
-  "Gas",
-  "Electric"
-]
-const engine_type= [
-  "3 piston",
-  "4 piston",
-  "6 piston",
-  "8 piston",
-  "12 piston",
-]
-const shapes = [
-  "Sedan",
-  "SUV",
-  "Hatchback",
-  "Convertible",
-  "Pickup",
-  "Van",
-  "Minivan",
-  "Limousine",
-];
-
-const colors = [
-  "White",
-  "Black",
-  "Gray",
-  "Silver",
-  "Blue",
-  "Red",
-  "Brown",
-  "Beige",
-  "Green",
-  "Yellow",
-  "Gold",
-  "Orange",
-  "Custom"
-]
 
 const make_data = ref<any[]>([]); // Initialize refdata as an empty array
 
