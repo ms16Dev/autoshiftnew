@@ -1,6 +1,6 @@
 <template>
   <div data-aos="fade-up" class="pt-24">
-    <div class="container  px-3 mx-auto flex flex-wrap flex-col md:flex-row justify-between">
+    <div class="container  px-3 mx-auto flex flex-wrap flex-col md:flex-row justify-between overflow-hidden">
       <div class="flex  flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
         <p class="uppercase tracking-loose w-full">Looking for a new car?</p>
         <h1 class="my-4 text-5xl font-bold leading-tight">
@@ -16,7 +16,7 @@
         </router-link>
       </div>
 
-      <div class="relative w-80 h-80 mx-24">
+      <div class="relative w-80 h-80 mx-24 my-8">
         <!-- Rectangle 1 -->
         <div class="absolute w-80 h-80 bg-pink-500 rounded-full ring-4 ring-white overflow-hidden ">
           <img
@@ -27,13 +27,13 @@
         </div>
 
         <!-- Rectangle 2 -->
-        <div class="absolute w-40 h-40 bg-purple-500  p-4 rounded-full ring-4 ring-white ltr:-translate-x-24 rtl:translate-x-24">
+        <div class="absolute w-32 h-32 bg-purple-500  p-4 rounded-full ring-4 ring-white ltr:-translate-x-16 rtl:translate-x-16">
           <img class="w-full h-full object-cover z-50 animate-bump " src="../../assets/asl.png" />
 
         </div>
 
         <!-- Rectangle 3 -->
-        <div class="absolute w-60 h-28 bg-pink-500  ring-4 ring-white rounded-full top-2/3 ltr:left-1/2 rtl:right-1/2 ">
+        <div class="absolute w-60 h-28 bg-pink-500  ring-4 ring-white rounded-full top-3/4 ltr:left-1/2 rtl:right-1/2 ">
           <div class="flex row-auto gap-3 justify-center pt-3">
             <IconButton icon="fa-gas-pump"  label=""/>
             <IconButton icon="fa-bolt"   label=""/>
