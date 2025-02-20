@@ -6,6 +6,10 @@ import ChipItemChecked from "./ChipItemChecked.vue";
 
 const props = defineProps({
 
+  title: {
+    type: String,
+    default: 'Title', // Can be 'top', 'bottom', 'left', 'right'
+  },
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
@@ -56,6 +60,13 @@ function toggleOption(index: number, fromChecked: boolean) {
     ]"
   >
   <div class="overflow-y-scroll h-full scrollbar-none ">
+    <div class="flex items-center h-24">
+      <button @click="emit('close')" class="w-24 h-24 hover:bg-pink-500 flex items-center justify-center">
+        <span class="fas fa-arrow-left text-white text-2xl"></span>
+      </button>
+      <h1 class="text-white text-2xl text-center">{{ title }}</h1>
+    </div>
+
 
     <div class=" flex-wrap  ">
       <ChipItemChecked  v-for="(opt, index) in checked" :key="index" :option="opt" class=" p-2 text-white hover:bg-pink-500" @click="toggleOption(index,true )"></ChipItemChecked>

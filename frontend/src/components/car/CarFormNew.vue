@@ -18,6 +18,8 @@ import MultiImageLoader from "../MultiImageLoader.vue";
 import {Car} from "../../types/Car.ts";
 import axios from "axios";
 import {useAuthStore} from "../../stores/auth.ts";
+import { origins, gears, car_type, engine_type, shapes, colors } from '../../core/data/carOoptions';
+import IconButton from "../IconButton.vue";
 
 
 let classes: string[];
@@ -90,50 +92,6 @@ const setMake = (value: Make) =>{
 const toggleMake = () => {
   state.makePopUp = !state.makePopUp
 }
-
-
-const origins = ['American','Korean', 'Gulf', 'Local']
-const gears = ['Auto','Manual']
-const car_type = [
-  "Hybrid",
-  "Petrol",
-  "Diesel",
-  "Gas",
-  "Electric"
-]
-const engine_type= [
-  "3 piston",
-  "4 piston",
-  "6 piston",
-  "8 piston",
-  "12 piston",
-]
-const shapes = [
-  "Sedan",
-  "SUV",
-  "Hatchback",
-  "Convertible",
-  "Pickup",
-  "Van",
-  "Minivan",
-  "Limousine",
-];
-
-const colors = [
-  "White",
-  "Black",
-  "Gray",
-  "Silver",
-  "Blue",
-  "Red",
-  "Brown",
-  "Beige",
-  "Green",
-  "Yellow",
-  "Gold",
-  "Orange",
-  "Custom"
-]
 
 const make_data = ref<any[]>([]); // Initialize refdata as an empty array
 
@@ -265,65 +223,44 @@ const saveCar = async () => {
 
 
 
+        <IconButton :label="formatNumber(state.mileage ?? 0)" icon="fas fa-tachometer" @click="togglePopUp('mileagePopUp')"/>
+        <IconButton :label="state.gear" icon="fas fa-gears" @click="togglePopUp('gearPopUp')"/>
+        <IconButton :label="state.type" icon="fas fa-gas-pump"  @click="togglePopUp('typePopUp')"/>
+        <IconButton :label="state.engine" icon="fas fa-bolt"  @click="togglePopUp('enginePopUp')"/>
+        <IconButton :label="state.shape" icon="fas fa-car"  @click="togglePopUp('shapePopUp')"/>
+        <IconButton :label="state.color" icon="fas fa-brush"  @click="togglePopUp('colorPopUp')"/>
+        <IconButton label="Luxury" icon="fas fa-leaf"  @click="togglePopUp('luxuryPopUp')"/>
+        <IconButton label="Safety" icon="fas fa-life-ring"  @click="togglePopUp('safetyPopUp')"/>
+        <IconButton label="Location" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
+        <IconButton label="Description" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
+
         <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-tachometer bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{formatNumber(state.mileage ?? 0) }}</span>
+          <i class="w-8 h-8 rounded-full fas fa-star bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
+          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
+            Star</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('gearPopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-gears bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{ state.gear }}</span>
+        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
+          <i class="w-8 h-8 rounded-full fas fa-thumbtack bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
+          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
+            Feature</span>
         </button>
 
-        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('typePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-gas-pump bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{ state.type }}</p>
-        </button>
 
-        <button class="flex flex-col items-center justify-center" @click="togglePopUp('enginePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-bolt bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">{{state.engine}}</p>
-        </button>
-
-        <button class="flex flex-col items-center justify-center" @click="togglePopUp('shapePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-car bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{state.shape}}</span>
-        </button>
-
-        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('colorPopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-brush bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            {{ state.color }}</span>
-        </button>
-
-        <button class="flex flex-col items-center justify-center"  @click="togglePopUp('luxuryPopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-leaf bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Luxury</p>
-        </button>
-
-        <button class="flex flex-col items-center justify-center" @click="togglePopUp('safetyPopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-life-ring bg-pink-300 text-white text-sm p-2  flex items-center justify-center"></i>
-          <p class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Safety</p>
-        </button>
 
 
 
 
       </div>
 
-        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
+        <div class="w-full border-b-2 border-b-pink-700 mt-4 "></div>
+        <div class="flex row-auto w-full  justify-center">
+          <h4 class="w-fit px-1 text-pink-500 text-sm bg-white rounded-full border-2 border-pink-700 -translate-y-1/2 ">Add more images</h4>
 
 
-        <h3 class="text-pink-500">Enter description (optional)</h3>
-        <textarea
-            v-model="state.description"
-            class="w-3/4 h-24 border-2 border-pink-700 rounded-md p-2 m-2 focus:ring-pink-700 focus:border-pink-700 focus:outline-none resize-y"
-            placeholder="Description"
-        ></textarea>
-        <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
+        </div>
+
+
 
 
         <MultiImageLoader @save="(value) => formData = value"
@@ -332,12 +269,9 @@ const saveCar = async () => {
         <div class="w-full border-b-2 border-b-pink-700 mt-2 "></div>
 
 
-        <div class="flex items-start justify-between  m-2">
+        <div class="flex items-start justify-end  m-2">
           <!-- Location Button -->
-          <button class="flex flex-row items-center " @click="togglePopUp('locationPopUp')">
-            <i class="w-8 h-8 rounded-full fas fa-map bg-pink-300 text-white text-sm p-2 flex items-center justify-center"></i>
-            <span class="text-pink-500 text-sm font-bold text-center px-2 h-[30px] flex items-center justify-center">Location</span>
-          </button>
+
 
           <!-- Save Post Button -->
           <button
@@ -431,6 +365,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('luxury')(value)"
         @close="state.luxuryPopUp = false"
         :options="shapes"
+        title="List luxury features"
         :checked="state.luxury"></ChipsPopUp>
 
     <ChipsPopUp
@@ -438,6 +373,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('safety')(value)"
         @close="state.safetyPopUp = false"
         :options="shapes"
+        title="List safety features"
         :checked="state.safety"></ChipsPopUp>
 
     <ChipsPopUp
@@ -445,6 +381,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('location')(value)"
         @close="state.locationPopUp = false"
         :options="shapes"
+        title="Add location"
         :checked="state.location"></ChipsPopUp>
 
   </div>
