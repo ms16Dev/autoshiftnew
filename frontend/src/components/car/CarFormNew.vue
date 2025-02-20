@@ -365,6 +365,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('luxury')(value)"
         @close="state.luxuryPopUp = false"
         :options="shapes"
+        title="List luxury features"
         :checked="state.luxury"></ChipsPopUp>
 
     <ChipsPopUp
@@ -372,6 +373,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('safety')(value)"
         @close="state.safetyPopUp = false"
         :options="shapes"
+        title="List safety features"
         :checked="state.safety"></ChipsPopUp>
 
     <ChipsPopUp
@@ -379,6 +381,7 @@ const saveCar = async () => {
         @choice="(value) => handleSave('location')(value)"
         @close="state.locationPopUp = false"
         :options="shapes"
+        title="Add location"
         :checked="state.location"></ChipsPopUp>
 
   </div>
