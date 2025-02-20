@@ -47,22 +47,16 @@ function removeImage(index: number) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center space-y-4">
+  <div class="flex flex-row items-center space-y-4">
 
-    <!-- Add Image Button -->
-    <button
-        @click="handleImageClick"
-        class="mt-2 py-1 px-3 text-sm font-medium bg-pink-300 text-white rounded-md shadow hover:bg-pink-700 focus:outline-none"
-    >
-      More Images
-    </button>
+
 
     <!-- Image Preview Container -->
-    <div class="flex gap-3 w-full h-[100px] overflow-x-scroll">
+    <div class="flex gap-3 w-full h-[80px] overflow-x-scroll">
       <div
           v-for="(image, index) in images"
           :key="index"
-          class="flex-shrink-0 w-[80px] h-[80px] relative overflow-hidden cursor-pointer group bg-gray-100"
+          class="flex-shrink-0 w-[60px] h-[50px] relative overflow-hidden cursor-pointer group bg-gray-100"
       >
         <!-- Selected Image -->
         <img
@@ -80,6 +74,14 @@ function removeImage(index: number) {
         </button>
       </div>
     </div>
+
+    <!-- Add Image Button -->
+    <button
+        @click="handleImageClick"
+        class="m-2 py-1 px-3 text-sm font-medium bg-pink-300 text-white rounded-md shadow hover:bg-pink-700 focus:outline-none"
+    >
+      <span class="fas fa-image"></span>
+    </button>
 
     <!-- Hidden File Input -->
     <input
