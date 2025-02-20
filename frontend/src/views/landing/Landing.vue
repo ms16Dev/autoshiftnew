@@ -4,7 +4,7 @@
       <div class="flex  flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
         <p class="uppercase tracking-loose w-full">Looking for a new car?</p>
         <h1 class="my-4 text-5xl font-bold leading-tight">
-          You're at the best place for car deals!
+          You're at the right place for best car deals!
         </h1>
         <p class="leading-normal text-2xl mb-8">AutoShift Car Market </p>
         <router-link to="/home">
@@ -15,9 +15,43 @@
           </button>
         </router-link>
       </div>
-      <div class="flex w-full md:w-3/5 py-6 justify-end items-end ">
-        <img class="w-3/2 md:w-3/2 z-50 animate-bump " src="../../assets/asl.png" />
 
+      <div class="relative w-80 h-80 mx-24">
+        <!-- Rectangle 1 -->
+        <div class="absolute w-80 h-80 bg-pink-500 rounded-full ring-4 ring-white overflow-hidden ">
+          <img
+              src="https://th.bing.com/th/id/R.80dbc6f688f302d511616b8d063a1b9c?rik=anvTJW1eD7YTqA&pid=ImgRaw&r=0"
+              class="w-full h-full object-cover"
+              alt="Circular Image"
+          />
+        </div>
+
+        <!-- Rectangle 2 -->
+        <div class="absolute w-40 h-40 bg-purple-500  p-4 rounded-full ring-4 ring-white ltr:-translate-x-24 rtl:translate-x-24">
+          <img class="w-full h-full object-cover z-50 animate-bump " src="../../assets/asl.png" />
+
+        </div>
+
+        <!-- Rectangle 3 -->
+        <div class="absolute w-60 h-28 bg-pink-500  ring-4 ring-white rounded-full top-2/3 ltr:left-1/2 rtl:right-1/2 ">
+          <div class="flex row-auto gap-3 justify-center pt-3">
+            <IconButton icon="fa-gas-pump"  label=""/>
+            <IconButton icon="fa-bolt"   label=""/>
+            <IconButton icon="fa-car"   label=""/>
+          </div>
+
+          <div class="flex row-auto gap-3 justify-center ">
+            <div class="w-12 h-2 bg-gray-50 "></div>
+            <div class="w-12 h-2 bg-gray-50 "></div>
+            <div class="w-12 h-2 bg-gray-50 "></div>
+
+          </div>
+
+
+
+
+
+        </div>
       </div>
     </div>
   </div>
@@ -325,10 +359,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import IconButton from "../../components/IconButton.vue";
 
 export default defineComponent({
   name: 'Landing',
-  components: {},
+  components: {IconButton},
   setup() {
     return {}
   },
@@ -346,4 +381,6 @@ export default defineComponent({
 .animate-bump {
   animation: bump 0.6s ease-in-out infinite;
 }
+
+
 </style>
