@@ -58,7 +58,7 @@
             <a
               class="inline-block uppercase no-underline font-medium hover:text-gray-800 hover:text-underline py-2 px-4"
               href="#contact"
-              >Contact</a
+              >Get Started</a
             >
           </li>
         </ul>

@@ -27,13 +27,13 @@
         </div>
 
         <!-- Rectangle 2 -->
-        <div class="absolute w-32 h-32 bg-purple-500  p-4 rounded-full ring-4 ring-white ltr:-translate-x-16 rtl:translate-x-16">
+        <div class=" hidden absolute w-32 h-32 bg-purple-500  p-4 rounded-full ring-4 ring-white ltr:-translate-x-16 rtl:translate-x-16">
           <img class="w-full h-full object-cover z-50 animate-bump " src="../../assets/asl.png" />
 
         </div>
 
         <!-- Rectangle 3 -->
-        <div class="absolute w-60 h-28 bg-pink-500  ring-4 ring-white rounded-full top-3/4 ltr:left-1/2 rtl:right-1/2 ">
+        <div class="absolute w-60 h-24 bg-pink-500  ring-4 ring-white rounded-full top-3/4 ltr:left-1/2 rtl:right-1/2 ">
           <div class="flex row-auto gap-3 justify-center pt-3">
             <IconButton icon="fa-gas-pump"  label=""/>
             <IconButton icon="fa-bolt"   label=""/>
@@ -90,7 +90,7 @@
     <div class="container max-w-5xl mx-auto m-8">
 
       <h2 data-aos="fade-up" class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
-        Why
+        Cars Only Zone !
       </h2>
       <div data-aos="fade-up" class="w-full mb-4">
         <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
@@ -98,29 +98,26 @@
       <div data-aos="fade-up-right" class="flex flex-wrap">
         <div class="w-5/6 sm:w-1/2 p-6">
           <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">
-            Building scalable and robust web applications.
+            Find best car deals
           </h3>
           <p class="text-gray-600 mb-8">
-            Building both front-end and back-end applications. With a focus on delivering seamless user experiences and
-            efficient server-side logic, Ensure every part of your application is optimized for performance and
-            maintainability.
+            Offering a wide range of cars from various vendors. Find the perfect car that fits your needs and budget.
             <br />
           </p>
         </div>
         <div class="w-full sm:w-1/2 p-6">
-          <img class="w-full md:w-4/5 z-50" src="../../assets/imgs/undraw_online_stats_0g94.svg" />
+          <img class="w-full md:w-4/5 z-50" src="../../assets/imgs/undraw_note-list_47ij.svg" />
         </div>
       </div>
       <div data-aos="fade-up-left" class="flex flex-wrap flex-col-reverse sm:flex-row">
         <div class="w-full sm:w-1/2 p-6 mt-6">
-          <img class="w-full md:w-4/5 z-50" src="../../assets/imgs/undraw_security_re_a2rk.svg" />
+          <img class="w-full md:w-4/5 z-50" src="../../assets/imgs/undraw_order-ride_4gaq.svg" />
         </div>
         <div class="w-full sm:w-1/2 p-6 mt-6">
           <div class="align-middle">
-            <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Integration and Security</h3>
+            <h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">Request a specific car</h3>
             <p class="text-gray-600 mb-8">
-              Seamlessly integrating systems while ensuring top-notch security. Focus on building secure, connected
-              applications that protect your data and enhance functionality across platforms.
+              If you can't find the car you are looking for, you can request it and we will find the best deal for you.
 
               <br />
             </p>
@@ -134,7 +131,7 @@
     <div class="absolute inset-0 bg-gray-900 bg-opacity-50"></div> <!-- Optional overlay for better readability -->
 
     <div class="container relative z-10 mx-auto flex flex-wrap pt-4 pb-12">
-      <h2 data-aos="fade-up" class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">How</h2>
+      <h2 data-aos="fade-up" class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">Dealers</h2>
 
       <div data-aos="fade-up" class="w-full mb-4">
         <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
@@ -142,92 +139,50 @@
       <!--        Begin SDLC cards-->
       <!--        SDLC card-->
 
-      <div data-aos="zoom-in-down" class="w-full md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
+      <div data-aos="zoom-in-down" class="w-1/ md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
         <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
           <div class="flex items-center justify-start">
             <button
                 class="mx-4 lg:mx-4 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
-              Planing
+              Get Noticed
             </button>
           </div>
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="text-gray-800 text-base px-6 mb-5">Understand Requirements</p>
+          <a class="flex flex-wrap no-underline hover:no-underline">
+            <p class="text-gray-800 text-base px-6 mb-5">Build your profile </p>
             <p class="text-gray-400 text-base px-6 mb-5">
-              Begin by gathering requirements to ensure the project aligns with your goals and needs. Clear
-              communication at this stage sets the foundation for a successful development process.
+              Create a profile to showcase your cars and services. Get noticed by consumers looking for cars.
             </p>
           </a>
         </div>
       </div>
       <!--        SDLC card-->
 
-      <div data-aos="zoom-in-down" class="w-full md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
+      <div data-aos="zoom-in-down" class="w-1/2 md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
         <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
           <div class="flex items-center justify-start">
             <button
                 class="mx-4 lg:mx-4 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
-              Design
+              Get Reached
             </button>
           </div>
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="text-gray-800 text-base px-6 mb-5">Craft Solutions</p>
+          <a class="flex flex-wrap no-underline hover:no-underline">
+            <p class="text-gray-800 text-base px-6 mb-5">No need to chase customers </p>
             <p class="text-gray-400 text-base px-6 mb-5">
-              Next, design the architecture and user interface, focusing on creating a seamless and intuitive
-              experience. Every element is planned for efficiency and scalability.
+              Consumers will reach out to you directly. No need to chase customers. Just focus on showcasing your cars.
             </p>
           </a>
         </div>
       </div>
       <!--        SDLC card-->
 
-      <div data-aos="zoom-in-down" class="w-full md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-          <div class="flex items-center justify-start">
-            <button
-                class="mx-4 lg:mx-4 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            >
-              Development
-            </button>
-          </div>
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="text-gray-800 text-base px-6 mb-5">Build and Integrate</p>
-            <p class="text-gray-400 text-base px-6 mb-5">
-              Write clean, maintainable code, integrating various systems and ensuring everything works together
-              flawlessly. Security and performance are always top priorities.
-            </p>
-          </a>
-        </div>
-      </div>
-      <!--        SDLC card-->
-
-      <div data-aos="zoom-in-down" class="w-full md:w-1/4 p-6 flex flex-col flex-grow flex-shrink">
-        <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-          <div class="flex items-center justify-start">
-            <button
-                class="mx-4 lg:mx-4 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            >
-              Testing and Deployment
-            </button>
-          </div>
-          <a href="#" class="flex flex-wrap no-underline hover:no-underline">
-            <p class="text-gray-800 text-base px-6 mb-5">Deliver Quality</p>
-            <p class="text-gray-400 text-base px-6 mb-5">
-              Finally, rigorously test the software, fix any issues, and deploy the solution. Ongoing support ensures
-              your application runs smoothly post-launch.
-            </p>
-          </a>
-        </div>
-      </div>
-
-      <!--        Begin SDLC cards-->
     </div>
   </section>
   <section id="pricing" class="bg-white py-8">
     <div class="container mx-auto px-2 pt-4 pb-12 text-gray-800">
       <h2 data-aos="fade-up" class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
-        Get Involved
+        More to Come
       </h2>
       <div data-aos="fade-up" class="w-full mb-4">
         <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
@@ -238,22 +193,12 @@
           class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4"
         >
           <div class="flex-1 bg-white text-gray-600 rounded-t rounded-b-none overflow-hidden shadow">
-            <div class="p-8 text-3xl font-bold text-center border-b-4">Service Provider</div>
+            <div class="p-8 text-3xl font-bold text-center border-b-4">Rentals</div>
             <ul class="w-full text-center text-sm">
-              <li class="border-b py-4">.NET Core, ASP.NET</li>
-              <li class="border-b py-4">Java Spring Boot</li>
-              <li class="border-b py-4">REST, WebSocket</li>
-              <li class="border-b py-4">MySQL, PostgreSQL, MongoDB</li>
+              <li class="border-b py-4">Custom rental requests</li>
+              <li class="border-b py-4">Notify service providers </li>
+              <li class="border-b py-4">Make a deal</li>
             </ul>
-          </div>
-          <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
-            <div class="flex items-center justify-center">
-              <button
-                class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-0 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-              >
-                Register
-              </button>
-            </div>
           </div>
         </div>
         <div
@@ -261,23 +206,13 @@
           class="flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10"
         >
           <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
-            <div class="w-full p-8 text-3xl font-bold text-center">Consumer</div>
+            <div class="w-full p-8 text-3xl font-bold text-center">Parts Yard</div>
             <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div>
             <ul class="w-full text-center text-base font-bold">
-              <li class="border-b py-4">OAuth, JWT (Authentication)</li>
-              <li class="border-b py-4">API Integration, Microservices</li>
-              <li class="border-b py-4">Cloud Services (AWS, Azure)</li>
-              <li class="border-b py-4">Git, Docker, CI/CD</li>
+              <li class="border-b py-4">Parts listings</li>
+              <li class="border-b py-4">Upgrades offerings </li>
+              <li class="border-b py-4">Parts requests</li>
             </ul>
-          </div>
-          <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
-            <div class="flex items-center justify-center">
-              <button
-                class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-0 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-              >
-                Register
-              </button>
-            </div>
           </div>
         </div>
         <div
@@ -285,22 +220,12 @@
           class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4"
         >
           <div class="flex-1 bg-white text-gray-600 rounded-t rounded-b-none overflow-hidden shadow">
-            <div class="p-8 text-3xl font-bold text-center border-b-4">Vendor</div>
+            <div class="p-8 text-3xl font-bold text-center border-b-4">Auctions</div>
             <ul class="w-full text-center text-sm">
-              <li class="border-b py-4">HTML, CSS, JavaScript</li>
-              <li class="border-b py-4">Vue.js, Vuex, Vite, Nuxt</li>
-              <li class="border-b py-4">Keenthems, Tailwind CSS</li>
-              <li class="border-b py-4">Axios, Fetch API</li>
+              <li class="border-b py-4">Boost the value of your rare car </li>
+              <li class="border-b py-4">Get unlimited bids</li>
+              <li class="border-b py-4">Close a fare deal</li>
             </ul>
-          </div>
-          <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
-            <div class="flex items-center justify-center">
-              <button
-                class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-0 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-              >
-                Register
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -344,16 +269,15 @@
     </g>
   </svg>
   <section id="contact" data-aos="zoom-in-up" class="container mx-auto text-center py-6 mb-12">
-    <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">Interested !</h2>
+    <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white">Get started now !</h2>
     <div class="w-full mb-4">
       <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
     </div>
-    <h3 class="my-4 text-3xl leading-tight">Get in touch to know more ...</h3>
-    <button
+    <router-link to="home"
       class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
     >
-      Contact
-    </button>
+      Get Started
+    </router-link>
   </section>
 </template>
 
