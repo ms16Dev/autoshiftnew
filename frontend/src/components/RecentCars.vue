@@ -5,12 +5,10 @@
         ref="slider"
         class="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar"
     >
-      <CarItem
-          v-for="(post, index) in posts"
-          :key="index"
-          :data="post"
-          class="flex-shrink-0 w-[300px]"
+      <CarItem v-for="car in cars" :key="car.id" :car="car"
+               class="flex-shrink-0 w-[300px]"
       />
+
     </div>
 
     <!-- Navigation Buttons -->
@@ -34,7 +32,7 @@ import { ref } from "vue";
 import CarItem from "../components/CarItem.vue"; // Ensure this path is correct
 
 const props = defineProps({
-  posts: {
+  cars: {
     type: Array,
     required: true,
   },

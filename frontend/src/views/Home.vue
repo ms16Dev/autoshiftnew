@@ -8,10 +8,30 @@ import RecentCars from "../components/RecentCars.vue";
 import ContactSection from "../components/ContactSection.vue";
 import FeaturedDealers from "../components/FeaturedDealers.vue";
 import BrandsSlider from "../components/BrandsSlider.vue";
+import apiService from "../core/services/ApiService.ts";
+import {onMounted, ref} from "vue";
+import {CarListDto} from "../core/models/CarListDto.ts";
 
 defineOptions({
   name: 'Home'
 })
+
+const cars = ref<CarListDto[]>([]);
+
+
+const fetchFeaturedCars = async () => {
+  try {
+    const response = await apiService.get1("cars?&limit=5");
+    cars.value = response.data.data || [];
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    cars.value = [];
+  }
+};
+
+onMounted(async () => {
+  await fetchFeaturedCars();
+});
 
 const slidesData = [
   {
@@ -119,7 +139,7 @@ const recentPosts = [
 
 
         <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Featured Cars</h1>
-        <RecentCars :posts="recentPosts" />
+        <RecentCars :cars="cars" />
 
 
 
