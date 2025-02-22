@@ -65,7 +65,7 @@ async function submitForm() {
       password: password.value,
     });
 
-    await router.push("/home");
+    await router.push("/auth/complete-registration");
   } catch (error) {
     errorMessage.value = error.response?.data?.message || "Signup failed. Please try again.";
   } finally {
