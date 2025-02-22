@@ -158,15 +158,64 @@
             </div>
 
             <!-- Contact Section -->
+            <!-- Contact Section -->
             <div v-show="activeTab === 2" class="text-gray-600">
               <h3 class="text-2xl font-semibold">{{ isDealer ? "Dealer Contact Info" : "User Contact Info" }}</h3>
-              <ul class="list-disc pl-6">
-                <li v-if="isDealer">Business Address</li>
-                <li v-if="isDealer">Phone Number</li>
-                <li>Email</li>
-                <li v-if="!isDealer">Social Media (Optional)</li>
-              </ul>
+
+              <form @submit.prevent="submitForm" class="space-y-6">
+
+                <!-- Business Address (for Dealer) -->
+                <div v-if="isDealer" class="flex flex-col">
+                  <label for="businessAddress" class="font-bold text-pink-700">Business Address</label>
+                  <input v-model="businessAddress" type="text" id="businessAddress" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter business address" />
+                </div>
+
+                <!-- Country -->
+                <div class="flex flex-col">
+                  <label for="country" class="font-bold text-pink-700">Country</label>
+                  <input v-model="country" type="text" id="country" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter country" />
+                </div>
+
+                <!-- City -->
+                <div class="flex flex-col">
+                  <label for="city" class="font-bold text-pink-700">City</label>
+                  <input v-model="city" type="text" id="city" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter city" />
+                </div>
+
+                <!-- Address -->
+                <div class="flex flex-col">
+                  <label for="address" class="font-bold text-pink-700">Address</label>
+                  <input v-model="address" type="text" id="address" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter address" />
+                </div>
+
+                <!-- Contact Phone -->
+                <div class="flex flex-col">
+                  <label for="contactPhone" class="font-bold text-pink-700">Contact Phone</label>
+                  <input v-model="contactPhone" type="text" id="contactPhone" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter phone number" />
+                </div>
+
+                <!-- Contact Email -->
+                <div class="flex flex-col">
+                  <label for="contactEmail" class="font-bold text-pink-700">Contact Email</label>
+                  <input v-model="contactEmail" type="email" id="contactEmail" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter email" />
+                </div>
+
+                <!-- Social Links Section -->
+                <div class="flex flex-col">
+                  <label for="socialLinks" class="font-bold text-pink-700">Social Links</label>
+                  <input v-model="socialLinks" type="text" id="socialLinks" class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700" placeholder="Enter social link" />
+                  <button class="mt-2 bg-pink-500 text-white px-4 py-2 rounded-lg" @click="addSocialLink">Add Link</button>
+                  <!-- Display added social links -->
+
+                </div>
+
+                <div class="flex justify-center">
+                  <button type="submit" class="mt-4 bg-pink-500 text-white px-6 py-3 rounded-lg">Save</button>
+                </div>
+
+              </form>
             </div>
+
           </div>
         </div>
       </div>
