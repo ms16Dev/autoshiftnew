@@ -10,8 +10,6 @@ defineOptions({
   name: 'list-dealers'
 });
 
-
-
 const currentPage = ref(1);  // Initialize at page 1
 const itemsPerPage = ref(15); // Number of questions to show per page
 
