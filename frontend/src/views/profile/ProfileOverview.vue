@@ -145,19 +145,18 @@ defineOptions({
   name: 'join-dealer'
 });
 
-const activeTab = ref(1); // Active tab default is 'Requirements'
+const activeTab = ref(1);
 
 
 
 
-const currentPage = ref(1);  // Initialize at page 1
-const itemsPerPage = ref(15); // Number of questions to show per page
+const currentPage = ref(1);
+const itemsPerPage = ref(15);
 
 const totalPages = computed(() => {
   return Math.ceil(cars.length / itemsPerPage.value);
 });
 
-// Compute the paginated questions to display based on the current page
 const paginatedCars = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage.value;
   const endIndex = startIndex + itemsPerPage.value;
@@ -175,5 +174,4 @@ const handlePageChange = (page: number) => {
 </script>
 
 <style scoped>
-/* Add custom styles if needed */
 </style>
