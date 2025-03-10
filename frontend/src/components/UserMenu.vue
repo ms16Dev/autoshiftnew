@@ -15,8 +15,7 @@ defineProps({
 const emit = defineEmits(['close']);
 
 
-
-import { ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 
 const currentLang = ref(localStorage.getItem("lang") || "en");
 
@@ -40,6 +39,13 @@ watch(currentLang, (newLang) => {
   document.documentElement.lang = newLang;
   document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
 }, { immediate: true });
+
+const userRole = computed(() => {
+  if (store?.userInfo?.roles?.includes("ROLE_ADMIN")) {
+    return "Admin";
+  }
+  return "User"; // Default to "User" if "ROLE_ADMIN" is not found
+});
 
 
 const logout = () => {
@@ -98,7 +104,7 @@ const logout = () => {
   >
     <div class="flex-col p-2">
       <h1 class="text-white text-lg">{{store?.userInfo?.name}}</h1>
-      <h1 class="text-white text-lg">{{store?.userInfo?.roles}}</h1>
+      <h1 class="text-white rounded-full bg-purple-600 w-fit px-2">{{userRole}}</h1>
     </div>
 
     <ul class="divide-y divide-gray-200">
