@@ -1,18 +1,11 @@
 <script setup lang="ts">
 
-import IconButtonLink, { IconButtonLinkProps } from './IconButtonLink.vue';
+import IconButtonLink from './IconButtonLink.vue';
 import {useAuthStore} from "../stores/auth.ts";
 
 const store =  useAuthStore();
 
 defineProps({
-  items: {
-    type: Array as () => IconButtonLinkProps[],
-    default: () => [
-      { text: 'Profile', icon: 'fas fa-user', target: '/dealers/1' },
-      { text: 'Settings', icon: 'fas fa-cogs', target: '/settings' },
-    ],
-  },
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
@@ -66,8 +59,19 @@ const logout = () => {
     </div>
 
     <ul class="divide-y divide-gray-200">
-      <li v-if="store.isAuthenticated" v-for="(item, index) in items" :key="index" class="p-2">
-        <IconButtonLink  v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      <li v-if="store.isAuthenticated" class="p-2">
+        <IconButtonLink
+            text="Profile"
+            icon="fas fa-user"
+            :target="`/users/${store.userInfo?.name ?? ''}`"
+            class="text-pink-500" @click="$emit('close')"/>
+      </li>
+      <li v-if="store.isAuthenticated" class="p-2">
+        <IconButtonLink
+            text="Settings"
+            icon="fas fa-cogs"
+            :target="`/settings/${store.userInfo?.name ?? ''}`"
+            class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
@@ -98,8 +102,19 @@ const logout = () => {
     </div>
 
     <ul class="divide-y divide-gray-200">
-      <li v-if="store.isAuthenticated" v-for="(item, index) in items" :key="index" class="p-2">
-        <IconButtonLink  v-bind="item" class="text-pink-500" @click="$emit('close')"/>
+      <li v-if="store.isAuthenticated" class="p-2">
+        <IconButtonLink
+            text="Profile"
+            icon="fas fa-user"
+            :target="`/users/${store.userInfo?.name ?? ''}`"
+            class="text-pink-500" @click="$emit('close')"/>
+      </li>
+      <li v-if="store.isAuthenticated" class="p-2">
+        <IconButtonLink
+            text="Settings"
+            icon="fas fa-cogs"
+            :target="`/settings/${store.userInfo?.name ?? ''}`"
+            class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
