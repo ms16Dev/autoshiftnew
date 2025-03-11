@@ -67,7 +67,8 @@ async function submitForm() {
 
     await router.push("/auth/complete-registration");
   } catch (error) {
-    errorMessage.value = error.response?.data?.message || "Signup failed. Please try again.";
+    const axiosError = error as any;
+    errorMessage.value = axiosError.response?.data?.message || "Signup failed. Please try again.";
   } finally {
     loading.value = false;
   }

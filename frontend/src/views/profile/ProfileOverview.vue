@@ -107,19 +107,12 @@
           <div v-show="activeTab === 3" class="text-gray-600">
             <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
-              <car-item v-for="car in paginatedCars" :key="car.id" :car="car"/>
 
 
 
             </div>
 
-            <TablePagination
-                :current-page="currentPage"
-                :per-page="itemsPerPage"
-                :total="cars.length"
-                :total-pages="totalPages"
-                @page-change="handlePageChange"
-            ></TablePagination>
+
 
           </div>
         </div>
@@ -136,10 +129,8 @@
 
 <script setup lang="ts">
 import AdItem from "../../components/AdItem.vue";
-import {computed, ref} from "vue";
-import cars from "../../core/data/CarsData.ts";
-import TablePagination from "../../components/TablePagenition.vue";
-import CarItem from "../../components/CarItem.vue";
+
+import {ref} from "vue";
 
 defineOptions({
   name: 'join-dealer'
@@ -149,25 +140,6 @@ const activeTab = ref(1);
 
 
 
-
-const currentPage = ref(1);
-const itemsPerPage = ref(15);
-
-const totalPages = computed(() => {
-  return Math.ceil(cars.length / itemsPerPage.value);
-});
-
-const paginatedCars = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage.value;
-  const endIndex = startIndex + itemsPerPage.value;
-  return cars.slice(startIndex, endIndex);
-});
-
-const handlePageChange = (page: number) => {
-
-
-  currentPage.value = page;  // Update current page
-};
 
 
 

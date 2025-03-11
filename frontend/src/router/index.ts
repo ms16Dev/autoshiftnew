@@ -14,7 +14,6 @@ import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
 import OtpVerify from "../views/auth/OtpVerify.vue";
 import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
-import CompleteProfile from "../views/auth/CompleteProfile.vue";
 import NotFound from "../views/NotFound.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
@@ -80,7 +79,6 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'verify-email', name: 'Verify Email', component: VerifyEmail },
             { path: 'reset-password', name: 'Reset Password', component: ResetPassword },
             { path: 'otp-verify', name: 'OTP Verify', component: OtpVerify },
-            { path: 'complete-registration', name: 'complete-register', component: CompleteProfile },
 
         ]
     },
