@@ -2,7 +2,7 @@
 import { onMounted, onBeforeUnmount } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 import LayoutNav from '../components/landing/Nav.vue';
-import Footer from '../components/footer.vue';
+import Footer from '../components/Footer.vue';
 
 // Import global styles
 import '../assets/css/style-landing.css';
