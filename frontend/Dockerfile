@@ -16,5 +16,5 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Set Nginx config (optional)
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 8080
+EXPOSE 8080  # Ensure this matches Fly.io's expectations
 CMD ["nginx", "-g", "daemon off;"]
