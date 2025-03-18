@@ -1,45 +1,27 @@
-# syntax = docker/dockerfile:1
+# Stage 1: Build Vue App
+FROM node:20.18.0-alpine AS build
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.18.0
-FROM node:${NODE_VERSION}-slim AS base
-
-LABEL fly_launch_runtime="Node.js"
-
-# Node.js app lives here
+# Set working directory
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
 
-
-# Throw-away build stage to reduce size of final image
-FROM base AS build
-
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
-
-# Install node modules
-COPY package-lock.json package.json ./
-RUN npm ci --include=dev
-
-# Copy application code
+# Copy the entire app
 COPY . .
 
-# Build application
+# Build the Vue app (outputs to /app/dist)
 RUN npm run build
 
-# Remove development dependencies
-RUN npm prune --omit=dev
+# Stage 2: Serve Vue App with Nginx
+FROM nginx:alpine
 
+# Copy built Vue files to Nginx web root
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Final stage for app image
-FROM base
+# Expose port 80
+EXPOSE 80
 
-# Copy built application
-COPY --from=build /app /app
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD [ "node", "index.js" ]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
