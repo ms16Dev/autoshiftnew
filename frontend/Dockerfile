@@ -4,14 +4,19 @@ FROM node:20.18.0-alpine AS build
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package files
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
 
-# Copy the entire app
+# Install all dependencies, including dev dependencies
+RUN npm ci
+
+# Copy the full app source
 COPY . .
 
-# Build the Vue app (outputs to /app/dist)
+# Ensure vue-tsc is available
+RUN npx vue-tsc --noEmit  # Type-check Vue files
+
+# Build the Vue app
 RUN npm run build
 
 # Stage 2: Serve Vue App with Nginx
