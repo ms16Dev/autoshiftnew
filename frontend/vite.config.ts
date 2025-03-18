@@ -5,7 +5,8 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
-    port: 3000, // Or any unused port
-  },
+    host: '0.0.0.0', // Ensures it listens to external requests
+    port: 8080, // Match the Fly.io expected port
+  }
 
 })
