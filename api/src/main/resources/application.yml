@@ -1,21 +1,16 @@
 spring:
   profiles:
-    active: cors
-  data:
-    mongodb:
-#      host: localhost
-#      port: 27017
-#      uri: mongodb://user:secret@mongo1.example.com:12345,mongo2.example.com:23456/test
-      uri: mongodb://localhost:27017/blog
-      gridfs:
-        database: images
+    active: dev,cors  # Default profiles for local development
+
   jackson:
     default-property-inclusion: non_null
     serialization:
       indent-output: true
+
   web:
     resources:
       static-locations: file:./images/
+
 logging:
   level:
     root: INFO
