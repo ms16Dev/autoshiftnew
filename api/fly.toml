@@ -1,15 +1,25 @@
-# fly.toml app configuration file generated for api-red-bush-2717 on 2025-03-19T06:18:46+03:00
+# fly.toml app configuration file generated for autoshift-backend on 2025-04-02T21:35:30+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'api-red-bush-2717'
+app = 'autoshift-backend'
 primary_region = 'ams'
 
 [build]
 
+[env]
+  SPRING_DATA_MONGODB_URI = 'mongodb://mongodb-app.internal:27017/cars'
+  SPRING_PROFILES_ACTIVE = 'prod,cors'
+  SPRING_REDIS_HOST = 'redis-app.internal'
+  SPRING_REDIS_PORT = '6379'
+
+[[mounts]]
+  source = 'data_volume'
+  destination = '/data'
+
 [http_service]
-  internal_port = 8080
+  internal_port = 27017
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
