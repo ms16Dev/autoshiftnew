@@ -4,3 +4,7 @@ spring:
       uri: mongodb://mongodb:27017/blog
       gridfs:
         database: images
+
+  server:
+    address: 0.0.0.0
+    port: 8080

@@ -2,10 +2,15 @@ spring:
   profiles:
     active: dev,cors  # Default profiles for local development
 
+
   jackson:
     default-property-inclusion: non_null
     serialization:
       indent-output: true
+
+  server:
+    address: 0.0.0.0
+    port: 8080
 
   web:
     resources:
