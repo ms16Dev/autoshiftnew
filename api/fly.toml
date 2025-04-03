@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for autoshift-backend on 2025-04-02T21:35:30+03:00
+# fly.toml app configuration file generated for autoshift-backend on 2025-04-02T23:15:35+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -19,7 +19,7 @@ primary_region = 'ams'
   destination = '/data'
 
 [http_service]
-  internal_port = 27017
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
