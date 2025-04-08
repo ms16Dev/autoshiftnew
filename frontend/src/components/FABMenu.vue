@@ -7,7 +7,8 @@ defineProps({
     default: () => [
       { text: 'Car', icon: 'fas fa-car', target: '/cars/add-car' },
       { text: 'Part', icon: 'fas fa-cogs', target: '/home' },
-      { text: 'Service', icon: 'fas fa-box', target: '/home' },
+      { text: 'Rental', icon: 'fas fa-tag', target: '/home' },
+      { text: 'Auction', icon: 'fas fa-hammer', target: '/home' },
     ],
   },
   position: {
