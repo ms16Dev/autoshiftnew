@@ -66,7 +66,7 @@
                 class="text-xl font-semibold py-2 px-4 cursor-pointer"
                 @click="activeTab = 1">
                 <i class="fas fa-user"
-                 :class="{'text-pink-500': activeTab === 1}"
+                   :class="activeTab === 1 ? 'text-pink-500' : 'text-pink-300'"
 
                 />
             </button>
@@ -75,7 +75,7 @@
                 class="text-xl font-semibold py-2 px-4 cursor-pointer"
                 @click="activeTab = 2">
                 <i class="fas fa-info"
-                   :class="{'text-pink-500': activeTab === 2}"
+                   :class="activeTab === 2 ? 'text-pink-500' : 'text-pink-300'"
 
                 />
             </button>
@@ -84,7 +84,7 @@
                 class="text-xl font-semibold py-2 px-4 cursor-pointer"
                 @click="activeTab = 3">
                 <i class="fas fa-envelope"
-                   :class="{'text-pink-500': activeTab === 3}"
+                   :class="activeTab === 3 ? 'text-pink-500' : 'text-pink-300'"
 
                 />
             </button>
@@ -93,7 +93,7 @@
                 class="text-xl font-semibold py-2 px-4 cursor-pointer"
                 @click="activeTab = 4">
                 <i class="fas fa-star"
-                   :class="{'text-pink-500': activeTab === 4}"
+                   :class="activeTab === 4 ? 'text-pink-500' : 'text-pink-300'"
 
                 />
             </button>
@@ -102,7 +102,7 @@
                 class="text-xl font-semibold py-2 px-4 cursor-pointer"
                 @click="activeTab = 5">
                 <i class="fas fa-chart-line"
-                   :class="{'text-pink-500': activeTab === 5}"
+                   :class="activeTab === 5 ? 'text-pink-500' : 'text-pink-300'"
 
                 />
             </button>
@@ -123,7 +123,36 @@
     <!-- Main Content Area -->
     <div class="w-full lg:w-3/5 p-4 text-gray-400">
 
-     <p class="text-lg font-extrabold "> Recent Activity</p>
+      <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Recent Cars</h1>
+      <FeaturedDealers :posts="recentPosts" />
+      <div class="flex justify-end">
+        <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
+          Browse All ..
+        </router-link>
+      </div>
+
+
+      <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Recent Parts</h1>
+      <FeaturedDealers :posts="recentPosts" />
+      <div class="flex justify-end">
+        <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
+          Browse All ..
+        </router-link>
+      </div>
+
+
+      <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Available Rentals</h1>
+      <FeaturedDealers :posts="recentPosts" />
+      <div class="flex justify-end">
+        <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
+          Browse All ..
+        </router-link>
+      </div>
+
+
+
+
+
 
 
     </div>
@@ -139,13 +168,20 @@
 import AdItem from "../../components/AdItem.vue";
 
 import {ref} from "vue";
+import FeaturedDealers from "../../components/FeaturedDealers.vue";
 
 defineOptions({
   name: 'join-dealer'
 });
 
 const activeTab = ref(1);
-
+const recentPosts = [
+  { title: "Post 1", image: "post1.jpg", link: "/post1" },
+  { title: "Post 2", image: "post2.jpg", link: "/post2" },
+  { title: "Post 3", image: "post3.jpg", link: "/post3" },
+  { title: "Post 3", image: "post3.jpg", link: "/post3" },
+  { title: "Post 3", image: "post3.jpg", link: "/post3" },
+];
 
 
 
