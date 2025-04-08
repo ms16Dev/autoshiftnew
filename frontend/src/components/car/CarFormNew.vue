@@ -241,7 +241,7 @@ const saveCar = async () => {
         </button>
 
         <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-thumbtack bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
+          <i class="w-8 h-8 rounded-full fas fa-crown bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
           <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
             Feature</span>
         </button>
