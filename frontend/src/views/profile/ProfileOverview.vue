@@ -5,52 +5,71 @@
       <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
         <div class="group flex-col inset-px shadow-md">
 
+          <!-- Cover image-->
+          <div class="overflow-hidden">
+            <img class="w-full transition-transform duration-700  group-hover:scale-110" src="/car_plchldr1.jpg"/>
+
+          </div>
+          <!--Devider-->
+          <div class="w-full border-b-2 border-b-pink-700 "></div>
+          <div class="flex flex-row w-full justify-center">
+            <div class="z-10"></div>
+            <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
+              <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
+            </div>
+          </div>
+          <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">fdsfdsfsfs</div>
+          <div class="flex  justify-center text-gray-500 text-lg -translate-y-8"> fasdfafsafa</div>
           <div class="w-full mt-4 ">
             <!-- Tab Content -->
-            <div v-show="activeTab === 1" class="w-full text-gray-600">
-              <!-- Cover image-->
-              <div class="overflow-hidden">
-                <img class="w-full transition-transform duration-700  group-hover:scale-110" src="/car_plchldr1.jpg"/>
+            <div v-show="activeTab === 1" class="w-full text-gray-600  pb-4">
 
-              </div>
-              <!--Devider-->
-              <div class="w-full border-b-2 border-b-pink-700 "></div>
-              <div class="flex flex-row w-full justify-center">
-                <div class="z-10"></div>
-                <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
-                  <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
-                </div>
-              </div>
-              <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">fdsfdsfsfs</div>
-              <div class="flex  justify-center text-gray-500 text-lg -translate-y-8"> fasdfafsafa</div>
-              <button type="submit" class="flex-row px-1 bg-pink-500 hover:bg-pink-700 text-white py-1 rounded-md transition shadow-md -translate-y-6 ">
+              <p class="font-semibold">16.4k likes</p>
+              <button type="submit" class="flex-row px-1 bg-pink-500 hover:bg-pink-700 text-white py-1 rounded-md transition shadow-md  ">
                 <i class="fas fa-thumbs-up text-white"></i>
                 Like
               </button>
             </div>
 
 
-            <div v-show="activeTab === 2" class="text-gray-600">
-              <h3 class="text-2xl font-semibold">Dealer Benefits</h3>
-              <ul class="list-disc pl-6">
-                <li>Free car listing space</li>
-                <li>Access to premium customer leads</li>
-                <li>Flexible financing options</li>
-              </ul>
+            <div v-show="activeTab === 2" class="text-gray-600 pb-4">
+                Free car listing space
+                Access to premium customer leads
+                Flexible financing options
             </div>
-            <div v-show="activeTab === 3" class="text-gray-600">
+            <div v-show="activeTab === 3" class="text-gray-600 pb-4">
+              <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
+                <div class="p-6  max-w-md mx-auto space-y-4">
+                  <div class="flex items-center space-x-3 text-gray-700">
+                    <i class="fas fa-phone-alt text-pink-500"></i>
+                    <a href="tel:+1769778159236" class="hover:underline">+1 769 778 159 236</a>
+                  </div>
+
+                  <div class="flex items-center space-x-3 text-gray-700">
+                    <i class="fab fa-facebook text-blue-600"></i>
+                     <a href="https://facebook.com/fbidname" target="_blank" class="hover:underline">facebook.com/fbidname</a>
+                  </div>
+
+                  <div class="flex items-center space-x-3 text-gray-700">
+                    <i class="fab fa-instagram text-pink-600"></i>
+                 <a href="https://instagram.com/fbidname" target="_blank" class="hover:underline">instagram.com/fbidname</a>
+                  </div>
+
+                  <div class="flex items-center space-x-3 text-gray-700">
+                    <i class="fas fa-globe text-green-500"></i>
+                   <a href="https://somesite.com/" target="_blank" class="hover:underline">some-ite.com</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div v-show="activeTab === 4" class="text-gray-600 pb-4">
               <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
               </div>
 
             </div>
-            <div v-show="activeTab === 4" class="text-gray-600">
-              <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
-
-              </div>
-
-            </div>
-            <div v-show="activeTab === 5" class="text-gray-600">
+            <div v-show="activeTab === 5" class="text-gray-600 pb-4">
               <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
               </div>
