@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, onMounted} from "vue";
 import apiService from "../core/services/ApiService.ts";
+import {useAuthStore} from "../stores/auth.ts";
 
 interface Comment {
   id: number;
@@ -8,6 +9,9 @@ interface Comment {
   content: string;
   createdDate: string;
 }
+
+const authStore = useAuthStore();
+
 
 // Props to get car ID from parent
 const props = defineProps<{ carId: string }>();
@@ -87,7 +91,9 @@ onMounted(fetchComments);
     <p v-else class="text-gray-500">No comments yet. Be the first to comment!</p>
 
     <!-- Add Comment -->
-    <div class="mt-4">
+    <div
+        v-if="authStore.isAuthenticated"
+        class="mt-4">
       <input
           v-model="newComment"
           type="text"
@@ -100,6 +106,14 @@ onMounted(fetchComments);
       >
         Add Comment
       </button>
+
     </div>
+
+    <router-link
+        v-else
+        class="mt-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
+        to="/auth/sign-in">
+      Login to Add Comment
+    </router-link>
   </div>
 </template>

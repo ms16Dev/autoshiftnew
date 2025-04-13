@@ -5,6 +5,9 @@
  */
 package com.example.demo.interfaces;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,15 +27,19 @@ import java.util.Map;
 public class CurrentUserController {
 
     @GetMapping("")
-    public Mono<Map<String, Object>> current(@AuthenticationPrincipal Mono<Principal> principal) {
+    public Mono<ResponseEntity<Map<String, Object>>> current(@AuthenticationPrincipal Mono<Principal> principal) {
         return principal
-                .map(user ->
-                        Map.of(
-                                "name", user.getName(),
-                                "roles", AuthorityUtils.authorityListToSet(((Authentication) user)
-                                        .getAuthorities())
-                        )
-                );
+                .map(user -> {
+                    Map<String, Object> body = Map.of(
+                            "name", user.getName(),
+                            "roles", AuthorityUtils.authorityListToSet(((Authentication) user).getAuthorities())
+                    );
+                    return ResponseEntity.ok(body);
+                })
+                .switchIfEmpty(Mono.just(
+                        ResponseEntity.status(440) // Or 419 if you prefer
+                                .body(Map.of("error", "Session expired"))
+                ));
     }
 
 }

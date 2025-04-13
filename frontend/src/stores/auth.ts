@@ -97,7 +97,7 @@ export const useAuthStore = defineStore(
         /** Check if the session is still valid and update the store */
         const checkSession = async () => {
             try {
-                const { data } = await ApiService.get("auth/session", "");
+                const { data } = await ApiService.get1("/me");
                 if (data) {
                     setAuth(data);
                 } else {
