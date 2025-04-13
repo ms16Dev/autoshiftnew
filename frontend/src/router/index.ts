@@ -16,6 +16,7 @@ import OtpVerify from "../views/auth/OtpVerify.vue";
 import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
 import NotFound from "../views/NotFound.vue";
 import Admin from "../views/admin/Admin.vue";
+import Users from "../views/admin/Users.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -88,6 +89,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../layouts/AdminLayout.vue"),
         children:     [
             { path: '', name: 'Admin', component: Admin },
+            { path: 'users', name: 'Users', component: Users },
 
 
         ]
