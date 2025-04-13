@@ -101,18 +101,25 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     console.log("Navigating from:", from.path);
     console.log("Navigating to:", to.path);
 
     const authStore = useAuthStore();
 
+    try {
+        await authStore.checkSession(); // Ensure session is fresh
+    } catch (e) {
+        console.warn("Session check failed:", e);
+        // Already purged inside the store
+    }
+
     if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-        next("/auth/sign-in");
+        return next("/auth/sign-in");
     } else if (Array.isArray(to.meta.roles) && !authStore.hasAnyRole(to.meta.roles)) {
-        next("/home"); // Redirect unauthorized users
+        return next("/home"); // Redirect unauthorized users
     } else {
-        next();
+        return next();
     }
 });
 
