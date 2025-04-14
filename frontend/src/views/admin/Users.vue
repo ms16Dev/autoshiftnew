@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import IconButton from "../../components/IconButton.vue";
+import UserItem from "../../components/admin/users/UserItem.vue";
 </script>
 
 <template>
@@ -27,91 +28,10 @@ import IconButton from "../../components/IconButton.vue";
           <div class="w-full border-b-2 border-b-pink-700 "></div>
 
           <!--User Item -->
-
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
-          <div
-              class="flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-          >
-            <!-- User Avatar -->
-            <img src="../../assets/asl-pink.png" alt="User Avatar" class="w-16 h-16 rounded-full object-cover" />
-
-            <div class="flex flex-col items-start">
-              <!-- User Name -->
-              <span class="text-pink-500 font-lg font-extrabold">Username</span>
-              <!-- Date -->
-              <span class="text-gray-500 text-sm ">Date</span>
-            </div>
-
-          </div>
+          <UserItem/>
+          <UserItem/>
+          <UserItem/>
+          <UserItem/>
 
 
 
