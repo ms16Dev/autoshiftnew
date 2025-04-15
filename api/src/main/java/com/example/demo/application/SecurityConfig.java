@@ -65,6 +65,7 @@ public class SecurityConfig {
                                 .pathMatchers("/cars/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
+                                .pathMatchers("/users").hasRole("ADMIN")
                                 .pathMatchers("/ref-data").permitAll() // New whitelisted endpoint
                                 .anyExchange().permitAll()
                 )

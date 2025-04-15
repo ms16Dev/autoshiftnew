@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -32,5 +33,10 @@ public class MongoUserRepository  implements UserRepository {
         return this.mongoTemplate.remove(User.class)
             .all()
             .map(DeleteResult::getDeletedCount);
+    }
+
+    @Override
+    public Flux<User> findAll() {
+        return this.mongoTemplate.findAll(User.class);
     }
 }

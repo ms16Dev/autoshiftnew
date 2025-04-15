@@ -7,6 +7,7 @@ package com.example.demo.domain.repository;
 
 
 import com.example.demo.domain.model.User;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,4 +20,6 @@ public interface UserRepository {
     Mono<User> create(User user);
 
     Mono<Long> deleteAll();
+
+    Flux<User> findAll();
 }

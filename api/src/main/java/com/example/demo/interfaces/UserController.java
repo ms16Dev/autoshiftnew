@@ -12,12 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- *
- * @author hantsy
- */
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -27,5 +25,10 @@ public class UserController {
     @GetMapping("/users/{username}")
     public Mono<User> get(@PathVariable() String username) {
         return this.users.findByUsername(username);
+    }
+
+    @GetMapping("/users")
+    public Flux<User> getAllUsers() {
+        return this.users.findAll();
     }
 }
