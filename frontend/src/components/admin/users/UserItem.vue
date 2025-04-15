@@ -1,7 +1,6 @@
 <template>
   <div
       class="flex items-center justify-between gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
-      @click="goToProfile"
   >
 
       <!-- Avatar -->
@@ -10,45 +9,27 @@
       </span>
 
       <!-- User Name -->
-      <span class="text-pink-500 font-lg font-extrabold">{{ user.username }}</span>
+      <span class="text-pink-500 font-lg font-extrabold">{{ props.user.username }}</span>
 
       <!-- Email -->
-      <span class="text-gray-500 font-lg ">{{ user.email }}</span>
+      <span class="text-gray-500 font-lg ">{{ props.user.email }}</span>
 
       <!-- Status -->
-      <span class="text-gray-500 font-lg ">{{ user.active }}</span>
+      <span class="text-gray-500 font-lg ">{{ props.user.active }}</span>
 
       <!-- Status -->
-      <span class="text-gray-500 font-lg ">{{ user.roles }}</span>
+      <span class="text-gray-500 font-lg ">{{ props.user.roles }}</span>
 
   </div>
 </template>
 
-<script setup>
-import { useRouter } from 'vue-router';
+<script setup lang="ts">
 
-const router = useRouter();
+import { UserListDto } from '../../../core/models/UserListDto.ts'
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-    default: () => ({
-      email: 'mhmn@gmail.com',
-      username: 'User Name',
-      date: "2 days ago",
-      avatar: '/vite.svg',
-      id: null,
-      active:'Active',
-      roles: 'Admin'
-    })
-  }
-});
+const props = defineProps<{
+  user: UserListDto
+}>()
 
 
-const goToProfile = () => {
-  if (props.user.id) {
-    router.push(`/dealers/${props.user.id}`);
-  }
-};
 </script>

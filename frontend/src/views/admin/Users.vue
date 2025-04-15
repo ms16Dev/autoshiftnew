@@ -2,6 +2,32 @@
 
 import IconButton from "../../components/IconButton.vue";
 import UserItem from "../../components/admin/users/UserItem.vue";
+import {onMounted, ref} from "vue";
+import {UserListDto} from "../../core/models/UserListDto.ts";
+import apiService from "../../core/services/ApiService.ts";
+
+
+const users = ref<UserListDto[]>([]);
+const loading = ref(true);
+
+onMounted(async () => {
+  await handlePageChange()
+});
+
+
+
+const handlePageChange = async () => {
+  try {
+    const response = await apiService.get1("users");
+    users.value = response.data || [];
+
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    users.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -27,11 +53,16 @@ import UserItem from "../../components/admin/users/UserItem.vue";
 
           <div class="w-full border-b-2 border-b-pink-700 "></div>
 
-          <!--User Item -->
-          <UserItem/>
-          <UserItem/>
-          <UserItem/>
-          <UserItem/>
+
+          <!-- User Items -->
+          <div v-if="!loading">
+            <UserItem
+                v-for="user in users"
+                :key="user.id"
+                :user="user"
+            />
+          </div>
+          <div v-else class="p-4 text-gray-500">Loading users...</div>
 
 
 
