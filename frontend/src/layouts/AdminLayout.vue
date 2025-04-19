@@ -43,7 +43,7 @@ import IconButton from "../components/IconButton.vue";
           <div class="grid grid-cols-4 w-full justify-between px-3">
 
 
-            <router-link to="/admin/make">
+            <router-link to="/admin/makes">
               <IconButton icon="fas fa-tag" label="Make" class="hover:bg-pink-100"/>
             </router-link>
             <router-link to="/admin/class">

@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue';
 
+const props = defineProps({
+  bg: {
+    type: String,
+    required: false,
+    default: "/car-phldr.png"
+  },
+});
+
+
 const image = ref<string | null>(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 
@@ -51,7 +60,7 @@ function removeImage() {
       />
       <img
           v-else
-          src="/car-phldr.png"
+          :src="props.bg"
           alt="Placeholder"
           class="object-cover w-full h-full"
       />
