@@ -17,6 +17,7 @@ import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
 import NotFound from "../views/NotFound.vue";
 import Admin from "../views/admin/Admin.vue";
 import Users from "../views/admin/Users.vue";
+import Roles from "../views/admin/Roles.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -90,6 +91,7 @@ const routes: Array<RouteRecordRaw> = [
         children:     [
             { path: '', name: 'Admin', component: Admin },
             { path: 'users', name: 'Users', component: Users },
+            { path: 'roles', name: 'Roles', component: Roles },
 
 
         ]
