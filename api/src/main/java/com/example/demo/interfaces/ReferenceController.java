@@ -16,6 +16,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.created;
 
@@ -87,12 +89,78 @@ public class ReferenceController {
                 ));
     }
 
+
+    @GetMapping("makes")
+    public Mono<ResponseEntity<Flux<MakeRequest>>> getMakes() {
+        Flux<MakeRequest> data = mongoTemplate.findAll(MakeRequest.class, "makes");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+
+    @PostMapping("makes")
+    public Mono<ResponseEntity<String>> createMake(@RequestBody MakeRequest makeRequest) {
+        return mongoTemplate.save(makeRequest, "makes")
+                .map(savedRole -> ResponseEntity.ok("Make created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating make: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("makes/{id}")
+    public Mono<ResponseEntity<String>> updateMake(
+            @PathVariable String id,
+            @RequestBody MakeRequest makeRequest) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        makeRequest.setId(id);
+
+        return mongoTemplate.save(makeRequest, "makes")
+                .map(savedMake -> ResponseEntity.ok("Make updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating make: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/makes/{id}")
+    public Mono<ResponseEntity<String>> deleteMake(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "makes"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Make deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Role not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting make: " + e.getMessage())
+                ));
+    }
+
+
     @Setter
     @Getter
     public static class RoleRequest {
         // Getter and setter
         private String id;
         private String name;
+
+    }
+
+    @Setter
+    @Getter
+    public static class MakeRequest {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+        private String url;
+        List<String> classes = Collections.emptyList();
+
 
     }
 
