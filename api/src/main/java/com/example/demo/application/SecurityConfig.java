@@ -67,6 +67,7 @@ public class SecurityConfig {
                                 .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
                                 .pathMatchers("/users").hasRole("ADMIN")
                                 .pathMatchers("/ref-data").permitAll() // New whitelisted endpoint
+                                .pathMatchers("/ref-data/**").authenticated() // New whitelisted endpoint
                                 .anyExchange().permitAll()
                 )
                 .addFilterAt(loginFilter, SecurityWebFiltersOrder.AUTHENTICATION)
