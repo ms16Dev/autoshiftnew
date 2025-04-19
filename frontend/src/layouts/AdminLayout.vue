@@ -11,60 +11,75 @@ import IconButton from "../components/IconButton.vue";
       <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
         <div class="group flex-col inset-px shadow-md">
 
-          <!-- Cover image-->
-          <div class="overflow-hidden">
-            <img class="w-full transition-transform duration-700  group-hover:scale-110" src="/car_plchldr1.jpg"/>
+          <!-- Logo or Title -->
+          <div class="text-center bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300">
+            <!-- Center the logo inside the router-link -->
+            <router-link to="" class="flex justify-center">
+              <img src="../assets/asl.png" alt="Logo" width="120" height="120">
+            </router-link>
+            <h3 class="text-3xl font-bold text-white">AUTOSHIFT</h3>
 
+            <p class="mt-2 text-gray-500">Connecting buyers and sellers in the car market</p>
           </div>
           <!--Devider-->
           <div class="w-full border-b-2 border-b-pink-700 "></div>
-          <div class="flex flex-row w-full justify-center">
-            <div class="z-10"></div>
-            <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
-              <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
-            </div>
-          </div>
-          <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">Admin</div>
+          <div class="flex justify-center text-pink-500 font-bold text-2xl ">Admin</div>
+
+
+          <div class="flex px-2  text-pink-500 font-bold text-md ">Users & Roles</div>
 
           <div class="grid grid-cols-4 w-full justify-between px-3">
 
             <router-link to="/admin/users">
-              <IconButton icon="fas fa-tachometer" label="Users" class="hover:bg-pink-100"/>
+              <IconButton icon="fas fa-user" label="Users" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-tachometer" label="Roles" class="hover:bg-pink-100"/>
+            <router-link to="/admin/roles">
+              <IconButton icon="fas fa-shield" label="Roles" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-gears" label="Make" class="hover:bg-pink-100"/>
+
+          </div>
+          <div class="flex px-2  text-pink-500 font-bold text-md ">Car Options</div>
+
+          <div class="grid grid-cols-4 w-full justify-between px-3">
+
+
+            <router-link to="/admin/make">
+              <IconButton icon="fas fa-tag" label="Make" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-gas-pump" label="Class" class="hover:bg-pink-100"/>
+            <router-link to="/admin/class">
+              <IconButton icon="fas fa-list" label="Class" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
+            <router-link to="/admin/engine">
               <IconButton icon="fas fa-bolt" label="Engine" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-car" label="Gear" class="hover:bg-pink-100"/>
+            <router-link to="/admin/gear">
+              <IconButton icon="fas fa-gear" label="Gear" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
+            <router-link to="/admin/color">
               <IconButton icon="fas fa-brush" label="Color" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-leaf" label="Shape" class="hover:bg-pink-100"/>
+            <router-link to="/admin/shape">
+              <IconButton icon="fas fa-car" label="Shape" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-life-ring" label="Luxury" class="hover:bg-pink-100"/>
+            <router-link to="/admin/luxury">
+              <IconButton icon="fas fa-leaf" label="Luxury" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-map-marker" label="Safety" class="hover:bg-pink-100"/>
+            <router-link to="/admin/safety">
+              <IconButton icon="fas fa-life-ring" label="Safety" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/users">
-              <IconButton icon="fas fa-map-marker" label="Location" class="hover:bg-pink-100"/>
-            </router-link>
+
 
 
           </div>
 
+          <div class="flex px-2  text-pink-500 font-bold text-md ">Other</div>
+
+          <div class="grid grid-cols-4 w-full justify-between px-3">
+
+          <router-link to="/admin/location">
+            <IconButton icon="fas fa-map-marker" label="Location" class="hover:bg-pink-100"/>
+          </router-link>
+          </div>
 
         </div>
 
