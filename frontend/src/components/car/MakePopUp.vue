@@ -4,9 +4,11 @@ import MakeItem from "./MakeItem.vue";
 
 // Define the Make interface
 export interface Make {
-  name: string;
+  id: string;
+  name_en: string;
   name_ar: string;
   url: string;
+  classes: string[];
 }
 
 // Define props with proper typing
@@ -39,7 +41,7 @@ const saveMake = (value: number) => {
 <template>
   <div
       :class="[
-      'absolute  bg-pink-700 z-100 w-full h-full ',
+      'absolute  bg-pink-700 z-50 w-full h-full ',
       position === 'bottom' ? 'top-0 end-0' : '',
       position === 'top' ? 'bottom-full end-0' : '',
       position === 'left' ? 'mr-2 right-full top-0' : '',
@@ -47,7 +49,7 @@ const saveMake = (value: number) => {
     ]"
   >
     <div class="h-full flex-col grid grid-cols-2 gap-4 overflow-y-scroll scrollbar-none ">
-        <MakeItem  v-for="(make, index) in makes" :key="index" :url="`/public/carmakes/${make.url}`" class="h-full p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
+        <MakeItem  v-for="(make, index) in makes" :key="index" :url="'http://localhost:8080'+make.url" class="h-24 p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
     </div>
 
 

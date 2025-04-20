@@ -46,7 +46,7 @@ import IconButton from "../components/IconButton.vue";
             <router-link to="/admin/makes">
               <IconButton icon="fas fa-tag" label="Make" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/class">
+            <router-link to="/admin/classes">
               <IconButton icon="fas fa-list" label="Class" class="hover:bg-pink-100"/>
             </router-link>
             <router-link to="/admin/engine">

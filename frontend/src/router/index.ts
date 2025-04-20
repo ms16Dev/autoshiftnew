@@ -19,6 +19,7 @@ import Admin from "../views/admin/Admin.vue";
 import Users from "../views/admin/Users.vue";
 import Roles from "../views/admin/Roles.vue";
 import Makes from "../views/admin/Makes.vue";
+import Classes from "../views/admin/Classes.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -94,6 +95,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'users', name: 'Users', component: Users },
             { path: 'roles', name: 'Roles', component: Roles },
             { path: 'makes', name: 'Makes', component: Makes },
+            { path: 'classes', name: 'Classes', component: Classes },
 
 
         ]
