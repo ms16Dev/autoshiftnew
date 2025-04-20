@@ -49,7 +49,7 @@ import IconButton from "../components/IconButton.vue";
             <router-link to="/admin/classes">
               <IconButton icon="fas fa-list" label="Class" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/engine">
+            <router-link to="/admin/engines">
               <IconButton icon="fas fa-bolt" label="Engine" class="hover:bg-pink-100"/>
             </router-link>
             <router-link to="/admin/gear">
