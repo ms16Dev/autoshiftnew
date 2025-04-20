@@ -218,6 +218,58 @@ public class ReferenceController {
                 ));
     }
 
+    @GetMapping("/engines")
+    public Mono<ResponseEntity<Flux<Engine>>> getEngines() {
+        Flux<Engine> data = mongoTemplate.findAll(Engine.class, "engines");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/engines")
+    public Mono<ResponseEntity<String>> createEngine(@RequestBody Engine engine) {
+        return mongoTemplate.save(engine, "engines")
+                .map(savedEngine -> ResponseEntity.ok("Engine created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating engine: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/engines/{id}")
+    public Mono<ResponseEntity<String>> updateEngine(
+            @PathVariable String id,
+            @RequestBody Engine engine) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        engine.setId(id);
+
+        return mongoTemplate.save(engine, "engines")
+                .map(savedEngine -> ResponseEntity.ok("Engine updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating engine: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/engines/{id}")
+    public Mono<ResponseEntity<String>> deleteEngine(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "engines"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Engine deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Engine not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting role: " + e.getMessage())
+                ));
+    }
+
+
+
     @Setter
     @Getter
     public static class RoleRequest {
@@ -252,6 +304,15 @@ public class ReferenceController {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ClassRequest  implements Serializable {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Engine {
         // Getter and setter
         private String id;
         private String name_en;
