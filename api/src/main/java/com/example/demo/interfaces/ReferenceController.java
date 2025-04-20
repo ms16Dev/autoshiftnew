@@ -1,25 +1,31 @@
 package com.example.demo.interfaces;
 
 
+import com.example.demo.domain.model.Car;
+import com.example.demo.domain.model.Comment;
+import com.example.demo.interfaces.dto.CommentForm;
 import com.example.demo.interfaces.dto.CreatPostCommand;
 import jakarta.validation.Valid;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
 
 
 @RestController
@@ -141,6 +147,76 @@ public class ReferenceController {
                 ));
     }
 
+    @PostMapping("/makes/{id}/classes")
+    public Mono<Boolean> createClassOf(
+            @PathVariable("id") String id,
+            @RequestBody @Valid ClassRequest classRequest) {
+
+        // 1. First create the class document with both names
+        return mongoTemplate.insert(
+                        ClassRequest.builder()
+                                .name_en(classRequest.getName_en())
+                                .name_ar(classRequest.getName_ar())
+                                .build()
+                )
+                // 2. Get the ID of the newly created class
+                .map(ClassRequest::getId)
+                // 3. Update the Make document to reference this new class
+                .flatMap(classId ->
+                        mongoTemplate.update(MakeRequest.class)
+                                .matching(where("id").is(id))
+                                .apply(new Update().push("classes", classId))
+                                .all()
+                                .map(result -> result.getModifiedCount() == 1L)
+                );
+    }
+    @GetMapping("/makes/{id}/classes")
+    public Flux<ClassRequest> getClassesOf(@PathVariable("id") String makeId) {
+        return mongoTemplate.findById(makeId, MakeRequest.class)
+                .flatMapMany(make -> {
+                    if (make.getClasses() == null || make.getClasses().isEmpty()) {
+                        return Flux.empty();
+                    }
+                    return Flux.fromIterable(make.getClasses())
+                            .flatMap(classId -> mongoTemplate.findById(classId, ClassRequest.class));
+                });
+    }
+
+
+    @PutMapping("/classes/{id}")
+    public Mono<ResponseEntity<String>> updateClass(
+            @PathVariable String id,
+            @RequestBody ClassRequest classRequest) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        classRequest.setId(id);
+
+        return mongoTemplate.save(classRequest, "classes")
+                .map(savedRole -> ResponseEntity.ok("Class updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating class: " + e.getMessage())
+                ));
+    }
+
+
+    @DeleteMapping("/classes/{id}")
+    public Mono<ResponseEntity<String>> deleteClass(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "classes"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Class deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Class not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting class: " + e.getMessage())
+                ));
+    }
 
     @Setter
     @Getter
@@ -153,7 +229,12 @@ public class ReferenceController {
 
     @Setter
     @Getter
-    public static class MakeRequest {
+    @Document(collection = "makes")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MakeRequest implements Serializable {
         // Getter and setter
         private String id;
         private String name_en;
@@ -163,6 +244,20 @@ public class ReferenceController {
 
 
     }
+    @Setter
+    @Getter
+    @Document(collection = "classes")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ClassRequest  implements Serializable {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
 
 }
 
