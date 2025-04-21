@@ -25,6 +25,7 @@ import Fuel from "../views/admin/Fuel.vue";
 import Gears from "../views/admin/Gears.vue";
 import Colors from "../views/admin/Colors.vue";
 import Shapes from "../views/admin/Shapes.vue";
+import Luxury from "../views/admin/Luxury.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -106,6 +107,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'gears', name: 'Gears', component: Gears },
             { path: 'colors', name: 'Colors', component: Colors },
             { path: 'shapes', name: 'Shapes', component: Shapes },
+            { path: 'luxury', name: 'Luxury', component: Luxury },
 
 
         ]
