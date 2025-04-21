@@ -522,6 +522,57 @@ public class ReferenceController {
     }
 
 
+ @GetMapping("/safety")
+    public Mono<ResponseEntity<Flux<Safety>>> getSafety() {
+        Flux<Safety> data = mongoTemplate.findAll(Safety.class, "safety");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/safety")
+    public Mono<ResponseEntity<String>> createSafety(@RequestBody Safety safety) {
+        return mongoTemplate.save(safety, "safety")
+                .map(savedEngine -> ResponseEntity.ok("Safety created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating safety: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/safety/{id}")
+    public Mono<ResponseEntity<String>> updateSafety(
+            @PathVariable String id,
+            @RequestBody Safety safety) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        safety.setId(id);
+
+        return mongoTemplate.save(safety, "safety")
+                .map(savedEngine -> ResponseEntity.ok("Safety updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating safety: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/safety/{id}")
+    public Mono<ResponseEntity<String>> deleteSafety(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "safety"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Safety deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Safety not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting safety: " + e.getMessage())
+                ));
+    }
+
+
 
     @Setter
     @Getter
@@ -613,6 +664,15 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Luxury {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Safety {
         // Getter and setter
         private String id;
         private String name_en;
