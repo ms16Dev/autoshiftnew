@@ -319,6 +319,57 @@ public class ReferenceController {
     }
 
 
+    @GetMapping("/gears")
+    public Mono<ResponseEntity<Flux<Gear>>> getGears() {
+        Flux<Gear> data = mongoTemplate.findAll(Gear.class, "gears");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/gears")
+    public Mono<ResponseEntity<String>> createGear(@RequestBody Gear gear) {
+        return mongoTemplate.save(gear, "gears")
+                .map(savedEngine -> ResponseEntity.ok("Gear created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating gear: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/gears/{id}")
+    public Mono<ResponseEntity<String>> updateGear(
+            @PathVariable String id,
+            @RequestBody Gear gear) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        gear.setId(id);
+
+        return mongoTemplate.save(gear, "gears")
+                .map(savedEngine -> ResponseEntity.ok("Gear updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating gear: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/gears/{id}")
+    public Mono<ResponseEntity<String>> deleteGear(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "gears"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Gear deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Gear not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting gear: " + e.getMessage())
+                ));
+    }
+
+
 
     @Setter
     @Getter
@@ -372,6 +423,15 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Fuel {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Gear {
         // Getter and setter
         private String id;
         private String name_en;
