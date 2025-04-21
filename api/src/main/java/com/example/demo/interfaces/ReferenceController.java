@@ -573,6 +573,57 @@ public class ReferenceController {
     }
 
 
+ @GetMapping("/countries")
+    public Mono<ResponseEntity<Flux<Country>>> getCountries() {
+        Flux<Country> data = mongoTemplate.findAll(Country.class, "countries");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/countries")
+    public Mono<ResponseEntity<String>> createCountry(@RequestBody Country country) {
+        return mongoTemplate.save(country, "countries")
+                .map(savedEngine -> ResponseEntity.ok("Country created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating country: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/countries/{id}")
+    public Mono<ResponseEntity<String>> updateCountry(
+            @PathVariable String id,
+            @RequestBody Country country) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        country.setId(id);
+
+        return mongoTemplate.save(country, "countries")
+                .map(savedEngine -> ResponseEntity.ok("Country updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating country: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/countries/{id}")
+    public Mono<ResponseEntity<String>> deleteCountry(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "countries"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Country deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Country not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting country: " + e.getMessage())
+                ));
+    }
+
+
 
     @Setter
     @Getter
@@ -673,6 +724,15 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Safety {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Country {
         // Getter and setter
         private String id;
         private String name_en;
