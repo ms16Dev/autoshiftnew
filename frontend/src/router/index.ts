@@ -21,6 +21,7 @@ import Roles from "../views/admin/Roles.vue";
 import Makes from "../views/admin/Makes.vue";
 import Classes from "../views/admin/Classes.vue";
 import Engines from "../views/admin/Engines.vue";
+import Fuel from "../views/admin/Fuel.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -98,6 +99,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'makes', name: 'Makes', component: Makes },
             { path: 'classes', name: 'Classes', component: Classes },
             { path: 'engines', name: 'Engines', component: Engines },
+            { path: 'fuels', name: 'Fuels', component: Fuel },
 
 
         ]
