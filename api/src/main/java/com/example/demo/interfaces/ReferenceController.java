@@ -419,6 +419,56 @@ public class ReferenceController {
                 ));
     }
 
+ @GetMapping("/shapes")
+    public Mono<ResponseEntity<Flux<Shape>>> getShapes() {
+        Flux<Shape> data = mongoTemplate.findAll(Shape.class, "shapes");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/shapes")
+    public Mono<ResponseEntity<String>> createShape(@RequestBody Shape shape) {
+        return mongoTemplate.save(shape, "shapes")
+                .map(savedEngine -> ResponseEntity.ok("Shape created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating shape: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/shapes/{id}")
+    public Mono<ResponseEntity<String>> updateShape(
+            @PathVariable String id,
+            @RequestBody Shape shape) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        shape.setId(id);
+
+        return mongoTemplate.save(shape, "shapes")
+                .map(savedEngine -> ResponseEntity.ok("Shape updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating shape: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/shapes/{id}")
+    public Mono<ResponseEntity<String>> deleteShape(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "shapes"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Shape deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Shape not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting shape: " + e.getMessage())
+                ));
+    }
+
 
 
     @Setter
@@ -492,6 +542,16 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Color {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+
+    @Setter
+    @Getter
+    public static class Shape {
         // Getter and setter
         private String id;
         private String name_en;
