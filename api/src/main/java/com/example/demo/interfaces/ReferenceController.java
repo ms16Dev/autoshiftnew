@@ -268,14 +268,14 @@ public class ReferenceController {
                 ));
     }
 
-    @GetMapping("/fuels")
+    @GetMapping("/fuel")
     public Mono<ResponseEntity<Flux<Fuel>>> getFuels() {
         Flux<Fuel> data = mongoTemplate.findAll(Fuel.class, "fuels");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
-    @PostMapping("/fuels")
+    @PostMapping("/fuel")
     public Mono<ResponseEntity<String>> createFuel(@RequestBody Fuel fuel) {
         return mongoTemplate.save(fuel, "fuels")
                 .map(savedEngine -> ResponseEntity.ok("Fuel created successfully"))
@@ -284,7 +284,7 @@ public class ReferenceController {
                 ));
     }
 
-    @PutMapping("/fuels/{id}")
+    @PutMapping("/fuel/{id}")
     public Mono<ResponseEntity<String>> updateFuel(
             @PathVariable String id,
             @RequestBody Fuel fuel) {
@@ -299,7 +299,7 @@ public class ReferenceController {
                 ));
     }
 
-    @DeleteMapping("/fuels/{id}")
+    @DeleteMapping("/fuel/{id}")
     public Mono<ResponseEntity<String>> deleteFuel(@PathVariable String id) {
         return mongoTemplate.remove(
                         Query.query(Criteria.where("_id").is(id)),
