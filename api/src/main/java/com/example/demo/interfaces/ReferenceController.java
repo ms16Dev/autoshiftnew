@@ -369,6 +369,56 @@ public class ReferenceController {
                 ));
     }
 
+    @GetMapping("/colors")
+    public Mono<ResponseEntity<Flux<Color>>> getColors() {
+        Flux<Color> data = mongoTemplate.findAll(Color.class, "colors");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/colors")
+    public Mono<ResponseEntity<String>> createColor(@RequestBody Color color) {
+        return mongoTemplate.save(color, "colors")
+                .map(savedEngine -> ResponseEntity.ok("Color created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating color: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/colors/{id}")
+    public Mono<ResponseEntity<String>> updateColor(
+            @PathVariable String id,
+            @RequestBody Color color) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        color.setId(id);
+
+        return mongoTemplate.save(color, "colors")
+                .map(savedEngine -> ResponseEntity.ok("Color updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating color: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/colors/{id}")
+    public Mono<ResponseEntity<String>> deleteColor(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "colors"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Color deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Color not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting color: " + e.getMessage())
+                ));
+    }
+
 
 
     @Setter
@@ -432,6 +482,16 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Gear {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+
+    @Setter
+    @Getter
+    public static class Color {
         // Getter and setter
         private String id;
         private String name_en;
