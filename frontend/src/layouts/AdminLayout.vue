@@ -49,8 +49,8 @@ import IconButton from "../components/IconButton.vue";
             <router-link to="/admin/classes">
               <IconButton icon="fas fa-list" label="Class" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/fuels">
-              <IconButton icon="fas fa-gas-pump" label="Fuels" class="hover:bg-pink-100"/>
+            <router-link to="/admin/fuel">
+              <IconButton icon="fas fa-gas-pump" label="Fuel" class="hover:bg-pink-100"/>
             </router-link>
             <router-link to="/admin/engines">
               <IconButton icon="fas fa-bolt" label="Engine" class="hover:bg-pink-100"/>
@@ -75,12 +75,18 @@ import IconButton from "../components/IconButton.vue";
 
           </div>
 
-          <div class="flex px-2  text-pink-500 font-bold text-md ">Other</div>
+          <div class="flex px-2  text-pink-500 font-bold text-md ">Location</div>
 
           <div class="grid grid-cols-4 w-full justify-between px-3">
 
-          <router-link to="/admin/location">
-            <IconButton icon="fas fa-map-marker" label="Location" class="hover:bg-pink-100"/>
+          <router-link to="/admin/countries">
+            <IconButton icon="fas fa-globe" label="Country" class="hover:bg-pink-100"/>
+          </router-link>
+          <router-link to="/admin/cities">
+            <IconButton icon="fas fa-city" label="City" class="hover:bg-pink-100"/>
+          </router-link>
+          <router-link to="/admin/currencies">
+            <IconButton icon="fas fa-dollar" label="Currency" class="hover:bg-pink-100"/>
           </router-link>
           </div>
 

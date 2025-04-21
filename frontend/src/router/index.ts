@@ -27,6 +27,7 @@ import Colors from "../views/admin/Colors.vue";
 import Shapes from "../views/admin/Shapes.vue";
 import Luxury from "../views/admin/Luxury.vue";
 import Safety from "../views/admin/Safety.vue";
+import Countries from "../views/admin/Countries.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -110,6 +111,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'shapes', name: 'Shapes', component: Shapes },
             { path: 'luxury', name: 'Luxury', component: Luxury },
             { path: 'safety', name: 'Safety', component: Safety },
+            { path: 'countries', name: 'Countries', component: Countries },
 
 
         ]
