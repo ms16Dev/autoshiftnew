@@ -471,6 +471,58 @@ public class ReferenceController {
 
 
 
+ @GetMapping("/luxury")
+    public Mono<ResponseEntity<Flux<Luxury>>> getLuxury() {
+        Flux<Luxury> data = mongoTemplate.findAll(Luxury.class, "luxury");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/luxury")
+    public Mono<ResponseEntity<String>> createLuxury(@RequestBody Luxury luxury) {
+        return mongoTemplate.save(luxury, "luxury")
+                .map(savedEngine -> ResponseEntity.ok("Luxury created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating luxury: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/luxury/{id}")
+    public Mono<ResponseEntity<String>> updateLuxury(
+            @PathVariable String id,
+            @RequestBody Luxury luxury) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        luxury.setId(id);
+
+        return mongoTemplate.save(luxury, "luxury")
+                .map(savedEngine -> ResponseEntity.ok("Luxury updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating luxury: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/luxury/{id}")
+    public Mono<ResponseEntity<String>> deleteLuxury(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "luxury"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Luxury deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Luxury not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting luxury: " + e.getMessage())
+                ));
+    }
+
+
+
     @Setter
     @Getter
     public static class RoleRequest {
@@ -552,6 +604,15 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Shape {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Luxury {
         // Getter and setter
         private String id;
         private String name_en;
