@@ -74,9 +74,9 @@ const logout = () => {
       </li>
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Settings"
+            text="Admin"
             icon="fas fa-cogs"
-            :target="`/settings/${store.userInfo?.name ?? ''}`"
+            :target="`/admin`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated">
@@ -117,9 +117,9 @@ const logout = () => {
       </li>
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Settings"
+            text="Admin"
             icon="fas fa-cogs"
-            :target="`/settings/${store.userInfo?.name ?? ''}`"
+            :target="`/admin`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated">
