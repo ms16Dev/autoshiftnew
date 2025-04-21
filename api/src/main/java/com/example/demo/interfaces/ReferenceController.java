@@ -268,6 +268,56 @@ public class ReferenceController {
                 ));
     }
 
+    @GetMapping("/fuels")
+    public Mono<ResponseEntity<Flux<Fuel>>> getFuels() {
+        Flux<Fuel> data = mongoTemplate.findAll(Fuel.class, "fuels");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+    @PostMapping("/fuels")
+    public Mono<ResponseEntity<String>> createFuel(@RequestBody Fuel fuel) {
+        return mongoTemplate.save(fuel, "fuels")
+                .map(savedEngine -> ResponseEntity.ok("Fuel created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating fuel: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/fuels/{id}")
+    public Mono<ResponseEntity<String>> updateFuel(
+            @PathVariable String id,
+            @RequestBody Fuel fuel) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        fuel.setId(id);
+
+        return mongoTemplate.save(fuel, "fuels")
+                .map(savedEngine -> ResponseEntity.ok("Fuel updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating fuel: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/fuels/{id}")
+    public Mono<ResponseEntity<String>> deleteFuel(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "fuels"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Fuel deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Fuel not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting fuel: " + e.getMessage())
+                ));
+    }
+
 
 
     @Setter
@@ -313,6 +363,15 @@ public class ReferenceController {
     @Setter
     @Getter
     public static class Engine {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    public static class Fuel {
         // Getter and setter
         private String id;
         private String name_en;
