@@ -61,7 +61,7 @@ import IconButton from "../components/IconButton.vue";
             <router-link to="/admin/colors">
               <IconButton icon="fas fa-brush" label="Color" class="hover:bg-pink-100"/>
             </router-link>
-            <router-link to="/admin/shape">
+            <router-link to="/admin/shapes">
               <IconButton icon="fas fa-car" label="Shape" class="hover:bg-pink-100"/>
             </router-link>
             <router-link to="/admin/luxury">
