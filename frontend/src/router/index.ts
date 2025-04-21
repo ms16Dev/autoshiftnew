@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'makes', name: 'Makes', component: Makes },
             { path: 'classes', name: 'Classes', component: Classes },
             { path: 'engines', name: 'Engines', component: Engines },
-            { path: 'fuels', name: 'Fuels', component: Fuel },
+            { path: 'fuel', name: 'Fuel', component: Fuel },
             { path: 'gears', name: 'Gears', component: Gears },
             { path: 'colors', name: 'Colors', component: Colors },
             { path: 'shapes', name: 'Shapes', component: Shapes },

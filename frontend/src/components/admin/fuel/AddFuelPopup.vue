@@ -14,7 +14,7 @@ const handleSubmit = async () => {
   try {
 
 
-    await apiService.post(`/ref-data/fuels`, {
+    await apiService.post(`/ref-data/fuel`, {
       name_en: fuelNameEn.value,
       name_ar: fuelNameAr.value,
 

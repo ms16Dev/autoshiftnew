@@ -27,7 +27,7 @@ onMounted(async () => {
 
 const handlePageChange = async () => {
   try {
-    const response = await apiService.get1("/ref-data/fuels");
+    const response = await apiService.get1("/ref-data/fuel");
     fuels.value = response.data || [];
   } catch (error) {
     console.error("Error fetching fuels:", error);
@@ -94,7 +94,7 @@ const handleFuelUpdated = async () => {
             <!--Devider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
             <div class="flex justify-between items-center bg-gray-100">
-              <div class="flex px-4 text-pink-500 font-bold text-2xl">Fuels</div>
+              <div class="flex px-4 text-pink-500 font-bold text-2xl">Fuel</div>
 
               <div class="flex p-4 text-pink-500 font-bold text-2xl">
                    <IconButton icon="fas fa-plus" label="Add" class="hover:bg-pink-100" @click="toggleAddFuelPopup"/>

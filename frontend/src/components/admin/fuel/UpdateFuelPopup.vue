@@ -26,7 +26,7 @@ const handleSubmit = async () => {
 
 
     // Use PUT for updates (since we're modifying an existing role)
-    await apiService.update("/ref-data/fuels", props.id, {
+    await apiService.update("/ref-data/fuel", props.id, {
       name_en: fuelNameEn.value,
       name_ar: fuelNameAr.value,
     });
