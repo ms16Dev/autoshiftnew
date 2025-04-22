@@ -1,12 +1,9 @@
 package com.example.demo.interfaces;
 
 
-import com.example.demo.domain.model.Car;
-import com.example.demo.domain.model.Comment;
-import com.example.demo.interfaces.dto.CommentForm;
-import com.example.demo.interfaces.dto.CreatPostCommand;
 import jakarta.validation.Valid;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,13 +16,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.http.ResponseEntity.created;
-import static org.springframework.http.ResponseEntity.noContent;
 
 
 @RestController
@@ -170,6 +164,7 @@ public class ReferenceController {
                                 .map(result -> result.getModifiedCount() == 1L)
                 );
     }
+
     @GetMapping("/makes/{id}/classes")
     public Flux<ClassRequest> getClassesOf(@PathVariable("id") String makeId) {
         return mongoTemplate.findById(makeId, MakeRequest.class)
@@ -225,6 +220,7 @@ public class ReferenceController {
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/engines")
     public Mono<ResponseEntity<String>> createEngine(@RequestBody Engine engine) {
         return mongoTemplate.save(engine, "engines")
@@ -275,6 +271,7 @@ public class ReferenceController {
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/fuel")
     public Mono<ResponseEntity<String>> createFuel(@RequestBody Fuel fuel) {
         return mongoTemplate.save(fuel, "fuels")
@@ -326,6 +323,7 @@ public class ReferenceController {
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/gears")
     public Mono<ResponseEntity<String>> createGear(@RequestBody Gear gear) {
         return mongoTemplate.save(gear, "gears")
@@ -376,6 +374,7 @@ public class ReferenceController {
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/colors")
     public Mono<ResponseEntity<String>> createColor(@RequestBody Color color) {
         return mongoTemplate.save(color, "colors")
@@ -419,13 +418,14 @@ public class ReferenceController {
                 ));
     }
 
- @GetMapping("/shapes")
+    @GetMapping("/shapes")
     public Mono<ResponseEntity<Flux<Shape>>> getShapes() {
         Flux<Shape> data = mongoTemplate.findAll(Shape.class, "shapes");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/shapes")
     public Mono<ResponseEntity<String>> createShape(@RequestBody Shape shape) {
         return mongoTemplate.save(shape, "shapes")
@@ -470,14 +470,14 @@ public class ReferenceController {
     }
 
 
-
- @GetMapping("/luxury")
+    @GetMapping("/luxury")
     public Mono<ResponseEntity<Flux<Luxury>>> getLuxury() {
         Flux<Luxury> data = mongoTemplate.findAll(Luxury.class, "luxury");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/luxury")
     public Mono<ResponseEntity<String>> createLuxury(@RequestBody Luxury luxury) {
         return mongoTemplate.save(luxury, "luxury")
@@ -522,13 +522,14 @@ public class ReferenceController {
     }
 
 
- @GetMapping("/safety")
+    @GetMapping("/safety")
     public Mono<ResponseEntity<Flux<Safety>>> getSafety() {
         Flux<Safety> data = mongoTemplate.findAll(Safety.class, "safety");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/safety")
     public Mono<ResponseEntity<String>> createSafety(@RequestBody Safety safety) {
         return mongoTemplate.save(safety, "safety")
@@ -573,58 +574,102 @@ public class ReferenceController {
     }
 
 
- @GetMapping("/countries")
+
+    @GetMapping("/countries")
     public Mono<ResponseEntity<Flux<Country>>> getCountries() {
         Flux<Country> data = mongoTemplate.findAll(Country.class, "countries");
-
-        // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
+
     @PostMapping("/countries")
-    public Mono<ResponseEntity<String>> createCountry(@RequestBody Country country) {
+    public Mono<ResponseEntity<String>> createCountry(@RequestBody @Valid Country country) {
         return mongoTemplate.save(country, "countries")
-                .map(savedEngine -> ResponseEntity.ok("Country created successfully"))
+                .map(saved -> ResponseEntity.ok("Country created successfully"))
                 .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating country: " + e.getMessage())
-                ));
+                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+                );
     }
 
     @PutMapping("/countries/{id}")
-    public Mono<ResponseEntity<String>> updateCountry(
-            @PathVariable String id,
-            @RequestBody Country country) {
-
-        // Set the ID from path variable to ensure we're updating the correct document
+    public Mono<ResponseEntity<String>> updateCountry(@PathVariable String id, @RequestBody Country country) {
         country.setId(id);
-
         return mongoTemplate.save(country, "countries")
-                .map(savedEngine -> ResponseEntity.ok("Country updated successfully"))
+                .map(saved -> ResponseEntity.ok("Country updated successfully"))
                 .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error updating country: " + e.getMessage())
-                ));
+                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+                );
     }
 
     @DeleteMapping("/countries/{id}")
     public Mono<ResponseEntity<String>> deleteCountry(@PathVariable String id) {
-        return mongoTemplate.remove(
-                        Query.query(Criteria.where("_id").is(id)),
-                        "countries"
-                )
-                .map(deleteResult -> {
-                    if (deleteResult.getDeletedCount() > 0) {
-                        return ResponseEntity.ok("Country deleted successfully");
-                    } else {
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                .body("Country not found with id: " + id);
+        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)), "countries")
+                .flatMap(result -> {
+                    if (result.getDeletedCount() > 0) {
+                        return Mono.just(ResponseEntity.ok("Country deleted successfully"));
                     }
+                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body("Country not found with id: " + id));
                 })
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error deleting country: " + e.getMessage())
-                ));
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
 
+    @PostMapping("/countries/{id}/cities")
+    public Mono<ResponseEntity<String>> createCityOf(@PathVariable String id, @RequestBody @Valid City city) {
+        city.setCountryId(id); // denormalized ref
 
+        return mongoTemplate.insert(city, "cities")
+                .flatMap(savedCity ->
+                        mongoTemplate.update(Country.class)
+                                .matching(Query.query(Criteria.where("_id").is(id)))
+                                .apply(new Update().push("cities", savedCity.getId()))
+                                .all()
+                                .flatMap(result -> {
+                                    if (result.getModifiedCount() == 1L) {
+                                        return Mono.just(ResponseEntity.ok("City created and linked."));
+                                    }
+                                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                            .body("Country not found."));
+                                }))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+                );
+    }
 
+    @GetMapping("/countries/{id}/cities")
+    public Flux<City> getCitiesOf(@PathVariable String id) {
+        return mongoTemplate.findById(id, Country.class)
+                .flatMapMany(country -> {
+                    if (country.getCities() == null || country.getCities().isEmpty()) {
+                        return Flux.empty();
+                    }
+                    return Flux.fromIterable(country.getCities())
+                            .flatMap(cityId -> mongoTemplate.findById(cityId, City.class));
+                });
+    }
+
+    @PutMapping("/cities/{id}")
+    public Mono<ResponseEntity<String>> updateCity(@PathVariable String id, @RequestBody City city) {
+        city.setId(id);
+        return mongoTemplate.save(city, "cities")
+                .map(saved -> ResponseEntity.ok("City updated successfully"))
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
+    }
+
+    @DeleteMapping("/cities/{id}")
+    public Mono<ResponseEntity<String>> deleteCity(@PathVariable String id) {
+        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)), "cities")
+                .flatMap(result -> {
+                    if (result.getDeletedCount() > 0) {
+                        return mongoTemplate.updateMulti(
+                                        Query.query(Criteria.where("cities").in(id)),
+                                        new Update().pull("cities", id),
+                                        Country.class)
+                                .thenReturn(ResponseEntity.ok("City deleted and references removed."));
+                    }
+                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body("City not found."));
+                })
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
+    }
     @Setter
     @Getter
     public static class RoleRequest {
@@ -651,6 +696,7 @@ public class ReferenceController {
 
 
     }
+
     @Setter
     @Getter
     @Document(collection = "classes")
@@ -658,7 +704,7 @@ public class ReferenceController {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ClassRequest  implements Serializable {
+    public static class ClassRequest implements Serializable {
         // Getter and setter
         private String id;
         private String name_en;
@@ -730,13 +776,35 @@ public class ReferenceController {
         private String name_ar;
     }
 
-    @Setter
-    @Getter
+    @Document("countries")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Country {
-        // Getter and setter
+        @Id
         private String id;
+
         private String name_en;
         private String name_ar;
+
+        private List<String> cities;
+    }
+
+
+    @Document("cities")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class City {
+        @Id
+        private String id;
+
+        private String name_en;
+        private String name_ar;
+
+        private String countryId; // optional but useful for reverse queries
     }
 
 
