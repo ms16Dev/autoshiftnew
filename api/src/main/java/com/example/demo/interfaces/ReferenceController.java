@@ -613,6 +613,8 @@ public class ReferenceController {
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
 
+
+
     @PostMapping("/countries/{id}/cities")
     public Mono<ResponseEntity<String>> createCityOf(@PathVariable String id, @RequestBody @Valid City city) {
         city.setCountryId(id); // denormalized ref
@@ -667,6 +669,68 @@ public class ReferenceController {
                                 .thenReturn(ResponseEntity.ok("City deleted and references removed."));
                     }
                     return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body("City not found."));
+                })
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
+    }
+
+
+
+
+    @PostMapping("/countries/{id}/currencies")
+    public Mono<ResponseEntity<String>> createCurrencyOf(@PathVariable String id, @RequestBody @Valid Currency currency) {
+        currency.setCountryId(id); // denormalized ref
+
+        return mongoTemplate.insert(currency, "currencies")
+                .flatMap(savedCurrency ->
+                        mongoTemplate.update(Country.class)
+                                .matching(Query.query(Criteria.where("_id").is(id)))
+                                .apply(new Update().push("currencies", savedCurrency.getId()))
+                                .all()
+                                .flatMap(result -> {
+                                    if (result.getModifiedCount() == 1L) {
+                                        return Mono.just(ResponseEntity.ok("Currency created and linked."));
+                                    }
+                                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                            .body("Country not found."));
+                                }))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+                );
+    }
+
+    @GetMapping("/countries/{id}/currencies")
+    public Flux<Currency> getCurrenciesOf(@PathVariable String id) {
+        return mongoTemplate.findById(id, Country.class)
+                .doOnNext(country -> System.out.println("Fetched Country: " + country))
+                .flatMapMany(country -> {
+                    if (country.getCurrencies() == null || country.getCurrencies().isEmpty()) {
+                        return Flux.empty();
+                    }
+                    return Flux.fromIterable(country.getCurrencies())
+                            .flatMap(currencyId -> mongoTemplate.findById(currencyId, Currency.class));
+                });
+    }
+
+    @PutMapping("/currencies/{id}")
+    public Mono<ResponseEntity<String>> updateCurrency(@PathVariable String id, @RequestBody Currency currency) {
+        currency.setId(id);
+        return mongoTemplate.save(currency, "currencies")
+                .map(saved -> ResponseEntity.ok("Currency updated successfully"))
+                .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
+    }
+
+    @DeleteMapping("/currencies/{id}")
+    public Mono<ResponseEntity<String>> deleteCurrency(@PathVariable String id) {
+        return mongoTemplate.remove(Query.query(Criteria.where("_id").is(id)), "currencies")
+                .flatMap(result -> {
+                    if (result.getDeletedCount() > 0) {
+                        return mongoTemplate.updateMulti(
+                                        Query.query(Criteria.where("currencies").in(id)),
+                                        new Update().pull("currencies", id),
+                                        Country.class)
+                                .thenReturn(ResponseEntity.ok("Currency deleted and references removed."));
+                    }
+                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Currency not found."));
                 })
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
@@ -789,6 +853,7 @@ public class ReferenceController {
         private String name_ar;
 
         private List<String> cities;
+        private List<String> currencies;
     }
 
 
@@ -804,8 +869,25 @@ public class ReferenceController {
         private String name_en;
         private String name_ar;
 
-        private String countryId; // optional but useful for reverse queries
+        private String countryId;
     }
+
+
+    @Document("currencies")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Currency {
+        // Getter and setter
+        private String id;
+        private String name_en;
+        private String name_ar;
+
+        private String countryId;
+
+    }
+
 
 
 }
