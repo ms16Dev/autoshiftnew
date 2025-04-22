@@ -29,6 +29,7 @@ import Luxury from "../views/admin/Luxury.vue";
 import Safety from "../views/admin/Safety.vue";
 import Countries from "../views/admin/Countries.vue";
 import Cities from "../views/admin/Cities.vue";
+import Currencies from "../views/admin/Currencies.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -114,6 +115,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'safety', name: 'Safety', component: Safety },
             { path: 'countries', name: 'Countries', component: Countries },
             { path: 'cities', name: 'Cities', component: Cities },
+            { path: 'currencies', name: 'Currencies', component: Currencies },
 
 
         ]
