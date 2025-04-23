@@ -56,7 +56,7 @@ const formattedCreatedDate = computed(() => {
 
 <!-- Cover image-->
         <div class="overflow-hidden">
-          <img class="w-full h-[200px] transition-transform duration-700  group-hover:scale-110" :src="'http://localhost:8080'+car.coverImage"/>
+          <img class="w-full h-[200px] transition-transform duration-700 object-contain  group-hover:scale-110" :src="'http://localhost:8080'+car.coverImage"/>
 
         </div>
 <!--Devider-->

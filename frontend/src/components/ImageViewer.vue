@@ -2,7 +2,7 @@
   <div class="image-viewer flex flex-col  items-center">
 
     <div class="w-full col-span-2 h-[460px]">
-      <img :src="currentImage" class="w-full h-full object-cover" alt="cover image">
+      <img :src="currentImage" class="w-full h-full object-contain" alt="cover image">
     </div>
 
     <!-- Thumbnails section -->
@@ -11,7 +11,7 @@
       <img
           :src="'http://localhost:8080'+coverPhoto"
           alt="Cover Image"
-          class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-cover"
+          class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(coverPhoto)"
       />
 
@@ -21,7 +21,7 @@
           :key="index"
           :src="'http://localhost:8080'+image"
           alt="Thumbnail"
-          class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-cover"
+          class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(image)"
       />
     </div>

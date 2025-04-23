@@ -56,13 +56,13 @@ function removeImage() {
           v-if="image"
           :src="image"
           alt="Selected"
-          class="object-cover w-full h-full"
+          class="object-contain w-full h-full"
       />
       <img
           v-else
           :src="props.bg"
           alt="Placeholder"
-          class="object-cover w-full h-full"
+          class="object-contain w-full h-full"
       />
 
       <button
