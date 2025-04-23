@@ -11,8 +11,8 @@ defineProps({
 </script>
 
 <template>
-    <button class="text-2xl bg-pink-400 rounded-full m-1">
-      <i :class="['fas', 'fa-check', 'text-2xl text-center w-12 h-8  md:h-10 xl:w-5 xl:h-8 xl:text-lg xl:text-center me-2']" />
+    <button class="text-sm bg-pink-400 rounded-full m-1">
+      <i :class="['fas', 'fa-check', 'text-sm text-center w-12 h-4  md:h-4 xl:w-5 xl:h-4 xl:text-lg xl:text-center me-2']" />
       <span class=" font-medium">{{ option }}</span>
     </button>
 </template>
