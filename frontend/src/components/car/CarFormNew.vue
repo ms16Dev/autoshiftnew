@@ -1,12 +1,7 @@
 <script setup lang="ts">
 
 import ImageLoader from '../ImageLoader.vue';
-import {reactive, ref} from "vue";
-
-const formatNumber = (number: number): string => {
-  return new Intl.NumberFormat('en-US').format(number);
-};
-
+import {onMounted, reactive, ref, toRaw} from "vue";
 import PricePopUp from "./PricePopUp.vue";
 import MakePopUp, {Make} from "./MakePopUp.vue";
 import MileagePopUp from "./MileagePopUp.vue";
@@ -14,15 +9,19 @@ import YearPopUp from "./YearPopUp.vue"
 import OptionsPopUp from "./OptionsPopUp.vue";
 import ChipsPopUp from "./ChipsPopUp.vue";
 import ApiService from "../../core/services/ApiService.ts";
+import apiService from "../../core/services/ApiService.ts";
 import MultiImageLoader from "../MultiImageLoader.vue";
 import {Car} from "../../types/Car.ts";
 import axios from "axios";
 import {useAuthStore} from "../../stores/auth.ts";
-import { origins, gears, car_type, engine_type, shapes, colors } from '../../core/data/carOoptions';
 import IconButton from "../IconButton.vue";
 
+const formatNumber = (number: number): string => {
+  return new Intl.NumberFormat('en-US').format(number);
+};
 
-let classes: string[];
+
+const classes = ref<RefOption[]>([])
 const make = ref<Make | null>(null);
 const formData1 = ref(new FormData());
 const formData = ref(new FormData());
@@ -32,13 +31,13 @@ const state = reactive({
   price: 1500,
   mileage: 121000,
   year: 2018,
-  origin: 'Korean',
-  gear: 'Auto',
-  class: 'Yaris',
-  type: 'Hybrid',
-  engine: '4 piston',
-  shape: 'Sedan',
-  color: 'Red',
+  origin: 'Status',
+  gear: 'Gear',
+  class: 'class',
+  type: 'Fuel',
+  engine: 'Engine',
+  shape: 'Shape',
+  color: 'Color',
   luxury: [] as string[],
   safety: [] as string[],
   location: [] as string[],
@@ -82,29 +81,44 @@ const handleSave = <T extends keyof typeof state>(field: T) => {
 
 const setMake = (value: Make) =>{
   make.value = value;
-  const item = make_data.value.find((obj) => obj.name_en === value.name);
-  classes = item ? item.class_en : [];
-  state.class = classes[0]
+  getClasses(make.value.id)
   toggleMake();
 }
+
+const getClasses = async (id: string) => {
+  try {
+    const response = await apiService.get1(`/ref-data/makes/${id}/classes`);
+
+    const rawData = toRaw(response.data || []);
+
+    // Extract only the `name_en` values
+    // Save the names to classes.value
+    classes.value = rawData
+
+
+  } catch (error) {
+    console.error("Error fetching classes:", error);
+    classes.value = [];
+  }
+};
 
 
 const toggleMake = () => {
   state.makePopUp = !state.makePopUp
 }
 
-const make_data = ref<any[]>([]); // Initialize refdata as an empty array
 
-const fetchData = async () => {
+const fetchMakes = async () => {
   try {
-    const { data } = await ApiService.get("/ref-data"); // Use await with the async function
-    make_data.value = data;  // Update the refdata without blocking the UI
+    const { data } = await ApiService.get1("/ref-data/makes"); // Use await with the async function
 
-    makes.value = make_data.value.map((item: any) => ({
-      name: item.name_en,
-      name_ar: item.name_ar,
-      url: item.url,
-    }));
+    makes.value = data
+
+    // Initialize `make` with the first element of the array
+    if (Array.isArray(data) && data.length > 0) {
+      make.value = data[0];
+      await getClasses(make.value?.id!!)
+    }
 
   } catch (err) {
     // Handle error response
@@ -113,8 +127,46 @@ const fetchData = async () => {
   }
 };
 
-// Call the fetchData function
-fetchData();
+export interface RefOption {
+  name_en: string;
+  name_ar: string;
+}
+
+const fetchRefOptions = async (endpoint: string): Promise<RefOption[]> => {
+  try {
+    const { data } = await ApiService.get1(`/ref-data/${endpoint}`);
+    return data;
+  } catch (err) {
+    const error = err as any;
+    console.error(`Error fetching ${endpoint}:`, error.response?.data.errors || error);
+    return [];
+  }
+};
+
+
+const gears = ref<RefOption[]>([]);
+const fuel = ref<RefOption[]>([]);
+const engines = ref<RefOption[]>([]);
+const shapes = ref<RefOption[]>([]);
+const colors = ref<RefOption[]>([]);
+const luxury = ref<RefOption[]>([]);
+const safety = ref<RefOption[]>([]);
+const cities = ref<RefOption[]>([]);
+
+
+onMounted(async () => {
+  await fetchMakes();
+  gears.value = await fetchRefOptions("gears");
+  fuel.value = await fetchRefOptions("fuel");
+  engines.value = await fetchRefOptions("engines");
+  shapes.value = await fetchRefOptions("shapes");
+  colors.value = await fetchRefOptions("colors");
+  luxury.value = await fetchRefOptions("luxury");
+  safety.value = await fetchRefOptions("safety");
+  cities.value = await fetchRefOptions("countries/680678eede029f39388c0f7f/cities");
+});
+
+// Call the fetchMakes function
 const makes = ref<Make[]>([]); // Declare `makes` as a ref to hold the array of makes
 
 const saveCar = async () => {
@@ -146,7 +198,7 @@ const saveCar = async () => {
       coverImage: coverUrl,
       price: state.price,
       origin: state.origin,
-      make: make.value?.name!!,
+      make: make.value?.name_en!!,
       makeUrl: make.value?.url!!,
       model: state.class,
       year: state.year,
@@ -196,12 +248,12 @@ const saveCar = async () => {
           <image-loader @file-selected="(value) => formData1 = value"  class="w-full"/>
 
         </div>
-<!--Devider-->
+<!--Divider-->
       <div class="w-full border-b-2 border-b-pink-700 "></div>
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
-          <img :src="`/public/carmakes/${make?.url ?? '2.png'} `">
+          <img :src="`http://localhost:8080${make?.url } `">
         </button>
 
 
@@ -219,39 +271,18 @@ const saveCar = async () => {
 
       </div>
 
-      <div class="grid grid-cols-4 w-full justify-between px-3">
-
-
-
-        <IconButton :label="formatNumber(state.mileage ?? 0)" icon="fas fa-tachometer" @click="togglePopUp('mileagePopUp')"/>
-        <IconButton :label="state.gear" icon="fas fa-gears" @click="togglePopUp('gearPopUp')"/>
-        <IconButton :label="state.type" icon="fas fa-gas-pump"  @click="togglePopUp('typePopUp')"/>
-        <IconButton :label="state.engine" icon="fas fa-bolt"  @click="togglePopUp('enginePopUp')"/>
-        <IconButton :label="state.shape" icon="fas fa-car"  @click="togglePopUp('shapePopUp')"/>
-        <IconButton :label="state.color" icon="fas fa-brush"  @click="togglePopUp('colorPopUp')"/>
-        <IconButton label="Luxury" icon="fas fa-leaf"  @click="togglePopUp('luxuryPopUp')"/>
-        <IconButton label="Safety" icon="fas fa-life-ring"  @click="togglePopUp('safetyPopUp')"/>
-        <IconButton label="Location" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
-        <IconButton label="Description" icon="fas fa-map-marker"  @click="togglePopUp('locationPopUp')"/>
-
-        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-star bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            Star</span>
-        </button>
-
-        <button class="flex flex-col items-center justify-center" @click="togglePopUp('mileagePopUp')">
-          <i class="w-8 h-8 rounded-full fas fa-crown bg-pink-700 text-white text-sm p-2  flex items-center justify-center"></i>
-          <span class="text-pink-700  font-bold text-center px-2 h-[30px] flex items-center justify-center">
-            Feature</span>
-        </button>
-
-
-
-
-
-
-      </div>
+        <div class="grid grid-cols-4 w-full justify-between px-3 gap-2">
+          <IconButton class="hover:bg-pink-100" :label="formatNumber(state.mileage ?? 0)" icon="fas fa-tachometer" @click="togglePopUp('mileagePopUp')" />
+          <IconButton class="hover:bg-pink-100" :label="state.gear" icon="fas fa-gears" @click="togglePopUp('gearPopUp')" />
+          <IconButton class="hover:bg-pink-100" :label="state.type" icon="fas fa-gas-pump" @click="togglePopUp('typePopUp')" />
+          <IconButton class="hover:bg-pink-100" :label="state.engine" icon="fas fa-bolt" @click="togglePopUp('enginePopUp')" />
+          <IconButton class="hover:bg-pink-100" :label="state.shape" icon="fas fa-car" @click="togglePopUp('shapePopUp')" />
+          <IconButton class="hover:bg-pink-100" :label="state.color" icon="fas fa-brush" @click="togglePopUp('colorPopUp')" />
+          <IconButton class="hover:bg-pink-100" label="Luxury" icon="fas fa-leaf" @click="togglePopUp('luxuryPopUp')" />
+          <IconButton class="hover:bg-pink-100" label="Safety" icon="fas fa-life-ring" @click="togglePopUp('safetyPopUp')" />
+          <IconButton class="hover:bg-pink-100" label="Location" icon="fas fa-map-marker" @click="togglePopUp('locationPopUp')" />
+          <IconButton class="hover:bg-pink-100" label="Description" icon="fas fa-info" @click="togglePopUp('locationPopUp')" />
+        </div>
 
         <div class="w-full border-b-2 border-b-pink-700 mt-4 "></div>
         <div class="flex row-auto w-full  justify-center">
@@ -319,52 +350,64 @@ const saveCar = async () => {
         v-if="state.originPopUp"
         @choice="(value) => handleSave('origin')(value)"
         @close="state.originPopUp = false"
-        :options="origins"></OptionsPopUp>
+        :options="gears"
+        :title="'Status'"></OptionsPopUp>
 
     <OptionsPopUp
         v-if="state.gearPopUp"
         @choice="(value) => handleSave('gear')(value)"
         @close="state.gearPopUp = false"
-        :options="gears"></OptionsPopUp>
+        :options="gears"
+        :title="'Gear type'"></OptionsPopUp>
 
     <OptionsPopUp
         v-if="state.classPopUp"
         @choice="(value) => handleSave('class')(value)"
         @close="state.classPopUp = false"
-        :options="classes"></OptionsPopUp>
+        :options="classes"
+        :title="'Class / Model'"></OptionsPopUp>
+
 
     <OptionsPopUp
         v-if="state.typePopUp"
         @choice="(value) => handleSave('type')(value)"
         @close="state.typePopUp = false"
-        :options="car_type"></OptionsPopUp>
+        :options="fuel"
+        :title="'Fuel type'"></OptionsPopUp>
+
 
     <OptionsPopUp
         v-if="state.enginePopUp"
         @choice="(value) => handleSave('engine')(value)"
         @close="state.enginePopUp = false"
-        :options="engine_type"></OptionsPopUp>
+        :options="engines"
+        :title="'Engine size'"></OptionsPopUp>
+
 
 
     <OptionsPopUp
         v-if="state.shapePopUp"
         @choice="(value) => handleSave('shape')(value)"
         @close="state.shapePopUp = false"
-        :options="shapes"></OptionsPopUp>
+        :options="shapes"
+        :title="'Body shape'"></OptionsPopUp>
+
 
 
     <OptionsPopUp
         v-if="state.colorPopUp"
         @choice="(value) => handleSave('color')(value)"
         @close="state.colorPopUp = false"
-        :options="colors"></OptionsPopUp>
+        :options="colors"
+        :title="'Color'"></OptionsPopUp>
+
 
 
     <ChipsPopUp
         v-if="state.luxuryPopUp"
         @choice="(value) => handleSave('luxury')(value)"
         @close="state.luxuryPopUp = false"
-        :options="shapes"
+        :options="luxury"
         title="List luxury features"
         :checked="state.luxury"></ChipsPopUp>
 
@@ -372,17 +415,17 @@ const saveCar = async () => {
         v-if="state.safetyPopUp"
         @choice="(value) => handleSave('safety')(value)"
         @close="state.safetyPopUp = false"
-        :options="shapes"
+        :options="safety"
         title="List safety features"
         :checked="state.safety"></ChipsPopUp>
 
-    <ChipsPopUp
+     <OptionsPopUp
         v-if="state.locationPopUp"
         @choice="(value) => handleSave('location')(value)"
         @close="state.locationPopUp = false"
-        :options="shapes"
-        title="Add location"
-        :checked="state.location"></ChipsPopUp>
+        :options="cities"
+        :title="'location'"></OptionsPopUp>
+
 
   </div>
 </template>
