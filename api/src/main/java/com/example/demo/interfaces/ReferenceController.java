@@ -734,6 +734,62 @@ public class ReferenceController {
                 })
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
+
+
+    @GetMapping("/status")
+    public Mono<ResponseEntity<Flux<Status>>> getStatus() {
+        Flux<Status> data = mongoTemplate.findAll(Status.class, "status");
+
+        // Return a ResponseEntity wrapping the Flux
+        return Mono.just(ResponseEntity.ok(data));
+    }
+
+    @PostMapping("/status")
+    public Mono<ResponseEntity<String>> createStatus(@RequestBody Status status) {
+        return mongoTemplate.save(status, "status")
+                .map(savedEngine -> ResponseEntity.ok("Status created successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error creating status: " + e.getMessage())
+                ));
+    }
+
+    @PutMapping("/status/{id}")
+    public Mono<ResponseEntity<String>> updateStatus(
+            @PathVariable String id,
+            @RequestBody Status status) {
+
+        // Set the ID from path variable to ensure we're updating the correct document
+        status.setId(id);
+
+        return mongoTemplate.save(status, "status")
+                .map(savedEngine -> ResponseEntity.ok("Status updated successfully"))
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error updating status: " + e.getMessage())
+                ));
+    }
+
+    @DeleteMapping("/status/{id}")
+    public Mono<ResponseEntity<String>> deleteStatus(@PathVariable String id) {
+        return mongoTemplate.remove(
+                        Query.query(Criteria.where("_id").is(id)),
+                        "status"
+                )
+                .map(deleteResult -> {
+                    if (deleteResult.getDeletedCount() > 0) {
+                        return ResponseEntity.ok("Status deleted successfully");
+                    } else {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body("Status not found with id: " + id);
+                    }
+                })
+                .onErrorResume(e -> Mono.just(
+                        ResponseEntity.internalServerError().body("Error deleting status: " + e.getMessage())
+                ));
+    }
+
+
+
+
     @Setter
     @Getter
     public static class RoleRequest {
@@ -887,6 +943,21 @@ public class ReferenceController {
         private String countryId;
 
     }
+
+
+    @Document("status")
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Status {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
 
 
 
