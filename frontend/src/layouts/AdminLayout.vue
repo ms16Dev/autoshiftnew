@@ -21,7 +21,7 @@ import IconButton from "../components/IconButton.vue";
 
             <p class="mt-2 text-gray-500">Connecting buyers and sellers in the car market</p>
           </div>
-          <!--Devider-->
+          <!--Divider-->
           <div class="w-full border-b-2 border-b-pink-700 "></div>
           <div class="flex justify-center text-pink-500 font-bold text-2xl ">Admin</div>
 
@@ -43,6 +43,9 @@ import IconButton from "../components/IconButton.vue";
           <div class="grid grid-cols-4 w-full justify-between px-3">
 
 
+            <router-link to="/admin/status">
+              <IconButton icon="fas fa-info-circle" label="Status" class="hover:bg-pink-100"/>
+            </router-link>
             <router-link to="/admin/makes">
               <IconButton icon="fas fa-tag" label="Make" class="hover:bg-pink-100"/>
             </router-link>

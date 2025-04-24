@@ -30,6 +30,7 @@ import Safety from "../views/admin/Safety.vue";
 import Countries from "../views/admin/Countries.vue";
 import Cities from "../views/admin/Cities.vue";
 import Currencies from "../views/admin/Currencies.vue";
+import Status from "../views/admin/Status.vue";
 import {useAuthStore} from "../stores/auth.ts";
 
 
@@ -116,6 +117,7 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'countries', name: 'Countries', component: Countries },
             { path: 'cities', name: 'Cities', component: Cities },
             { path: 'currencies', name: 'Currencies', component: Currencies },
+            { path: 'status', name: 'Status', component: Status },
 
 
         ]
