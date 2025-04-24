@@ -89,11 +89,9 @@ const getClasses = async (id: string) => {
   try {
     const response = await apiService.get1(`/ref-data/makes/${id}/classes`);
 
-    const rawData = toRaw(response.data || []);
-
     // Extract only the `name_en` values
     // Save the names to classes.value
-    classes.value = rawData
+    classes.value = toRaw(response.data || [])
 
 
   } catch (error) {
@@ -144,6 +142,7 @@ const fetchRefOptions = async (endpoint: string): Promise<RefOption[]> => {
 };
 
 
+const status = ref<RefOption[]>([]);
 const gears = ref<RefOption[]>([]);
 const fuel = ref<RefOption[]>([]);
 const engines = ref<RefOption[]>([]);
@@ -156,6 +155,7 @@ const cities = ref<RefOption[]>([]);
 
 onMounted(async () => {
   await fetchMakes();
+  status.value = await fetchRefOptions("status");
   gears.value = await fetchRefOptions("gears");
   fuel.value = await fetchRefOptions("fuel");
   engines.value = await fetchRefOptions("engines");
@@ -253,7 +253,7 @@ const saveCar = async () => {
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
-          <img :src="`http://localhost:8080${make?.url } `">
+          <img :src="`http://localhost:8080${make?.url } `" alt="carMake">
         </button>
 
 
@@ -350,7 +350,7 @@ const saveCar = async () => {
         v-if="state.originPopUp"
         @choice="(value) => handleSave('origin')(value)"
         @close="state.originPopUp = false"
-        :options="gears"
+        :options="status"
         :title="'Status'"></OptionsPopUp>
 
     <OptionsPopUp
