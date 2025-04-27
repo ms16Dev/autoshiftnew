@@ -4,30 +4,36 @@ import apiService from "../../../core/services/ApiService.ts";
 
 const props = defineProps<{
   id: string,
-  name: string
+  name_en: string,
+  name_ar: string
 }>();
 
 const emit = defineEmits(['close', 'role-updated']);
 
-const rolename = ref('');
+const roleId = ref('');
+const roleNameEn = ref('');
+const roleNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
-  rolename.value = props.name;
+  roleId.value = props.id;
+  roleNameEn.value = props.name_en;
+  roleNameAr.value = props.name_ar;
 });
 
 const handleSubmit = async () => {
   try {
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/roles", props.id, {
-      name: rolename.value
+      id: roleNameEn.value,
+      name_en: roleNameEn.value,
+      name_ar: roleNameAr.value
     });
 
     // Emit event that user was updated
     emit('role-updated');
 
-    // Reset form
-    rolename.value = '';
+
 
   } catch (error) {
     console.error("Error updating role:", error);
@@ -43,8 +49,7 @@ const handleDelete = async () => {
     // Emit event that user was updated
     emit('role-updated');
 
-    // Reset form
-    rolename.value = '';
+
 
   } catch (error) {
     console.error("Error updating role:", error);
@@ -71,11 +76,31 @@ const handleClose = () => {
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Role</h2>
     <form @submit.prevent="handleSubmit">
       <div class="mb-4">
-        <label for="rolename" class="block text-white">Role name</label>
+        <label for="rolename" class="block text-white">Role id</label>
         <input
             type="text"
             id="rolename"
-            v-model="rolename"
+            v-model="roleId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="rolename" class="block text-white">Role name (En)</label>
+        <input
+            type="text"
+            id="rolename"
+            v-model="roleNameEn"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="rolename" class="block text-white">Role name (Ar)</label>
+        <input
+            type="text"
+            id="rolename"
+            v-model="roleNameAr"
             required
             class="border border-gray-300 rounded px-3 py-2 w-full"
         />

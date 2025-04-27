@@ -9,7 +9,8 @@
       </span>
 
       <!-- User Name -->
-      <span class="text-pink-500 font-lg font-extrabold">{{ props.name }}</span>
+      <span class="text-pink-500 font-lg font-extrabold">{{ props.name_en }}</span>
+      <span class="text-pink-500 font-lg font-extrabold">{{ props.name_ar }}</span>
 
   </div>
 </template>
@@ -18,7 +19,9 @@
 
 const props = defineProps<{
   id: string,
-  name: string
+  name_en: string,
+  name_ar: string,
+
 }>()
 
 </script>

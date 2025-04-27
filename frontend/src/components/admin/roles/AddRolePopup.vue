@@ -4,12 +4,16 @@ import apiService from "../../../core/services/ApiService.ts";
 
 const emit = defineEmits(['close', 'role-added']);
 
-const rolename = ref('');
+const roleId = ref('');
+const roleNameEn = ref('');
+const roleNameAr = ref('');
 
 const handleSubmit = async () => {
   try {
     await apiService.post("/ref-data/roles", {
-      name: rolename.value,
+      id: roleId.value,
+      name_en: roleNameEn.value,
+      name_ar: roleNameAr.value,
 
     });
 
@@ -17,7 +21,8 @@ const handleSubmit = async () => {
     emit('role-added');
 
     // Reset form
-    rolename.value = '';
+    roleNameEn.value = '';
+    roleNameEn.value = '';
 
 
   } catch (error) {
@@ -45,11 +50,31 @@ const handleClose = () => {
     <h2 class="text-xl font-bold text-white mb-4 text-center">Add Role</h2>
     <form @submit.prevent="handleSubmit">
       <div class="mb-4">
-        <label for="rolename" class="block text-white">Role name</label>
+        <label for="roleName" class="block text-white">Role id</label>
         <input
             type="text"
-            id="rolename"
-            v-model="rolename"
+            id="roleName"
+            v-model="roleId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="roleName" class="block text-white">Role name (En)</label>
+        <input
+            type="text"
+            id="roleName"
+            v-model="roleNameEn"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="roleName" class="block text-white">Role name (Ar)</label>
+        <input
+            type="text"
+            id="roleName"
+            v-model="roleNameAr"
             required
             class="border border-gray-300 rounded px-3 py-2 w-full"
         />
