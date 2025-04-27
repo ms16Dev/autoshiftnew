@@ -12,13 +12,15 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'class-updated']);
 
-const makeNameEn = ref('');
-const makeNameAr = ref('');
+const classId = ref('');
+const classNameEn = ref('');
+const classNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
-  makeNameEn.value = props.name_en;
-  makeNameAr.value = props.name_ar;
+  classId.value = props.id;
+  classNameEn.value = props.name_en;
+  classNameAr.value = props.name_ar;
 });
 
 const handleSubmit = async () => {
@@ -28,8 +30,9 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/classes", props.id, {
-      name_en: makeNameEn.value,
-      name_ar: makeNameAr.value,
+      id: classId.value,
+      name_en: classNameEn.value,
+      name_ar: classNameAr.value,
     });
 
     // Emit event that user was updated
@@ -80,21 +83,31 @@ const handleClose = () => {
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Class</h2>
     <form @submit.prevent="handleSubmit">
       <div class="mb-4">
-        <label for="makeNameEn" class="block text-white">Class name (En)</label>
+        <label for="classId" class="block text-white">Class Id</label>
         <input
             type="text"
-            id="makeNameEn"
-            v-model="makeNameEn"
+            id="classId"
+            v-model="classId"
             required
             class="border border-gray-300 rounded px-3 py-2 w-full"
         />
       </div>
       <div class="mb-4">
-        <label for="makeNameAr" class="block text-white">Class name (Ar)</label>
+        <label for="classNameEn" class="block text-white">Class name (En)</label>
         <input
             type="text"
-            id="makeNameAr"
-            v-model="makeNameAr"
+            id="classNameEn"
+            v-model="classNameEn"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="classNameAr" class="block text-white">Class name (Ar)</label>
+        <input
+            type="text"
+            id="classNameAr"
+            v-model="classNameAr"
             required
             class="border border-gray-300 rounded px-3 py-2 w-full"
         />

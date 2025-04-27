@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'class-added']);
 
+const errorMassage = ref('')
 const classId = ref('');
 const classNameEn = ref('');
 const classNameAr = ref('');
@@ -33,10 +34,21 @@ const handleSubmit = async () => {
 
 
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error adding class:", error);
-    // You might want to add error handling here
+
+    if (error.response && error.response.data) {
+      // Error came from Axios (HTTP response)
+      errorMassage.value = error.response.data;
+    } else if (error instanceof Error) {
+      // Some other normal JavaScript error
+      errorMassage.value = error.message;
+    } else {
+      // Fallback
+      errorMassage.value = String(error);
+    }
   }
+
 };
 
 const handleClose = () => {
@@ -66,6 +78,7 @@ const handleClose = () => {
             required
             class="border border-gray-300 rounded px-3 py-2 w-full"
         />
+        <label class="text-gray-900">{{ errorMassage }}</label>
       </div>
       <div class="mb-4">
         <label for="classNameEn" class="block text-white">Class name (En)</label>
