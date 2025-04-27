@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'city-updated']);
 
+const cityId = ref('');
 const cityNameEn = ref('');
 const cityNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  cityId.value = props.id;
   cityNameEn.value = props.name_en;
   cityNameAr.value = props.name_ar;
 });
@@ -78,6 +80,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update City</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="makeNameEn" class="block text-white">City id</label>
+        <input
+            type="text"
+            id="makeNameEn"
+            v-model="cityId"
+            required
+            disabled
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">City name (En)</label>
         <input

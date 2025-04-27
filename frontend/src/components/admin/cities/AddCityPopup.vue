@@ -10,6 +10,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'city-added']);
 
+const cityId = ref('');
 const cityNameEn = ref('');
 const cityNameAr = ref('');
 
@@ -19,6 +20,7 @@ const handleSubmit = async () => {
 
 
     await apiService.post(`/ref-data/countries/${props.id}/cities`, {
+      id: cityId.value,
       name_en: cityNameEn.value,
       name_ar: cityNameAr.value,
 
@@ -54,6 +56,16 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Add City</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="classNameEn" class="block text-white">City id</label>
+        <input
+            type="text"
+            id="classNameEn"
+            v-model="cityId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="classNameEn" class="block text-white">City name (En)</label>
         <input
