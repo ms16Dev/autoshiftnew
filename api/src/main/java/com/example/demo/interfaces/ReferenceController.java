@@ -1,6 +1,8 @@
 package com.example.demo.interfaces;
 
 
+import com.mongodb.DuplicateKeyException;
+import com.mongodb.MongoWriteException;
 import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -12,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -38,16 +41,16 @@ public class ReferenceController {
     }
 
     @GetMapping("roles")
-    public Mono<ResponseEntity<Flux<RoleRequest>>> getRoles() {
-        Flux<RoleRequest> data = mongoTemplate.findAll(RoleRequest.class, "roles");
+    public Mono<ResponseEntity<Flux<Role>>> getRoles() {
+        Flux<Role> data = mongoTemplate.findAll(Role.class, "roles");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
 
     @PostMapping("roles")
-    public Mono<ResponseEntity<String>> createRole(@RequestBody RoleRequest roleRequest) {
-        return mongoTemplate.save(roleRequest, "roles")
+    public Mono<ResponseEntity<String>> createRole(@RequestBody Role role) {
+        return mongoTemplate.save(role, "roles")
                 .map(savedRole -> ResponseEntity.ok("Role created successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error creating role: " + e.getMessage())
@@ -57,12 +60,12 @@ public class ReferenceController {
     @PutMapping("roles/{id}")
     public Mono<ResponseEntity<String>> updateRole(
             @PathVariable String id,
-            @RequestBody RoleRequest roleRequest) {
+            @RequestBody Role role) {
 
         // Set the ID from path variable to ensure we're updating the correct document
-        roleRequest.setId(id);
+        role.setId(id);
 
-        return mongoTemplate.save(roleRequest, "roles")
+        return mongoTemplate.save(role, "roles")
                 .map(savedRole -> ResponseEntity.ok("Role updated successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error updating role: " + e.getMessage())
@@ -91,16 +94,16 @@ public class ReferenceController {
 
 
     @GetMapping("makes")
-    public Mono<ResponseEntity<Flux<MakeRequest>>> getMakes() {
-        Flux<MakeRequest> data = mongoTemplate.findAll(MakeRequest.class, "makes");
+    public Mono<ResponseEntity<Flux<Make>>> getMakes() {
+        Flux<Make> data = mongoTemplate.findAll(Make.class, "makes");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
     }
 
     @PostMapping("makes")
-    public Mono<ResponseEntity<String>> createMake(@RequestBody MakeRequest makeRequest) {
-        return mongoTemplate.save(makeRequest, "makes")
+    public Mono<ResponseEntity<String>> createMake(@RequestBody Make make) {
+        return mongoTemplate.save(make, "makes")
                 .map(savedRole -> ResponseEntity.ok("Make created successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error creating make: " + e.getMessage())
@@ -110,12 +113,12 @@ public class ReferenceController {
     @PutMapping("makes/{id}")
     public Mono<ResponseEntity<String>> updateMake(
             @PathVariable String id,
-            @RequestBody MakeRequest makeRequest) {
+            @RequestBody Make make) {
 
         // Set the ID from path variable to ensure we're updating the correct document
-        makeRequest.setId(id);
+        make.setId(id);
 
-        return mongoTemplate.save(makeRequest, "makes")
+        return mongoTemplate.save(make, "makes")
                 .map(savedMake -> ResponseEntity.ok("Make updated successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error updating make: " + e.getMessage())
@@ -142,38 +145,56 @@ public class ReferenceController {
     }
 
     @PostMapping("/makes/{id}/classes")
-    public Mono<Boolean> createClassOf(
+    public Mono<ResponseEntity<String>> createClassOf(
             @PathVariable("id") String id,
-            @RequestBody @Valid ClassRequest classRequest) {
+            @RequestBody @Valid CarClass carClass) {
 
-        // 1. First create the class document with both names
-        return mongoTemplate.insert(
-                        ClassRequest.builder()
-                                .name_en(classRequest.getName_en())
-                                .name_ar(classRequest.getName_ar())
-                                .build()
-                )
-                // 2. Get the ID of the newly created class
-                .map(ClassRequest::getId)
-                // 3. Update the Make document to reference this new class
-                .flatMap(classId ->
-                        mongoTemplate.update(MakeRequest.class)
-                                .matching(where("id").is(id))
-                                .apply(new Update().push("classes", classId))
-                                .all()
-                                .map(result -> result.getModifiedCount() == 1L)
+        // First check if the class already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(carClass.getId())), CarClass.class)
+                .flatMap(existingClass -> {
+                    // If the class exists, return a 409 Conflict with a message
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Class ID already exists."));
+                })
+                // Proceed to insert the new class if it doesn't exist
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        CarClass.builder()
+                                                .id(carClass.getId())
+                                                .name_en(carClass.getName_en())
+                                                .name_ar(carClass.getName_ar())
+                                                .build()
+                                )
+                                .map(savedClass -> savedClass.getId())
+                                .flatMap(classId ->
+                                        mongoTemplate.update(Make.class)
+                                                .matching(where("id").is(id))
+                                                .apply(new Update().push("classes", classId))
+                                                .all()
+                                                .map(result -> result.getModifiedCount() == 1L)
+                                )
+                                // Success response with message
+                                .map(success -> {
+                                    if (success) {
+                                        return ResponseEntity.ok("Class successfully added.");
+                                    }
+                                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add class.");
+                                })
                 );
     }
 
+
+
+
+
     @GetMapping("/makes/{id}/classes")
-    public Flux<ClassRequest> getClassesOf(@PathVariable("id") String makeId) {
-        return mongoTemplate.findById(makeId, MakeRequest.class)
+    public Flux<CarClass> getClassesOf(@PathVariable("id") String makeId) {
+        return mongoTemplate.findById(makeId, Make.class)
                 .flatMapMany(make -> {
                     if (make.getClasses() == null || make.getClasses().isEmpty()) {
                         return Flux.empty();
                     }
                     return Flux.fromIterable(make.getClasses())
-                            .flatMap(classId -> mongoTemplate.findById(classId, ClassRequest.class));
+                            .flatMap(classId -> mongoTemplate.findById(classId, CarClass.class));
                 });
     }
 
@@ -181,12 +202,12 @@ public class ReferenceController {
     @PutMapping("/classes/{id}")
     public Mono<ResponseEntity<String>> updateClass(
             @PathVariable String id,
-            @RequestBody ClassRequest classRequest) {
+            @RequestBody CarClass carClass) {
 
         // Set the ID from path variable to ensure we're updating the correct document
-        classRequest.setId(id);
+        carClass.setId(id);
 
-        return mongoTemplate.save(classRequest, "classes")
+        return mongoTemplate.save(carClass, "classes")
                 .map(savedRole -> ResponseEntity.ok("Class updated successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error updating class: " + e.getMessage())
@@ -574,7 +595,6 @@ public class ReferenceController {
     }
 
 
-
     @GetMapping("/countries")
     public Mono<ResponseEntity<Flux<Country>>> getCountries() {
         Flux<Country> data = mongoTemplate.findAll(Country.class, "countries");
@@ -612,7 +632,6 @@ public class ReferenceController {
                 })
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
-
 
 
     @PostMapping("/countries/{id}/cities")
@@ -672,8 +691,6 @@ public class ReferenceController {
                 })
                 .onErrorResume(e -> Mono.just(ResponseEntity.internalServerError().body("Error: " + e.getMessage())));
     }
-
-
 
 
     @PostMapping("/countries/{id}/currencies")
@@ -788,14 +805,19 @@ public class ReferenceController {
     }
 
 
-
-
     @Setter
     @Getter
-    public static class RoleRequest {
+    @Document(collection = "roles")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Role {
         // Getter and setter
+        @Id
         private String id;
-        private String name;
+        private String name_en;
+        private String name_ar;
 
     }
 
@@ -806,8 +828,9 @@ public class ReferenceController {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MakeRequest implements Serializable {
+    public static class Make implements Serializable {
         // Getter and setter
+        @Id
         private String id;
         private String name_en;
         private String name_ar;
@@ -824,8 +847,9 @@ public class ReferenceController {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ClassRequest implements Serializable {
+    public static class CarClass implements Serializable {
         // Getter and setter
+        @Id
         private String id;
         private String name_en;
         private String name_ar;
@@ -833,74 +857,119 @@ public class ReferenceController {
 
     @Setter
     @Getter
-    public static class Engine {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-    @Setter
-    @Getter
-    public static class Fuel {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-    @Setter
-    @Getter
-    public static class Gear {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-
-    @Setter
-    @Getter
-    public static class Color {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-
-    @Setter
-    @Getter
-    public static class Shape {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-    @Setter
-    @Getter
-    public static class Luxury {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-    @Setter
-    @Getter
-    public static class Safety {
-        // Getter and setter
-        private String id;
-        private String name_en;
-        private String name_ar;
-    }
-
-    @Document("countries")
+    @Document(collection = "engines")
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class Engine {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    @Document(collection = "fuel")
+    @Data
     @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Fuel {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+
+    @Setter
+    @Getter
+    @Document(collection = "gears")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Gear {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+
+    @Setter
+    @Getter
+    @Document(collection = "colors")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Color {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+
+    @Setter
+    @Getter
+    @Document(collection = "shapes")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Shape {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    @Document(collection = "luxury")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Luxury {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    @Document(collection = "safety")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Safety {
+        // Getter and setter
+        @Id
+        private String id;
+        private String name_en;
+        private String name_ar;
+    }
+
+    @Setter
+    @Getter
+    @Document(collection = "countries")
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Country {
         @Id
         private String id;
@@ -913,11 +982,13 @@ public class ReferenceController {
     }
 
 
-    @Document("cities")
+    @Setter
+    @Getter
+    @Document(collection = "cities")
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     public static class City {
         @Id
         private String id;
@@ -929,13 +1000,16 @@ public class ReferenceController {
     }
 
 
-    @Document("currencies")
+    @Setter
+    @Getter
+    @Document(collection = "currencies")
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     public static class Currency {
         // Getter and setter
+        @Id
         private String id;
         private String name_en;
         private String name_ar;
@@ -945,11 +1019,13 @@ public class ReferenceController {
     }
 
 
-    @Document("status")
+    @Setter
+    @Getter
+    @Document(collection = "status")
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     public static class Status {
         // Getter and setter
         @Id
@@ -957,8 +1033,6 @@ public class ReferenceController {
         private String name_en;
         private String name_ar;
     }
-
-
 
 
 }
