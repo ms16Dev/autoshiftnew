@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'status-updated']);
 
+const statusId = ref('');
 const statusNameEn = ref('');
 const statusNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  statusId.value = props.id;
   statusNameEn.value = props.name_en;
   statusNameAr.value = props.name_ar;
 });
@@ -27,6 +29,8 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/status", props.id, {
+
+      id: statusNameEn.value,
       name_en: statusNameEn.value,
       name_ar: statusNameAr.value,
     });
@@ -78,6 +82,18 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Status</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="statusId" class="block text-white">Status id</label>
+        <input
+            disabled
+            type="text"
+            id="statusId"
+            v-model="statusId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Status name (En)</label>
         <input
