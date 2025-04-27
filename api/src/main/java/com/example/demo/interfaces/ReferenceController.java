@@ -1,8 +1,6 @@
 package com.example.demo.interfaces;
 
 
-import com.mongodb.DuplicateKeyException;
-import com.mongodb.MongoWriteException;
 import jakarta.validation.Valid;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -14,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -50,12 +47,22 @@ public class ReferenceController {
 
     @PostMapping("roles")
     public Mono<ResponseEntity<String>> createRole(@RequestBody Role role) {
-        return mongoTemplate.save(role, "roles")
-                .map(savedRole -> ResponseEntity.ok("Role created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating role: " + e.getMessage())
-                ));
+        // First, check if a role with the same ID already exists
+        return mongoTemplate.findOne(Query.query(Criteria.where("id").is(role.getId())), Role.class)
+                .flatMap(existingRole -> {
+                    // If a role with the same ID exists, return a 409 Conflict response
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Role with the same ID already exists."));
+                })
+                // Proceed with saving the role if no duplicate is found
+                .switchIfEmpty(
+                        mongoTemplate.save(role, "roles")
+                                .map(savedRole -> ResponseEntity.ok("Role created successfully"))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating role: " + e.getMessage())
+                                ))
+                );
     }
+
 
     @PutMapping("roles/{id}")
     public Mono<ResponseEntity<String>> updateRole(
@@ -164,7 +171,7 @@ public class ReferenceController {
                                                 .name_ar(carClass.getName_ar())
                                                 .build()
                                 )
-                                .map(savedClass -> savedClass.getId())
+                                .map(CarClass::getId)
                                 .flatMap(classId ->
                                         mongoTemplate.update(Make.class)
                                                 .matching(where("id").is(id))
@@ -181,9 +188,6 @@ public class ReferenceController {
                                 })
                 );
     }
-
-
-
 
 
     @GetMapping("/makes/{id}/classes")
