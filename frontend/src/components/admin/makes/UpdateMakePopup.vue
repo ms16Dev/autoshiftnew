@@ -15,6 +15,7 @@ const MakeImage = ref(new FormData());
 
 const emit = defineEmits(['close', 'make-updated']);
 
+const makeId = ref('');
 const makeNameEn = ref('');
 const makeNameAr = ref('');
 const newUrl = ref('');
@@ -22,6 +23,7 @@ const imageChanged = ref(false);
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  makeId.value = props.id;
   makeNameEn.value = props.name_en;
   makeNameAr.value = props.name_ar;
   newUrl.value = props.url;
@@ -46,6 +48,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/makes", props.id, {
+      id: makeId.value,
       name_en: makeNameEn.value,
       name_ar: makeNameAr.value,
       url: newUrl.value
@@ -55,7 +58,9 @@ const handleSubmit = async () => {
     emit('make-updated');
 
     // Reset form
+    makeId.value = '';
     makeNameEn.value = '';
+    makeNameAr.value = '';
 
   } catch (error) {
     console.error("Error updating role:", error);
@@ -72,7 +77,9 @@ const handleDelete = async () => {
     emit('make-updated');
 
     // Reset form
+    makeId.value = '';
     makeNameEn.value = '';
+    makeNameAr.value = '';
 
   } catch (error) {
     console.error("Error updating role:", error);
@@ -84,7 +91,7 @@ const handleClose = () => {
   emit('close');
 };
 
-const handleImageUpdate = (value) => {
+const handleImageUpdate = (value: FormData) => {
 
   MakeImage.value = value
   imageChanged.value = true
@@ -105,6 +112,17 @@ const handleImageUpdate = (value) => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Make</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="makeId" class="block text-white">Make id</label>
+        <input
+            disabled
+            type="text"
+            id="makeId"
+            v-model="makeId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Make name (En)</label>
         <input

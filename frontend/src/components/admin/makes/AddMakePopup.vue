@@ -6,6 +6,7 @@ import axios from "axios";
 
 const emit = defineEmits(['close', 'role-added']);
 
+const makeId = ref('');
 const makeNameEn = ref('');
 const makeNameAr = ref('');
 const MakeImage = ref(new FormData());
@@ -26,6 +27,7 @@ const handleSubmit = async () => {
 
 
     await apiService.post("/ref-data/makes", {
+      id: makeId.value,
       name_en: makeNameEn.value,
       name_ar: makeNameAr.value,
       url: imageUrl,
@@ -62,6 +64,16 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Add Make</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="makeId" class="block text-white">Make id</label>
+        <input
+            type="text"
+            id="makeId"
+            v-model="makeId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Make name (En)</label>
         <input

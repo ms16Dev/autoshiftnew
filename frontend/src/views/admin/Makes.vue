@@ -70,10 +70,10 @@ const handleMakeUpdated = async () => {
         v-if="showUpdateMakePopup"
         @close="toggleUpdateMakePopup"
         @make-updated="handleMakeUpdated"
-        :id="selectedMake.id"
-        :name_en="selectedMake.name_en"
-        :name_ar="selectedMake.name_ar"
-        :url="selectedMake.url"
+        :id="selectedMake?.id!!"
+        :name_en="selectedMake?.name_en!!"
+        :name_ar="selectedMake?.name_ar!!"
+        :url="selectedMake?.url!!"
 
     />
 
@@ -81,7 +81,7 @@ const handleMakeUpdated = async () => {
       <div class="w-full p-4 text-center text-gray-400">
         <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
           <div class="group flex-col inset-px shadow-md">
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
             <div class="flex justify-between items-center bg-gray-100">
               <div class="flex px-4 text-pink-500 font-bold text-2xl">Makes</div>
@@ -90,7 +90,7 @@ const handleMakeUpdated = async () => {
 
               </div>
             </div>
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
 
             <!-- User Items -->
