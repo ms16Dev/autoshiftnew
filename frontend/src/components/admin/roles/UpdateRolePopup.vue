@@ -120,12 +120,15 @@ const handleClose = () => {
 
     </form>
 
+    <div class="flex gap-3 justify-end mt-2">
+
     <button
         @click="handleDelete"
         class="bg-pink-500 text-white font-bold py-2 px-4 rounded hover:bg-pink-900 transition duration-200"
     >
       Delete Role
     </button>
+    </div>
   </div>
 </template>
 
