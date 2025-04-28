@@ -10,6 +10,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'currency-added']);
 
+const errorMassage = ref('');
+const currencyId   = ref('');
 const currencyNameEn = ref('');
 const currencyNameAr = ref('');
 
@@ -19,6 +21,7 @@ const handleSubmit = async () => {
 
 
     await apiService.post(`/ref-data/countries/${props.id}/currencies`, {
+      id: currencyId.value,
       name_en: currencyNameEn.value,
       name_ar: currencyNameAr.value,
 
@@ -30,9 +33,19 @@ const handleSubmit = async () => {
 
 
 
-  } catch (error) {
-    console.error("Error adding currency:", error);
+  }catch (error : any) {
+    console.error("Error adding user:", error);
     // You might want to add error handling here
+    if (error.response && error.response.data) {
+      // Error came from Axios (HTTP response)
+      errorMassage.value = error.response.data;
+    } else if (error instanceof Error) {
+      // Some other normal JavaScript error
+      errorMassage.value = error.message;
+    } else {
+      // Fallback
+      errorMassage.value = String(error);
+    }
   }
 };
 
@@ -54,6 +67,19 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Add Currency</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="currencyId" class="block text-white">Currency id</label>
+
+        <input
+            type="text"
+            id="currencyId"
+            v-model="currencyId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+        <label class="text-gray-900">{{ errorMassage }}</label>
+
+      </div>
       <div class="mb-4">
         <label for="classNameEn" class="block text-white">Currency name (En)</label>
         <input

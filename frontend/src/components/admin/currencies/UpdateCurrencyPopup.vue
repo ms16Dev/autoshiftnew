@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'currency-updated']);
 
+const currencyId = ref('');
 const currencyNameEn = ref('');
 const currencyNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  currencyId.value = props.id;
   currencyNameEn.value = props.name_en;
   currencyNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/currencies", props.id, {
+      id: currencyNameEn.value,
       name_en: currencyNameEn.value,
       name_ar: currencyNameAr.value,
     });
@@ -78,6 +81,16 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Currency</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="currencyId" class="block text-white">Currency id</label>
+        <input
+            type="text"
+            id="currencyId"
+            v-model="currencyId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Currency name (En)</label>
         <input
