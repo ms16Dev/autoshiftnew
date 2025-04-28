@@ -299,12 +299,30 @@ public class ReferenceController {
 
     @PostMapping("/fuel")
     public Mono<ResponseEntity<String>> createFuel(@RequestBody Fuel fuel) {
-        return mongoTemplate.save(fuel, "fuels")
-                .map(savedEngine -> ResponseEntity.ok("Fuel created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating fuel: " + e.getMessage())
-                ));
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(fuel.getId())), Fuel.class)
+                .flatMap(existingFuel -> {
+                    // If fuel exists, respond cleanly
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Fuel ID already exists."));
+                })
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Fuel.builder()
+                                                .id(fuel.getId())
+                                                .name_en(fuel.getName_en())
+                                                .name_ar(fuel.getName_ar())
+                                                .build()
+                                )
+                                .thenReturn(ResponseEntity.ok("Fuel created successfully."))
+                                .onErrorResume(e -> {
+                                    return Mono.just(ResponseEntity
+                                            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                            .body("Failed to create fuel."));
+                                })
+                );
     }
+
+
+
 
     @PutMapping("/fuel/{id}")
     public Mono<ResponseEntity<String>> updateFuel(
