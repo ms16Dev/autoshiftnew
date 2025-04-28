@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'shape-updated']);
 
+const shapeId = ref('');
 const shapeNameEn = ref('');
 const shapeNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  shapeId.value = props.id;
   shapeNameEn.value = props.name_en;
   shapeNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/shapes", props.id, {
+      id: shapeId.value,
       name_en: shapeNameEn.value,
       name_ar: shapeNameAr.value,
     });
@@ -78,6 +81,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Shape</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="shapeId" class="block text-white">Shape id</label>
+        <input
+            disabled
+            type="text"
+            id="shapeId"
+            v-model="shapeId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Shape name (En)</label>
         <input
