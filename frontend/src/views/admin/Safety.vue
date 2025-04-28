@@ -81,9 +81,9 @@ const handleSafetyUpdated = async () => {
         v-if="showUpdateSafetyPopup"
         @close="toggleUpdateSafetyPopup"
         @safety-updated="handleSafetyUpdated"
-        :id="selectedSafety.id"
-        :name_en="selectedSafety.name_en"
-        :name_ar="selectedSafety.name_ar"
+        :id="selectedSafety?.id!!"
+        :name_en="selectedSafety?.name_en!!"
+        :name_ar="selectedSafety?.name_ar!!"
 
     />
 
@@ -91,7 +91,7 @@ const handleSafetyUpdated = async () => {
       <div class="w-full p-4 text-center text-gray-400">
         <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
           <div class="group flex-col inset-px shadow-md">
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
             <div class="flex justify-between items-center bg-gray-100">
               <div class="flex px-4 text-pink-500 font-bold text-2xl">Safety</div>
@@ -100,7 +100,7 @@ const handleSafetyUpdated = async () => {
                    <IconButton icon="fas fa-plus" label="Add" class="hover:bg-pink-100" @click="toggleAddSafetyPopup"/>
               </div>
             </div>
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
 
             <!-- User Items -->
