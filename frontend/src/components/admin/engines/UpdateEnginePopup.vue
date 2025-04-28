@@ -10,13 +10,16 @@ const props = defineProps<{
 }>()
 
 
-const emit = defineEmits(['close', 'engine -updated']);
+const emit = defineEmits(['close', 'engine-updated']);
 
+const errorMassage = ref('');
+const engineId = ref('');
 const engineNameEn = ref('');
 const engineNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  engineId.value = props.id;
   engineNameEn.value = props.name_en;
   engineNameAr.value = props.name_ar;
 });
@@ -27,6 +30,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/engines", props.id, {
+      id: engineId.value,
       name_en: engineNameEn.value,
       name_ar: engineNameAr.value,
     });
@@ -36,9 +40,19 @@ const handleSubmit = async () => {
 
 
 
-  } catch (error) {
-    console.error("Error updating engine:", error);
+  } catch (error : any) {
+    console.error("Error adding user:", error);
     // You might want to add error handling here
+    if (error.response && error.response.data) {
+      // Error came from Axios (HTTP response)
+      errorMassage.value = error.response.data;
+    } else if (error instanceof Error) {
+      // Some other normal JavaScript error
+      errorMassage.value = error.message;
+    } else {
+      // Fallback
+      errorMassage.value = String(error);
+    }
   }
 };
 
@@ -78,6 +92,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Engine</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="engineId" class="block text-white">Engine id</label>
+        <input
+            disabled
+            type="text"
+            id="engineId"
+            v-model="engineId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Engine name (En)</label>
         <input
