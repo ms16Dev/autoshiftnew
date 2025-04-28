@@ -527,12 +527,31 @@ public class ReferenceController {
 
     @PostMapping("/shapes")
     public Mono<ResponseEntity<String>> createShape(@RequestBody Shape shape) {
-        return mongoTemplate.save(shape, "shapes")
-                .map(savedEngine -> ResponseEntity.ok("Shape created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating shape: " + e.getMessage())
-                ));
+
+        // First check if the shape already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(shape.getId())), Shape.class)
+                .flatMap(existingShape -> {
+                    // If the shape exists, return a 409 Conflict with a message
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Shape ID already exists."));
+                })
+                // Proceed to insert the new shape if it doesn't exist
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Shape.builder()
+                                                .id(shape.getId())
+                                                .name_en(shape.getName_en())
+                                                .name_ar(shape.getName_ar())
+                                                .build()
+                                )
+                                .map(Shape::getId)
+                                // Success response with message
+                                .map(shapeId -> ResponseEntity.ok("Shape successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating shape: " + e.getMessage()))
+                                )
+                );
     }
+
 
     @PutMapping("/shapes/{id}")
     public Mono<ResponseEntity<String>> updateShape(
