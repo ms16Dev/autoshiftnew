@@ -6,6 +6,8 @@ import apiService from "../../../core/services/ApiService.ts";
 
 const emit = defineEmits(['close', 'color-added']);
 
+const errorMassage = ref('');
+const colorId = ref('');
 const colorNameEn = ref('');
 const colorNameAr = ref('');
 
@@ -15,6 +17,7 @@ const handleSubmit = async () => {
 
 
     await apiService.post(`/ref-data/colors`, {
+      id: colorId.value,
       name_en: colorNameEn.value,
       name_ar: colorNameAr.value,
 
@@ -26,9 +29,19 @@ const handleSubmit = async () => {
 
 
 
-  } catch (error) {
-    console.error("Error adding color:", error);
+  } catch (error : any) {
+    console.error("Error adding user:", error);
     // You might want to add error handling here
+    if (error.response && error.response.data) {
+      // Error came from Axios (HTTP response)
+      errorMassage.value = error.response.data;
+    } else if (error instanceof Error) {
+      // Some other normal JavaScript error
+      errorMassage.value = error.message;
+    } else {
+      // Fallback
+      errorMassage.value = String(error);
+    }
   }
 };
 
@@ -50,6 +63,18 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Add Color</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="colorId" class="block text-white">Color id</label>
+        <input
+            type="text"
+            id="colorId"
+            v-model="colorId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+        <label class="text-gray-900">{{ errorMassage }}</label>
+
+      </div>
       <div class="mb-4">
         <label for="classNameEn" class="block text-white">Color name (En)</label>
         <input

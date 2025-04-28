@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'color-updated']);
 
+const colorId = ref('');
 const colorNameEn = ref('');
 const colorNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  colorId.value = props.id;
   colorNameEn.value = props.name_en;
   colorNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/colors", props.id, {
+      id: colorId.value,
       name_en: colorNameEn.value,
       name_ar: colorNameAr.value,
     });
@@ -78,6 +81,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Color</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="colorId" class="block text-white">Color name (En)</label>
+        <input
+            disabled
+            type="text"
+            id="colorId"
+            v-model="colorId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Color name (En)</label>
         <input
