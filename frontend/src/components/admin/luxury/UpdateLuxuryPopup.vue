@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'luxury-updated']);
 
+const luxuryId = ref('');
 const luxuryNameEn = ref('');
 const luxuryNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  luxuryId.value = props.id;
   luxuryNameEn.value = props.name_en;
   luxuryNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/luxury", props.id, {
+      id: luxuryId.value,
       name_en: luxuryNameEn.value,
       name_ar: luxuryNameAr.value,
     });
@@ -45,7 +48,7 @@ const handleSubmit = async () => {
 const handleDelete = async () => {
   try {
     // Use PUT for updates (since we're modifying an existing role)
-    await apiService.delete(`/ref-data/luxurys/${props.id}`);
+    await apiService.delete(`/ref-data/luxury/${props.id}`);
 
     // Emit event that user was updated
     emit('luxury-updated');
@@ -78,6 +81,18 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Luxury</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="luxuryId" class="block text-white">Luxury id</label>
+        <input
+            disabled
+            type="text"
+            id="luxuryId"
+            v-model="luxuryId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
+
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Luxury name (En)</label>
         <input
