@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'gear-updated']);
 
+const gearId = ref('');
 const gearNameEn = ref('');
 const gearNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  gearId.value = props.id;
   gearNameEn.value = props.name_en;
   gearNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/gears", props.id, {
+      id: gearId.value,
       name_en: gearNameEn.value,
       name_ar: gearNameAr.value,
     });
@@ -78,6 +81,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Gear</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="gearId" class="block text-white">Gear id</label>
+        <input
+            disabled
+            type="text"
+            id="gearId"
+            v-model="gearId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Gear name (En)</label>
         <input
