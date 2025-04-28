@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'country-updated']);
 
+const countryId = ref('');
 const countryNameEn = ref('');
 const countryNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  countryId.value = props.id;
   countryNameEn.value = props.name_en;
   countryNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/countries", props.id, {
+      id: countryId.value,
       name_en: countryNameEn.value,
       name_ar: countryNameAr.value,
     });
@@ -78,6 +81,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Country</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="countryId" class="block text-white">Country name (En)</label>
+        <input
+            disabled
+            type="text"
+            id="countryId"
+            v-model="countryId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Country name (En)</label>
         <input
