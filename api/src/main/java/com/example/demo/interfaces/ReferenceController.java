@@ -846,19 +846,27 @@ public class ReferenceController {
     public Mono<ResponseEntity<String>> createCurrencyOf(@PathVariable String id, @RequestBody @Valid Currency currency) {
         currency.setCountryId(id); // denormalized ref
 
-        return mongoTemplate.insert(currency, "currencies")
-                .flatMap(savedCurrency ->
-                        mongoTemplate.update(Country.class)
-                                .matching(Query.query(Criteria.where("_id").is(id)))
-                                .apply(new Update().push("currencies", savedCurrency.getId()))
-                                .all()
-                                .flatMap(result -> {
-                                    if (result.getModifiedCount() == 1L) {
-                                        return Mono.just(ResponseEntity.ok("Currency created and linked."));
-                                    }
-                                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                            .body("Country not found."));
-                                }))
+        // First check if currency with the same ID already exists
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(currency.getId())), Currency.class)
+                .flatMap(existingCurrency ->
+                        Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Currency ID already exists."))
+                )
+                // If not found, proceed with insertion and linking
+                .switchIfEmpty(
+                        mongoTemplate.insert(currency, "currencies")
+                                .flatMap(savedCurrency ->
+                                        mongoTemplate.update(Country.class)
+                                                .matching(Query.query(Criteria.where("_id").is(id)))
+                                                .apply(new Update().push("currencies", savedCurrency.getId()))
+                                                .all()
+                                                .flatMap(result -> {
+                                                    if (result.getModifiedCount() == 1L) {
+                                                        return Mono.just(ResponseEntity.ok("Currency created and linked."));
+                                                    }
+                                                    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                                            .body("Country not found."));
+                                                }))
+                )
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
                 );
