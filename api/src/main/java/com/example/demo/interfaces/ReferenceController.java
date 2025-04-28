@@ -457,12 +457,31 @@ public class ReferenceController {
 
     @PostMapping("/colors")
     public Mono<ResponseEntity<String>> createColor(@RequestBody Color color) {
-        return mongoTemplate.save(color, "colors")
-                .map(savedEngine -> ResponseEntity.ok("Color created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating color: " + e.getMessage())
-                ));
+
+        // First check if the color already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(color.getId())), Color.class)
+                .flatMap(existingColor -> {
+                    // If the color exists, return a 409 Conflict with a message
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Color ID already exists."));
+                })
+                // Proceed to insert the new color if it doesn't exist
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Color.builder()
+                                                .id(color.getId())
+                                                .name_en(color.getName_en())
+                                                .name_ar(color.getName_ar())
+                                                .build()
+                                )
+                                .map(Color::getId)
+                                // Success response with message
+                                .map(colorId -> ResponseEntity.ok("Color successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating color: " + e.getMessage()))
+                                )
+                );
     }
+
 
     @PutMapping("/colors/{id}")
     public Mono<ResponseEntity<String>> updateColor(
