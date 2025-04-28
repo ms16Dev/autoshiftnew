@@ -387,12 +387,31 @@ public class ReferenceController {
 
     @PostMapping("/gears")
     public Mono<ResponseEntity<String>> createGear(@RequestBody Gear gear) {
-        return mongoTemplate.save(gear, "gears")
-                .map(savedEngine -> ResponseEntity.ok("Gear created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating gear: " + e.getMessage())
-                ));
+
+        // First check if the gear already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(gear.getId())), Gear.class)
+                .flatMap(existingGear -> {
+                    // If the gear exists, return a 409 Conflict with a message
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Gear ID already exists."));
+                })
+                // Proceed to insert the new gear if it doesn't exist
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Gear.builder()
+                                                .id(gear.getId())
+                                                .name_en(gear.getName_en())
+                                                .name_ar(gear.getName_ar())
+                                                .build()
+                                )
+                                .map(Gear::getId)
+                                // Success response with message
+                                .map(gearId -> ResponseEntity.ok("Gear successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating gear: " + e.getMessage()))
+                                )
+                );
     }
+
 
     @PutMapping("/gears/{id}")
     public Mono<ResponseEntity<String>> updateGear(
