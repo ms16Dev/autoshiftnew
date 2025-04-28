@@ -668,12 +668,29 @@ public class ReferenceController {
 
     @PostMapping("/safety")
     public Mono<ResponseEntity<String>> createSafety(@RequestBody Safety safety) {
-        return mongoTemplate.save(safety, "safety")
-                .map(savedEngine -> ResponseEntity.ok("Safety created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating safety: " + e.getMessage())
-                ));
+
+        // First check if a Safety item with the same ID already exists
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(safety.getId())), Safety.class)
+                .flatMap(existingSafety ->
+                        Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Safety ID already exists."))
+                )
+                // If not found, insert it
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Safety.builder()
+                                                .id(safety.getId())
+                                                .name_en(safety.getName_en())
+                                                .name_ar(safety.getName_ar())
+                                                .build()
+                                )
+                                .map(Safety::getId)
+                                .map(savedId -> ResponseEntity.ok("Safety successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating safety: " + e.getMessage()))
+                                )
+                );
     }
+
 
     @PutMapping("/safety/{id}")
     public Mono<ResponseEntity<String>> updateSafety(
