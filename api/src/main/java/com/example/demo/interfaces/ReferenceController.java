@@ -598,12 +598,30 @@ public class ReferenceController {
 
     @PostMapping("/luxury")
     public Mono<ResponseEntity<String>> createLuxury(@RequestBody Luxury luxury) {
-        return mongoTemplate.save(luxury, "luxury")
-                .map(savedEngine -> ResponseEntity.ok("Luxury created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating luxury: " + e.getMessage())
-                ));
+
+        // First check if the luxury item already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(luxury.getId())), Luxury.class)
+                .flatMap(existingLuxury -> {
+                    // If it exists, return a 409 Conflict
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Luxury ID already exists."));
+                })
+                // If not found, insert it
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Luxury.builder()
+                                                .id(luxury.getId())
+                                                .name_en(luxury.getName_en())
+                                                .name_ar(luxury.getName_ar())
+                                                .build()
+                                )
+                                .map(Luxury::getId)
+                                .map(luxuryId -> ResponseEntity.ok("Luxury successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating luxury: " + e.getMessage()))
+                                )
+                );
     }
+
 
     @PutMapping("/luxury/{id}")
     public Mono<ResponseEntity<String>> updateLuxury(
