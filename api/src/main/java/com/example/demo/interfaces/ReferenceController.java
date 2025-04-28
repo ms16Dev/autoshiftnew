@@ -735,12 +735,29 @@ public class ReferenceController {
 
     @PostMapping("/countries")
     public Mono<ResponseEntity<String>> createCountry(@RequestBody @Valid Country country) {
-        return mongoTemplate.save(country, "countries")
-                .map(saved -> ResponseEntity.ok("Country created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+
+        // First check if a Country item with the same ID already exists
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(country.getId())), Country.class)
+                .flatMap(existingCountry ->
+                        Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Country ID already exists."))
+                )
+                // If not found, insert it
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Country.builder()
+                                                .id(country.getId())
+                                                .name_en(country.getName_en())
+                                                .name_ar(country.getName_ar())
+                                                .build()
+                                )
+                                .map(Country::getId)
+                                .map(savedId -> ResponseEntity.ok("Country created successfully."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating country: " + e.getMessage()))
+                                )
                 );
     }
+
 
     @PutMapping("/countries/{id}")
     public Mono<ResponseEntity<String>> updateCountry(@PathVariable String id, @RequestBody Country country) {
