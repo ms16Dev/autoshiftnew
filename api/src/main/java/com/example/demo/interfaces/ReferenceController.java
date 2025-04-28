@@ -248,12 +248,32 @@ public class ReferenceController {
 
     @PostMapping("/engines")
     public Mono<ResponseEntity<String>> createEngine(@RequestBody Engine engine) {
-        return mongoTemplate.save(engine, "engines")
-                .map(savedEngine -> ResponseEntity.ok("Engine created successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error creating engine: " + e.getMessage())
-                ));
+
+        // First check if the engine already exists by its ID
+        return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(engine.getId())), Engine.class)
+                .flatMap(existingEngine -> {
+                    // If the engine exists, return a 409 Conflict with a message
+                    return Mono.just(ResponseEntity.status(HttpStatus.CONFLICT).body("Engine ID already exists."));
+                })
+                // Proceed to insert the new engine if it doesn't exist
+                .switchIfEmpty(
+                        mongoTemplate.insert(
+                                        Engine.builder()
+                                                .id(engine.getId())
+                                                .name_en(engine.getName_en())
+                                                .name_ar(engine.getName_ar())
+                                                .build()
+                                )
+                                .map(Engine::getId)
+                                // Success response with message
+                                .map(engineId -> ResponseEntity.ok("Engine successfully created."))
+                                .onErrorResume(e -> Mono.just(
+                                        ResponseEntity.internalServerError().body("Error creating engine: " + e.getMessage()))
+                                )
+                );
     }
+
+
 
     @PutMapping("/engines/{id}")
     public Mono<ResponseEntity<String>> updateEngine(
@@ -313,11 +333,9 @@ public class ReferenceController {
                                                 .build()
                                 )
                                 .thenReturn(ResponseEntity.ok("Fuel created successfully."))
-                                .onErrorResume(e -> {
-                                    return Mono.just(ResponseEntity
-                                            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                            .body("Failed to create fuel."));
-                                })
+                                .onErrorResume(e -> Mono.just(ResponseEntity
+                                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                        .body("Failed to create fuel.")))
                 );
     }
 
