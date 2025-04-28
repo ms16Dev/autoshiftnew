@@ -12,11 +12,13 @@ const props = defineProps<{
 
 const emit = defineEmits(['close', 'fuel-updated']);
 
+const fuelId = ref('');
 const fuelNameEn = ref('');
 const fuelNameAr = ref('');
 
 // Populate the input when component mounts or props change
 onMounted(() => {
+  fuelId.value = props.id;
   fuelNameEn.value = props.name_en;
   fuelNameAr.value = props.name_ar;
 });
@@ -27,6 +29,7 @@ const handleSubmit = async () => {
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/ref-data/fuel", props.id, {
+      id: fuelId.value,
       name_en: fuelNameEn.value,
       name_ar: fuelNameAr.value,
     });
@@ -45,7 +48,7 @@ const handleSubmit = async () => {
 const handleDelete = async () => {
   try {
     // Use PUT for updates (since we're modifying an existing role)
-    await apiService.delete(`/ref-data/fuels/${props.id}`);
+    await apiService.delete(`/ref-data/fuel/${props.id}`);
 
     // Emit event that user was updated
     emit('fuel-updated');
@@ -78,6 +81,17 @@ const handleClose = () => {
 
     <h2 class="text-xl font-bold text-white mb-4 text-center">Update Fuel</h2>
     <form @submit.prevent="handleSubmit">
+      <div class="mb-4">
+        <label for="fuelId" class="block text-white">Fuel id</label>
+        <input
+            disabled
+            type="text"
+            id="fuelId"
+            v-model="fuelId"
+            required
+            class="border border-gray-300 rounded px-3 py-2 w-full"
+        />
+      </div>
       <div class="mb-4">
         <label for="makeNameEn" class="block text-white">Fuel name (En)</label>
         <input
