@@ -6,6 +6,7 @@
 package com.example.demo.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -14,9 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author hantsy
- */
+
 @Document(collection = "users")
 @Data
 @ToString
@@ -29,7 +28,7 @@ public class User {
     private String id;
     private String username;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Allows to write (set) but not read
     private String password;
 
     @Email

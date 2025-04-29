@@ -22,4 +22,6 @@ public interface UserRepository {
     Mono<Long> deleteAll();
 
     Flux<User> findAll();
+
+    Mono<User> save(User user);
 }

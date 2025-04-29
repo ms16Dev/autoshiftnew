@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -64,7 +65,8 @@ public class SecurityConfig {
                                 .pathMatchers("/posts/**").authenticated()
                                 .pathMatchers("/cars/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
-                                .pathMatchers("/users/{user}/**").access(this::currentUserMatchesPath)
+                                .pathMatchers("/users/{user}/**")
+                                .access(this::adminOrCurrentUserMatches)
                                 .pathMatchers("/users").hasRole("ADMIN")
                                 .pathMatchers("/ref-data").permitAll() // New whitelisted endpoint
                                 .pathMatchers("/ref-data/**").authenticated() // New whitelisted endpoint
@@ -167,6 +169,22 @@ public class SecurityConfig {
                 )
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException(username)));
     }
+
+    public Mono<AuthorizationDecision> adminOrCurrentUserMatches(Mono<Authentication> authentication, AuthorizationContext context) {
+        return authentication
+                .map(auth -> {
+                    boolean isAdmin = auth.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                    boolean isUserMatch = currentUserMatchesPath(auth, context.getExchange().getRequest());
+                    return new AuthorizationDecision(isAdmin || isUserMatch);
+                });
+    }
+    private boolean currentUserMatchesPath(Authentication auth, ServerHttpRequest request) {
+        String user = request.getPath().toString().split("/")[2]; // Extract the user from the path
+        return auth.getName().equals(user);
+    }
+
+
 }
 
 

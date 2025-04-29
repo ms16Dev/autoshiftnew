@@ -39,4 +39,9 @@ public class MongoUserRepository  implements UserRepository {
     public Flux<User> findAll() {
         return this.mongoTemplate.findAll(User.class);
     }
+
+    @Override
+    public Mono<User> save(User user) {
+        return mongoTemplate.save(user);
+    }
 }
