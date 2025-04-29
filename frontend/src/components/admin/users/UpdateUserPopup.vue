@@ -43,15 +43,27 @@ const getRoles = async () => {
   try {
     const response = await apiService.get1('/ref-data/roles');
     userRoles.value = response.data || [];
-    // Initialize selectedRoles with all roles set to false
-    userRoles.value.forEach(role => {
-      selectedRoles.value[role.name_en] = false;
-    });
+
+    // Rebuild selectedRoles based on available roles and user.roles
+    if (props.user) {
+      const userRoleSet = new Set(props.user.roles);
+      selectedRoles.value = userRoles.value.reduce((acc, role) => {
+        acc[role.id] = userRoleSet.has(role.id);
+        return acc;
+      }, {} as Record<string, boolean>);
+    } else {
+      selectedRoles.value = userRoles.value.reduce((acc, role) => {
+        acc[role.id] = false;
+        return acc;
+      }, {} as Record<string, boolean>);
+    }
   } catch (error) {
     console.error("Error fetching roles:", error);
     userRoles.value = [];
+    selectedRoles.value = {};
   }
 };
+
 
 const handleSubmit = async () => {
   if (!props.user) return; // Guard against null user
@@ -118,14 +130,14 @@ const handleSubmit = async () => {
         </label>
       </div>
 
-      <div v-for="role in userRoles" :key="role.name_en" class="flex items-center justify-between">
-        <span class="text-white">{{ role.name_en }}</span>
+      <div v-for="role in userRoles" :key="role.id" class="flex items-center justify-between">
+        <span class="text-white">{{ role.id }}</span>
         <label class="flex items-center cursor-pointer">
-          <input type="checkbox" v-model="selectedRoles[role.name_en]" class="sr-only" />
+          <input type="checkbox" v-model="selectedRoles[role.id]" class="sr-only" />
           <div class="w-10 h-5 bg-gray-400 rounded-full transition-colors relative"
-               :class="{ 'bg-pink-500': selectedRoles[role.name_en] }">
+               :class="{ 'bg-pink-500': selectedRoles[role.id] }">
             <div class="absolute w-4 h-4 bg-white rounded-full top-0.5 transition-transform"
-                 :class="{ 'translate-x-5': selectedRoles[role.name_en], 'left-0.5': !selectedRoles[role.name_en] }">
+                 :class="{ 'translate-x-5': selectedRoles[role.id], 'left-0.5': !selectedRoles[role.id] }">
             </div>
           </div>
         </label>
