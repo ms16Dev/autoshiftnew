@@ -5,10 +5,15 @@ import {onMounted, ref} from "vue";
 import {UserListDto} from "../../core/models/UserListDto.ts";
 import apiService from "../../core/services/ApiService.ts";
 import AddUserPopup from "../../components/admin/users/AddUserPopup.vue";
+import UpdateUserPopup from "../../components/admin/users/UpdateUserPopup.vue";
+
+
 
 const users = ref<UserListDto[]>([]);
 const loading = ref(true);
 const showAddUserPopup = ref(false);
+const showUpdateUserPopup = ref(false);
+const selectedUser = ref<UserListDto | null>(null);
 
 onMounted(async () => {
   await handlePageChange()
@@ -34,21 +39,42 @@ const handleUserAdded = async () => {
   showAddUserPopup.value = false;
   await handlePageChange(); // Refresh the user list
 };
+
+const toggleUpdateUserPopup = (user: UserListDto) => {
+  selectedUser.value = user
+  showUpdateUserPopup.value = !showUpdateUserPopup.value;
+};
+
+const handleUserUpdated = async () => {
+  showUpdateUserPopup.value = false;
+  await handlePageChange(); // Refresh the user list
+};
+
+
+
+
 </script>
 
 <template>
-  <div class="relative min-h-[400px]">
+  <div class="relative min-h-[600px]">
     <AddUserPopup
         v-if="showAddUserPopup"
         @close="toggleAddUserPopup"
         @user-added="handleUserAdded"
     />
 
+    <UpdateUserPopup
+        v-if="showUpdateUserPopup"
+        :user="selectedUser!!"
+        @close="showUpdateUserPopup = false"
+        @user-updated="handleUserUpdated"
+    />
+
     <div class="flex justify-center items-center">
       <div class="w-full p-4 text-center text-gray-400">
         <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
           <div class="group flex-col inset-px shadow-md">
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
             <div class="flex justify-between items-center bg-gray-100">
               <div class="flex px-4 text-pink-500 font-bold text-2xl">Users</div>
@@ -57,7 +83,7 @@ const handleUserAdded = async () => {
 
               </div>
             </div>
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
 
             <!-- User Items -->
@@ -66,6 +92,8 @@ const handleUserAdded = async () => {
                   v-for="user in users"
                   :key="user.id"
                   :user="user"
+                  @click="() => toggleUpdateUserPopup(user)"
+
               />
             </div>
             <div v-else class="p-4 text-gray-500">Loading users...</div>
