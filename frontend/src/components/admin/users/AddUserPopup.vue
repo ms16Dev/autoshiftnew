@@ -124,18 +124,18 @@ const handleClose = () => {
               <div class="relative">
                 <input
                     type="checkbox"
-                    v-model="selectedRoles[role.name_en]"
+                    v-model="selectedRoles[role.id]"
                     class="sr-only"
                 >
                 <!-- Switch track with border and conditional pink background -->
                 <div
                     class="w-10 h-5 rounded-full border border-gray-300 shadow-inner transition-colors"
-                    :class="selectedRoles[role.name_en] ? 'bg-pink-500' : 'bg-gray-400'"
+                    :class="selectedRoles[role.id] ? 'bg-pink-500' : 'bg-gray-400'"
                 ></div>
                 <!-- Switch thumb with border -->
                 <div
                     class="absolute w-4 h-4 bg-white rounded-full border border-gray-300 shadow top-0.5 left-0.5 transition-transform"
-                    :class="{ 'translate-x-5': selectedRoles[role.name_en] }"
+                    :class="{ 'translate-x-5': selectedRoles[role.id] }"
                 ></div>
               </div>
             </label>
