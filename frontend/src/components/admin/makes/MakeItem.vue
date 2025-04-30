@@ -1,6 +1,6 @@
 <template>
   <div
-      class="flex items-center justify-between gap-3 p-2 cursor-pointer hover:bg-gray-100 rounded-lg transition"
+      class="flex items-center justify-between gap-3 p-2 h-24 cursor-pointer hover:bg-gray-100 rounded-lg transition"
   >
 
       <!-- Avatar -->
