@@ -1,0 +1,9 @@
+[{
+  "id" : "gear_automatic",
+  "name_en" : "Automatic",
+  "name_ar" : "أوتوماتيك"
+},{
+  "id" : "gear_manual",
+  "name_en" : "Manual",
+  "name_ar" : "يدوي"
+}]

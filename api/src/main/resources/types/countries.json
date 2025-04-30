@@ -1,0 +1,44 @@
+[
+  {
+    "id": "country_yemen",
+    "name_en": "Yemen",
+    "name_ar": "اليمن",
+    "cities": ["city_sanaa", "city_aden", "city_taiz", "city_hodeidah", "city_mukalla"],
+    "currencies": ["currency_yer", "currency_usd"]
+  },
+  {
+    "id": "country_ksa",
+    "name_en": "Saudi Arabia",
+    "name_ar": "السعودية",
+    "cities": ["city_riyadh", "city_jeddah", "city_dammam", "city_mecca", "city_madinah"],
+    "currencies": ["currency_sar", "currency_usd"]
+  },
+  {
+    "id": "country_egypt",
+    "name_en": "Egypt",
+    "name_ar": "مصر",
+    "cities": ["city_cairo", "city_alexandria", "city_giza", "city_mansoura", "city_tanta"],
+    "currencies": ["currency_egp", "currency_usd"]
+  },
+  {
+    "id": "country_iraq",
+    "name_en": "Iraq",
+    "name_ar": "العراق",
+    "cities": ["city_baghdad", "city_basra", "city_erbil", "city_mosul", "city_najaf"],
+    "currencies": ["currency_iqd", "currency_usd"]
+  },
+  {
+    "id": "country_oman",
+    "name_en": "Oman",
+    "name_ar": "عمان",
+    "cities": ["city_muscat", "city_salamat", "city_suhar"],
+    "currencies": ["currency_omr", "currency_usd"]
+  },
+  {
+    "id": "country_jordan",
+    "name_en": "Jordan",
+    "name_ar": "الأردن",
+    "cities": ["city_amman", "city_irbid", "city_zarqa"],
+    "currencies": ["currency_jod", "currency_usd"]
+  }
+]

@@ -1,0 +1,1091 @@
+[{
+  "id":"class_Yaris" ,
+  "name_en": "Yaris",
+  "name_ar": "يارس"
+},
+{
+  "id":"class_Corolla" ,
+  "name_en": "Corolla",
+  "name_ar": "كورولا"
+},
+{
+  "id":"class_Camry" ,
+  "name_en": "Camry",
+  "name_ar": "كامري"
+},
+{
+  "id":"class_Avalon" ,
+  "name_en": "Avalon",
+  "name_ar": "أفالون"
+},
+{
+  "id":"class_RAV4" ,
+  "name_en": "RAV4",
+  "name_ar": "راف فور"
+},
+{
+  "id":"class_Highlander" ,
+  "name_en": "Highlander",
+  "name_ar": "هايلاندر"
+},
+{
+  "id":"class_4Runner" ,
+  "name_en": "4Runner",
+  "name_ar": "فور رانار"
+},
+{
+  "id":"class_Sequoia" ,
+  "name_en": "Sequoia",
+  "name_ar": "سيكويا"
+},
+{
+  "id":"class_Tacoma" ,
+  "name_en": "Tacoma",
+  "name_ar": "تاكوما"
+},
+{
+  "id":"class_Tundra" ,
+  "name_en": "Tundra",
+  "name_ar": "توندرا"
+},
+{
+  "id":"class_Prius" ,
+  "name_en": "Prius",
+  "name_ar": "بريوس"
+},
+{
+  "id":"class_Land_Cruiser" ,
+  "name_en": "Land Cruiser",
+  "name_ar": "لاند كروزر"
+},
+{
+  "id":"class_Hilux" ,
+  "name_en": "Hilux",
+  "name_ar": "هايلوكس"
+},
+{
+  "id":"class_Supra" ,
+  "name_en": "Supra",
+  "name_ar": "سوبرا"
+},
+{
+  "id":"class_Civic" ,
+  "name_en": "Civic",
+  "name_ar": "سيفيك"
+},
+{
+  "id":"class_Accord" ,
+  "name_en": "Accord",
+  "name_ar": "أكورد"
+},
+{
+  "id":"class_Insight" ,
+  "name_en": "Insight",
+  "name_ar": "إنسايت"
+},
+{
+  "id":"class_CR_V" ,
+  "name_en": "CR V",
+  "name_ar": "CR V"
+},
+{
+  "id":"class_HR_V" ,
+  "name_en": "HR V",
+  "name_ar": "HR V"
+},
+{
+  "id":"class_Passport" ,
+  "name_en": "Passport",
+  "name_ar": "باسبورت"
+},
+{
+  "id":"class_Pilot" ,
+  "name_en": "Pilot",
+  "name_ar": "بايلوت"
+},
+{
+  "id":"class_Ridgeline" ,
+  "name_en": "Ridgeline",
+  "name_ar": "ريدج لاين"
+},
+{
+  "id":"class_Odyssey" ,
+  "name_en": "Odyssey",
+  "name_ar": "أوديسي"
+},
+{
+  "id":"class_Mirage" ,
+  "name_en": "Mirage",
+  "name_ar": "ميراج"
+},
+{
+  "id":"class_Lancer" ,
+  "name_en": "Lancer",
+  "name_ar": "لانسر"
+},
+{
+  "id":"class_Outlander" ,
+  "name_en": "Outlander",
+  "name_ar": "أوت لاندر"
+},
+{
+  "id":"class_Eclipse_Cross" ,
+  "name_en": "Eclipse Cross",
+  "name_ar": "إكليبس كروس"
+},
+{
+  "id":"class_Pajero" ,
+  "name_en": "Pajero",
+  "name_ar": "باجيرو"
+},
+{
+  "id":"class_Triton" ,
+  "name_en": "Triton",
+  "name_ar": "تريتون"
+},
+{
+  "id":"class_ASX" ,
+  "name_en": "ASX",
+  "name_ar": "ASX"
+},
+{
+  "id":"class_Delica" ,
+  "name_en": "Delica",
+  "name_ar": "ديليكا"
+},
+{
+  "id":"class_Matiz" ,
+  "name_en": "Matiz",
+  "name_ar": "ماتيز"
+},
+{
+  "id":"class_Lanos" ,
+  "name_en": "Lanos",
+  "name_ar": "لانوس"
+},
+{
+  "id":"class_Nubira" ,
+  "name_en": "Nubira",
+  "name_ar": "نوبيرا"
+},
+{
+  "id":"class_Leganza" ,
+  "name_en": "Leganza",
+  "name_ar": "ليجانزا"
+},
+{
+  "id":"class_Tacuma" ,
+  "name_en": "Tacuma",
+  "name_ar": "تاكوما"
+},
+{
+  "id":"class_Magnus" ,
+  "name_en": "Magnus",
+  "name_ar": "ماجنوس"
+},
+{
+  "id":"class_Evanda" ,
+  "name_en": "Evanda",
+  "name_ar": "إيفاندا"
+},
+{
+  "id":"class_Mira" ,
+  "name_en": "Mira",
+  "name_ar": "ميرا"
+},
+{
+  "id":"class_Charade" ,
+  "name_en": "Charade",
+  "name_ar": "تشاريد"
+},
+{
+  "id":"class_Terios" ,
+  "name_en": "Terios",
+  "name_ar": "تيريوس"
+},
+{
+  "id":"class_Move" ,
+  "name_en": "Move",
+  "name_ar": "موف"
+},
+{
+  "id":"class_Sirion" ,
+  "name_en": "Sirion",
+  "name_ar": "سيريون"
+},
+{
+  "id":"class_Copen" ,
+  "name_en": "Copen",
+  "name_ar": "كوبن"
+},
+{
+  "id":"class_Rocky" ,
+  "name_en": "Rocky",
+  "name_ar": "روكي"
+},
+{
+  "id":"class_Fiesta" ,
+  "name_en": "Fiesta",
+  "name_ar": "فيستا"
+},
+{
+  "id":"class_Focus" ,
+  "name_en": "Focus",
+  "name_ar": "فوكاس"
+},
+{
+  "id":"class_Fusion" ,
+  "name_en": "Fusion",
+  "name_ar": "فيوجن"
+},
+{
+  "id":"class_Taurus" ,
+  "name_en": "Taurus",
+  "name_ar": "تاوروس"
+},
+{
+  "id":"class_Escape" ,
+  "name_en": "Escape",
+  "name_ar": "إسكيب"
+},
+{
+  "id":"class_Edge" ,
+  "name_en": "Edge",
+  "name_ar": "إدج"
+},
+{
+  "id":"class_Explorer" ,
+  "name_en": "Explorer",
+  "name_ar": "إكسبلورار"
+},
+{
+  "id":"class_Expedition" ,
+  "name_en": "Expedition",
+  "name_ar": "إكسبيديشن"
+},
+{
+  "id":"class_F_150" ,
+  "name_en": "F 150",
+  "name_ar": "F 150"
+},
+{
+  "id":"class_Ranger" ,
+  "name_en": "Ranger",
+  "name_ar": "رانجر"
+},
+{
+  "id":"class_Maverick" ,
+  "name_en": "Maverick",
+  "name_ar": "مافريك"
+},
+{
+  "id":"class_Bronco" ,
+  "name_en": "Bronco",
+  "name_ar": "برونكو"
+},
+{
+  "id":"class_Mustang" ,
+  "name_en": "Mustang",
+  "name_ar": "موستانج"
+},
+{
+  "id":"class_Spark" ,
+  "name_en": "Spark",
+  "name_ar": "سبارك"
+},
+{
+  "id":"class_Malibu" ,
+  "name_en": "Malibu",
+  "name_ar": "ماليبو"
+},
+{
+  "id":"class_Impala" ,
+  "name_en": "Impala",
+  "name_ar": "إمبالا"
+},
+{
+  "id":"class_Equinox" ,
+  "name_en": "Equinox",
+  "name_ar": "إكينوكس"
+},
+{
+  "id":"class_Trailblazer" ,
+  "name_en": "Trailblazer",
+  "name_ar": "ترابلايزر"
+},
+{
+  "id":"class_Traverse" ,
+  "name_en": "Traverse",
+  "name_ar": "تراقيرس"
+},
+{
+  "id":"class_Tahoe" ,
+  "name_en": "Tahoe",
+  "name_ar": "تاهو"
+},
+{
+  "id":"class_Suburban" ,
+  "name_en": "Suburban",
+  "name_ar": "ساب اوربان"
+},
+{
+  "id":"class_Colorado" ,
+  "name_en": "Colorado",
+  "name_ar": "كولورادو"
+},
+{
+  "id":"class_Silverado" ,
+  "name_en": "Silverado",
+  "name_ar": "سيلفادور"
+},
+{
+  "id":"class_Corvette" ,
+  "name_en": "Corvette",
+  "name_ar": "كورفيت"
+},
+{
+  "id":"class_Camaro" ,
+  "name_en": "Camaro",
+  "name_ar": "كامارو"
+},
+{
+  "id":"class_Bolt_EV" ,
+  "name_en": "Bolt EV",
+  "name_ar": "بولت EV"
+},
+{
+  "id":"class_Accent" ,
+  "name_en": "Accent",
+  "name_ar": "أكسنت"
+},
+{
+  "id":"class_Elantra" ,
+  "name_en": "Elantra",
+  "name_ar": "إلانترا"
+},
+{
+  "id":"class_Sonata" ,
+  "name_en": "Sonata",
+  "name_ar": "سوناتا"
+},
+{
+  "id":"class_Ioniq" ,
+  "name_en": "Ioniq",
+  "name_ar": "أيونيك"
+},
+{
+  "id":"class_Kona" ,
+  "name_en": "Kona",
+  "name_ar": "كونا"
+},
+{
+  "id":"class_Tucson" ,
+  "name_en": "Tucson",
+  "name_ar": "تاكسون"
+},
+{
+  "id":"class_Santa_Fe" ,
+  "name_en": "SantaFe",
+  "name_ar": "سانتافي"
+},
+{
+  "id":"class_Palisade" ,
+  "name_en": "Palisade",
+  "name_ar": "باليسيد"
+},
+{
+  "id":"class_Veloster" ,
+  "name_en": "Veloster",
+  "name_ar": "فيلوستر"
+},
+{
+  "id":"class_Rio" ,
+  "name_en": "Rio",
+  "name_ar": "ريو"
+},
+{
+  "id":"class_Forte" ,
+  "name_en": "Forte",
+  "name_ar": "فورت"
+},
+{
+  "id":"class_Optima" ,
+  "name_en": "Optima",
+  "name_ar": "أوبتيما"
+},
+{
+  "id":"class_Stinger" ,
+  "name_en": "Stinger",
+  "name_ar": "ستينجر"
+},
+{
+  "id":"class_Seltos" ,
+  "name_en": "Seltos",
+  "name_ar": "سيلتوس"
+},
+{
+  "id":"class_Sportage" ,
+  "name_en": "Sportage",
+  "name_ar": "سبورتيج"
+},
+{
+  "id":"class_Sorento" ,
+  "name_en": "Sorento",
+  "name_ar": "سورينتو"
+},
+{
+  "id":"class_Telluride" ,
+  "name_en": "Telluride",
+  "name_ar": "تيلورايد"
+},
+{
+  "id":"class_Soul" ,
+  "name_en": "Soul",
+  "name_ar": "سول"
+},
+{
+  "id":"class_Niro" ,
+  "name_en": "Niro",
+  "name_ar": "نيرو"
+},
+{
+  "id":"class_Picanto" ,
+  "name_en": "Picanto",
+  "name_ar": "بيكانتو"
+},
+{
+  "id":"class_Morning" ,
+  "name_en": "Morning",
+  "name_ar": "مورنينج"
+},
+{
+  "id":"class_Versa" ,
+  "name_en": "Versa",
+  "name_ar": "فيرسا"
+},
+{
+  "id":"class_Sentra" ,
+  "name_en": "Sentra",
+  "name_ar": "سينترا"
+},
+{
+  "id":"class_Altima" ,
+  "name_en": "Altima",
+  "name_ar": "ألتيما"
+},
+{
+  "id":"class_Maxima" ,
+  "name_en": "Maxima",
+  "name_ar": "ماكسيما"
+},
+{
+  "id":"class_Rogue" ,
+  "name_en": "Rogue",
+  "name_ar": "روج"
+},
+{
+  "id":"class_Murano" ,
+  "name_en": "Murano",
+  "name_ar": "مورانو"
+},
+{
+  "id":"class_Pathfinder" ,
+  "name_en": "Pathfinder",
+  "name_ar": "باث فايندر"
+},
+{
+  "id":"class_armada" ,
+  "name_en": "armada",
+  "name_ar": "أرمادا"
+},
+{
+  "id":"class_Frontier" ,
+  "name_en": "Frontier",
+  "name_ar": "فرونتير"
+},
+{
+  "id":"class_Titan" ,
+  "name_en": "Titan",
+  "name_ar": "تيتان"
+},
+{
+  "id":"class_Leaf" ,
+  "name_en": "Leaf",
+  "name_ar": "لييف"
+},
+{
+  "id":"class_GT_R" ,
+  "name_en": "GT R",
+  "name_ar": "GT R"
+},
+{
+  "id":"class_Z" ,
+  "name_en": "Z",
+  "name_ar": "Z"
+},
+{
+  "id":"class_Impreza" ,
+  "name_en": "Impreza",
+  "name_ar": "إمبريزا"
+},
+{
+  "id":"class_Legacy" ,
+  "name_en": "Legacy",
+  "name_ar": "ليجاسي"
+},
+{
+  "id":"class_Outback" ,
+  "name_en": "Outback",
+  "name_ar": "أوت باك"
+},
+{
+  "id":"class_Forester" ,
+  "name_en": "Forester",
+  "name_ar": "فورستر"
+},
+{
+  "id":"class_Ascent" ,
+  "name_en": "Ascent",
+  "name_ar": "أكسنت"
+},
+{
+  "id":"class_WRX" ,
+  "name_en": "WRX",
+  "name_ar": "WRX"
+},
+{
+  "id":"class_BRZ" ,
+  "name_en": "BRZ",
+  "name_ar": "BRZ"
+},
+{
+  "id":"class_Jetta" ,
+  "name_en": "Jetta",
+  "name_ar": "جيتا"
+},
+{
+  "id":"class_Passat" ,
+  "name_en": "Passat",
+  "name_ar": "باسات"
+},
+{
+  "id":"class_arteon" ,
+  "name_en": "arteon",
+  "name_ar": "أرتيون"
+},
+{
+  "id":"class_Golf" ,
+  "name_en": "Golf",
+  "name_ar": "جولف"
+},
+{
+  "id":"class_Tiguan" ,
+  "name_en": "Tiguan",
+  "name_ar": "تيجوان"
+},
+{
+  "id":"class_Atlas" ,
+  "name_en": "Atlas",
+  "name_ar": "أتلاس"
+},
+{
+  "id":"class_Beetle" ,
+  "name_en": "Beetle",
+  "name_ar": "بيتل"
+},
+{
+  "id":"class_Mazda3" ,
+  "name_en": "Mazda3",
+  "name_ar": "مازدا3"
+},
+{
+  "id":"class_Mazda6" ,
+  "name_en": "Mazda6",
+  "name_ar": "مازدا6"
+},
+{
+  "id":"class_CX_3" ,
+  "name_en": "CX 3",
+  "name_ar": "CX 3"
+},
+{
+  "id":"class_CX_30" ,
+  "name_en": "CX 30",
+  "name_ar": "CX 30"
+},
+{
+  "id":"class_CX_5" ,
+  "name_en": "CX 5",
+  "name_ar": "CX 5"
+},
+{
+  "id":"class_CX_50" ,
+  "name_en": "CX 50",
+  "name_ar": "CX 50"
+},
+{
+  "id":"class_CX_9" ,
+  "name_en": "CX 9",
+  "name_ar": "CX 9"
+},
+{
+  "id":"class_MX_5_Miata" ,
+  "name_en": "MX 5 Miata",
+  "name_ar": "MX 5 Miata"
+},
+{
+  "id":"class_Alto" ,
+  "name_en": "Alto",
+  "name_ar": "ألتو"
+},
+{
+  "id":"class_Swift" ,
+  "name_en": "Swift",
+  "name_ar": "سويفت"
+},
+{
+  "id":"class_Ciaz" ,
+  "name_en": "Ciaz",
+  "name_ar": "Ciaz"
+},
+{
+  "id":"class_Ertiga" ,
+  "name_en": "Ertiga",
+  "name_ar": "إرتيجا"
+},
+{
+  "id":"class_Vitara" ,
+  "name_en": "Vitara",
+  "name_ar": "فيتارا"
+},
+{
+  "id":"class_S_Cross" ,
+  "name_en": "S_Cross",
+  "name_ar": "إس كروس"
+},
+{
+  "id":"class_Jimny" ,
+  "name_en": "Jimny",
+  "name_ar": "جيمني"
+},
+{
+  "id":"class_Baleno" ,
+  "name_en": "Baleno",
+  "name_ar": "بالينو"
+},
+{
+  "id":"class_D_Max" ,
+  "name_en": "D Max",
+  "name_ar": "D Max"
+},
+{
+  "id":"class_MU_X" ,
+  "name_en": "MU X",
+  "name_ar": "MU X"
+},
+{
+  "id":"class_N_Series" ,
+  "name_en": "N Series",
+  "name_ar": "N Series"
+},
+{
+  "id":"class_F_Series" ,
+  "name_en": "F Series",
+  "name_ar": "F Series"
+},
+{
+  "id":"class_Elf" ,
+  "name_en": "Elf",
+  "name_ar": "Elf"
+},
+{
+  "id":"class_Trooper" ,
+  "name_en": "Trooper",
+  "name_ar": "تروبر"
+},
+{
+  "id":"class_Rodeo" ,
+  "name_en": "Rodeo",
+  "name_ar": "روديو"
+},
+{
+  "id":"class_IS" ,
+  "name_en": "IS",
+  "name_ar": "IS"
+},
+{
+  "id":"class_ES" ,
+  "name_en": "ES",
+  "name_ar": "ES"
+},
+{
+  "id":"class_GS" ,
+  "name_en": "GS",
+  "name_ar": "GS"
+},
+{
+  "id":"class_LS" ,
+  "name_en": "LS",
+  "name_ar": "LS"
+},
+{
+  "id":"class_UX" ,
+  "name_en": "UX",
+  "name_ar": "UX"
+},
+{
+  "id":"class_NX" ,
+  "name_en": "NX",
+  "name_ar": "NX"
+},
+{
+  "id":"class_RX" ,
+  "name_en": "RX",
+  "name_ar": "RX"
+},
+{
+  "id":"class_GX" ,
+  "name_en": "GX",
+  "name_ar": "GX"
+},
+{
+  "id":"class_LX" ,
+  "name_en": "LX",
+  "name_ar": "LX"
+},
+{
+  "id":"class_RC" ,
+  "name_en": "RC",
+  "name_ar": "RC"
+},
+{
+  "id":"class_LC" ,
+  "name_en": "LC",
+  "name_ar": "LC"
+},
+{
+  "id":"class_1_Series" ,
+  "name_en": "1 Series",
+  "name_ar": "1 Series"
+},
+{
+  "id":"class_2_Series" ,
+  "name_en": "2 Series",
+  "name_ar": "2 Series"
+},
+{
+  "id":"class_3_Series" ,
+  "name_en": "3 Series",
+  "name_ar": "3 Series"
+},
+{
+  "id":"class_4_Series" ,
+  "name_en": "4 Series",
+  "name_ar": "4 Series"
+},
+{
+  "id":"class_5_Series" ,
+  "name_en": "5 Series",
+  "name_ar": "5 Series"
+},
+{
+  "id":"class_7_Series" ,
+  "name_en": "7 Series",
+  "name_ar": "7 Series"
+},
+{
+  "id":"class_X1" ,
+  "name_en": "X1",
+  "name_ar": "X1"
+},
+{
+  "id":"class_X3" ,
+  "name_en": "X3",
+  "name_ar": "X3"
+},
+{
+  "id":"class_X5" ,
+  "name_en": "X5",
+  "name_ar": "X5"
+},
+{
+  "id":"class_X7" ,
+  "name_en": "X7",
+  "name_ar": "X7"
+},
+{
+  "id":"class_Z4" ,
+  "name_en": "Z4",
+  "name_ar": "Z4"
+},
+{
+  "id":"class_i3" ,
+  "name_en": "i3",
+  "name_ar": "i3"
+},
+{
+  "id":"class_i4" ,
+  "name_en": "i4",
+  "name_ar": "i4"
+},
+{
+  "id":"class_i8" ,
+  "name_en": "i8",
+  "name_ar": "i8"
+},
+{
+  "id":"class_A_Class" ,
+  "name_en": "A Class",
+  "name_ar": "A Class"
+},
+{
+  "id":"class_C_Class" ,
+  "name_en": "C Class",
+  "name_ar": "C Class"
+},
+{
+  "id":"class_E_Class" ,
+  "name_en": "E Class",
+  "name_ar": "E Class"
+},
+{
+  "id":"class_S_Class" ,
+  "name_en": "S Class",
+  "name_ar": "S Class"
+},
+{
+  "id":"class_GLA" ,
+  "name_en": "GLA",
+  "name_ar": "GLA"
+},
+{
+  "id":"class_GLC" ,
+  "name_en": "GLC",
+  "name_ar": "GLC"
+},
+{
+  "id":"class_GLE" ,
+  "name_en": "GLE",
+  "name_ar": "GLE"
+},
+{
+  "id":"class_GLS" ,
+  "name_en": "GLS",
+  "name_ar": "GLS"
+},
+{
+  "id":"class_G_Class" ,
+  "name_en": "G Class",
+  "name_ar": "G Class"
+},
+{
+  "id":"class_AMG GT" ,
+  "name_en": "AMG GT",
+  "name_ar": "AMG GT"
+},
+{
+  "id":"class_EQB" ,
+  "name_en": "EQB",
+  "name_ar": "EQB"
+},
+{
+  "id":"class_EQC" ,
+  "name_en": "EQC",
+  "name_ar": "EQC"
+},
+{
+  "id":"class_EQS" ,
+  "name_en": "EQS",
+  "name_ar": "EQS"
+},
+{
+  "id":"class_A3" ,
+  "name_en": "A3",
+  "name_ar": "A3"
+},
+{
+  "id":"class_A4" ,
+  "name_en": "A4",
+  "name_ar": "A4"
+},
+{
+  "id":"class_A5" ,
+  "name_en": "A5",
+  "name_ar": "A5"
+},
+{
+  "id":"class_A6" ,
+  "name_en": "A6",
+  "name_ar": "A6"
+},
+{
+  "id":"class_A7" ,
+  "name_en": "A7",
+  "name_ar": "A7"
+},
+{
+  "id":"class_A8" ,
+  "name_en": "A8",
+  "name_ar": "A8"
+},
+{
+  "id":"class_Q3" ,
+  "name_en": "Q3",
+  "name_ar": "Q3"
+},
+{
+  "id":"class_Q5" ,
+  "name_en": "Q5",
+  "name_ar": "Q5"
+},
+{
+  "id":"class_Q7" ,
+  "name_en": "Q7",
+  "name_ar": "Q7"
+},
+{
+  "id":"class_Q8" ,
+  "name_en": "Q8",
+  "name_ar": "Q8"
+},
+{
+  "id":"class_e_tron" ,
+  "name_en": "e tron",
+  "name_ar": "e tron"
+},
+{
+  "id":"class_R8" ,
+  "name_en": "R8",
+  "name_ar": "R8"
+},
+{
+  "id":"class_TT" ,
+  "name_en": "TT",
+  "name_ar": "TT"
+},
+{
+  "id":"class_Model_S" ,
+  "name_en": "Model S",
+  "name_ar": "Model S"
+},
+{
+  "id":"class_Model_3" ,
+  "name_en": "Model 3",
+  "name_ar": "Model 3"
+},
+{
+  "id":"class_Model_X" ,
+  "name_en": "Model X",
+  "name_ar": "Model X"
+},
+{
+  "id":"class_Model_Y" ,
+  "name_en": "Model Y",
+  "name_ar": "Model Y"
+},
+{
+  "id":"class_Cybertruck" ,
+  "name_en": "Cybertruck",
+  "name_ar": "Cybertruck"
+},
+{
+  "id":"class_Discovery" ,
+  "name_en": "Discovery",
+  "name_ar": "ديسكوفري"
+},
+{
+  "id":"class_Range_Rover" ,
+  "name_en": "Range_Rover",
+  "name_ar": "رانج روفر"
+},
+{
+  "id":"class_Range_Rover_Sport" ,
+  "name_en": "Sport",
+  "name_ar": "سبورت"
+},
+{
+  "id":"class_Range_Rover_Velar" ,
+  "name_en": "Velar",
+  "name_ar": "فيلار"
+},
+{
+  "id":"class_Defender" ,
+  "name_en": "Defender",
+  "name_ar": "ديفيندر"
+},
+{
+  "id":"class_Evoque" ,
+  "name_en": "Evoque",
+  "name_ar": "إيفوك"
+},
+{
+  "id":"class_911" ,
+  "name_en": "911",
+  "name_ar": "911"
+},
+{
+  "id":"class_718_Cayman" ,
+  "name_en": "718 Cayman",
+  "name_ar": "718 Cayman"
+},
+{
+  "id":"class_718_Boxster" ,
+  "name_en": "718 Boxster",
+  "name_ar": "718 Boxster"
+},
+{
+  "id":"class_Panamera" ,
+  "name_en": "Panamera",
+  "name_ar": "باناميرا"
+},
+{
+  "id":"class_Macan" ,
+  "name_en": "Macan",
+  "name_ar": "ماكان"
+},
+{
+  "id":"class_Cayenne" ,
+  "name_en": "Cayenne",
+  "name_ar": "كاين"
+},
+{
+  "id":"class_Taycan" ,
+  "name_en": "Taycan",
+  "name_ar": "تايكان"
+},
+{
+  "id":"class_XE" ,
+  "name_en": "XE",
+  "name_ar": "XE"
+},
+{
+  "id":"class_XF" ,
+  "name_en": "XF",
+  "name_ar": "XF"
+},
+{
+  "id":"class_XJ" ,
+  "name_en": "XJ",
+  "name_ar": "XJ"
+},
+{
+  "id":"class_E_PACE" ,
+  "name_en": "E_PACE",
+  "name_ar": "E_PACE"
+},
+{
+  "id":"class_F_PACE" ,
+  "name_en": "F PACE",
+  "name_ar": "F PACE"
+},
+{
+  "id":"class_I_PACE" ,
+  "name_en": "I PACE",
+  "name_ar": "I PACE"
+},
+{
+  "id":"class_F_TYPE" ,
+  "name_en": "F TYPE",
+  "name_ar": "F TYPE"
+}
+]

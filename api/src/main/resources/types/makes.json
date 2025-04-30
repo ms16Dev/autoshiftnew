@@ -1,0 +1,405 @@
+[{
+  "id":"make_toyota" ,
+  "name_en": "Toyota",
+  "name_ar": "تويوتا",
+  "url": "/images/2.png",
+  "classes": [
+    "class_Yaris",
+    "class_Corolla",
+    "class_Camry",
+    "class_Avalon",
+    "class_RAV4",
+    "class_Highlander",
+    "class_4Runner",
+    "class_Sequoia",
+    "class_Tacoma",
+    "class_Tundra",
+    "class_Prius",
+    "class_Land_Cruiser",
+    "class_Hilux",
+    "class_Supra"
+  ]
+},
+  {
+    "id":"make_honda" ,
+    "name_en": "Honda",
+    "name_ar": "هوندا",
+    "url": "/images/14.png",
+    "classes": [
+      "class_Civic",
+      "class_Accord",
+      "class_Insight",
+      "class_CR_V",
+      "class_HR_V",
+      "class_Passport",
+      "class_Pilot",
+      "class_Ridgeline",
+      "class_Odyssey"
+    ]
+  },
+  {
+    "id":"make_mitsubishi" ,
+    "name_en": "Mitsubishi",
+    "name_ar": "ميتسوبيشي",
+    "url": "/images/15.png",
+    "classes": [
+      "class_Mirage",
+      "class_Lancer",
+      "class_Outlander",
+      "class_Eclipse_Cross",
+      "class_Pajero",
+      "class_Triton",
+      "class_ASX",
+      "class_Delica"
+    ]
+  },
+  {
+    "id":"make_daewoo" ,
+    "name_en": "Daewoo",
+    "name_ar": "دايو",
+    "url": "/images/11.png",
+    "classes": [
+      "class_Matiz",
+      "class_Lanos",
+      "class_Nubira",
+      "class_Leganza",
+      "class_Tacuma",
+      "class_Magnus",
+      "class_Evanda"
+    ]
+  },
+  {
+    "id":"make_daihatsu" ,
+    "name_en": "Daihatsu",
+    "name_ar": "دايهاتسو",
+    "url": "/images/16.png",
+    "classes": [
+      "class_Mira",
+      "class_Charade",
+      "class_Terios",
+      "class_Move",
+      "class_Sirion",
+      "class_Copen",
+      "class_Rocky"
+    ]
+  },
+  {
+    "id":"make_ford" ,
+    "name_en": "Ford",
+    "name_ar": "فورد",
+    "url": "/images/18.png",
+    "classes": [
+      "class_Fiesta",
+      "class_Focus",
+      "class_Fusion",
+      "class_Taurus",
+      "class_Escape",
+      "class_Edge",
+      "class_Explorer",
+      "class_Expedition",
+      "class_F_150",
+      "class_Ranger",
+      "class_Maverick",
+      "class_Bronco",
+      "class_Mustang"
+    ]
+  },
+  {
+    "id":"make_chevrolet" ,
+    "name_en": "Chevrolet",
+    "name_ar": "تشيفروليه",
+    "url": "/images/17.png",
+    "classes": [
+      "class_Spark",
+      "class_Malibu",
+      "class_Impala",
+      "class_Equinox",
+      "class_Trailblazer",
+      "class_Traverse",
+      "class_Tahoe",
+      "class_Suburban",
+      "class_Colorado",
+      "class_Silverado",
+      "class_Corvette",
+      "class_Camaro",
+      "class_Bolt_EV"
+    ]
+  },
+  {
+    "id":"make_hyundai" ,
+    "name_en": "Hyundai",
+    "name_ar": "هيونداي",
+    "url": "/images/6.png",
+    "classes": [
+      "class_Accent",
+      "class_Elantra",
+      "class_Sonata",
+      "class_Ioniq",
+      "class_Kona",
+      "class_Tucson",
+      "class_Santa_Fe",
+      "class_Palisade",
+      "class_Veloster"
+    ]
+  },
+  {
+    "id":"make_kia" ,
+    "name_en": "Kia",
+    "name_ar": "كيا",
+    "url": "/images/9.png",
+    "classes": [
+      "class_Rio",
+      "class_Forte",
+      "class_Optima",
+      "class_Stinger",
+      "class_Seltos",
+      "class_Sportage",
+      "class_Sorento",
+      "class_Telluride",
+      "class_Soul",
+      "class_Niro",
+      "class_Picanto",
+      "class_Morning"
+    ]
+  },
+  {
+    "id":"make_nissan" ,
+    "name_en": "Nissan",
+    "name_ar": "نيسان",
+    "url": "/images/7.png",
+    "classes": [
+      "class_Versa",
+      "class_Sentra",
+      "class_Altima",
+      "class_Maxima",
+      "class_Rogue",
+      "class_Murano",
+      "class_Pathfinder",
+      "class_armada",
+      "class_Frontier",
+      "class_Titan",
+      "class_Leaf",
+      "class_GT_R",
+      "class_Z"
+    ]
+  },
+  {
+    "id":"make_subaru" ,
+    "name_en": "Subaru",
+    "name_ar": "سوبارو",
+    "url": "/images/19.png",
+    "classes": [
+      "class_Impreza",
+      "class_Legacy",
+      "class_Outback",
+      "class_Forester",
+      "class_Ascent",
+      "class_WRX",
+      "class_BRZ"
+    ]
+  },
+  {
+    "id":"make_volkswagen" ,
+    "name_en": "Volkswagen",
+    "name_ar": "فولكسواجن",
+    "url": "/images/20.png",
+    "classes": [
+      "class_Jetta",
+      "class_Passat",
+      "class_arteon",
+      "class_Golf",
+      "class_Tiguan",
+      "class_Atlas",
+      "class_Beetle"
+    ]
+  },
+  {
+    "id":"make_mazda" ,
+    "name_en": "Mazda",
+    "name_ar": "مازدا",
+    "url": "/images/12.png",
+    "classes": [
+      "class_Mazda3",
+      "class_Mazda6",
+      "class_CX_3",
+      "class_CX_30",
+      "class_CX_5",
+      "class_CX_50",
+      "class_CX_9",
+      "class_MX_5_Miata"
+    ]
+  },
+  {
+    "id":"make_suzuki" ,
+    "name_en": "Suzuki",
+    "name_ar": "سوزوكي",
+    "url": "/images/13.png",
+    "classes": [
+      "class_Alto",
+      "class_Swift",
+      "class_Ciaz",
+      "class_Ertiga",
+      "class_Vitara",
+      "class_S_Cross",
+      "class_Jimny",
+      "class_Baleno"
+    ]
+  },
+  {
+    "id":"make_isuzu" ,
+    "name_en": "Isuzu",
+    "name_ar": "ايسوزو",
+    "url": "/images/21.png",
+    "classes": [
+      "class_D_Max",
+      "class_MU_X",
+      "class_N_Series",
+      "class_F_Series",
+      "class_Elf",
+      "class_Trooper",
+      "class_Rodeo"
+    ]
+  },
+  {
+    "id":"make_lexus" ,
+    "name_en": "Lexus",
+    "name_ar": "ليكزس",
+    "url": "/images/22.png",
+    "classes": [
+      "class_IS",
+      "class_ES",
+      "class_GS",
+      "class_LS",
+      "class_UX",
+      "class_NX",
+      "class_RX",
+      "class_GX",
+      "class_LX",
+      "class_RC",
+      "class_LC"
+    ]
+  },
+  {
+    "id":"make_bmw" ,
+
+    "name_en": "BMW",
+    "name_ar": "بي ام دبليو",
+    "url": "/images/23.png",
+    "classes": [
+      "class_1_Series",
+      "class_2_Series",
+      "class_3_Series",
+      "class_4_Series",
+      "class_5_Series",
+      "class_7_Series",
+      "class_X1",
+      "class_X3",
+      "class_X5",
+      "class_X7",
+      "class_Z4",
+      "class_i3",
+      "class_i4",
+      "class_i8"
+    ]
+  },
+  {
+    "id":"make_mercedes_benz" ,
+    "name_en": "Mercedes-Benz",
+    "name_ar": "مرسيديس",
+    "url": "/images/8.png",
+    "classes": [
+      "class_A_Class",
+      "class_C_Class",
+      "class_E_Class",
+      "class_S_Class",
+      "class_GLA",
+      "class_GLC",
+      "class_GLE",
+      "class_GLS",
+      "class_G_Class",
+      "class_AMG GT",
+      "class_EQB",
+      "class_EQC",
+      "class_EQS"
+    ]
+  },
+  {
+    "id":"make_audi" ,
+    "name_en": "Audi",
+    "name_ar": "أودي",
+    "url": "/images/24.png",
+    "classes": [
+      "class_A3",
+      "class_A4",
+      "class_A5",
+      "class_A6",
+      "class_A7",
+      "class_A8",
+      "class_Q3",
+      "class_Q5",
+      "class_Q7",
+      "class_Q8",
+      "class_e_tron",
+      "class_R8",
+      "class_TT"
+    ]
+  },
+  {
+    "id":"make_tesla" ,
+
+    "name_en": "Tesla",
+    "name_ar": "تيسلا",
+    "url": "/images/25.png",
+    "classes": [
+      "class_Model_S",
+      "class_Model_3",
+      "class_Model_X",
+      "class_Model_Y",
+      "class_Cybertruck"
+    ]
+  },
+  {
+    "id":"make_land_rover" ,
+
+    "name_en": "Land Rover",
+    "name_ar": "لاند روفر",
+    "url": "/images/26.png",
+    "classes": [
+      "class_Discovery",
+      "class_Range_Rover",
+      "class_Range_Rover_Sport",
+      "class_Range_Rover_Velar",
+      "class_Defender",
+      "class_Evoque"
+    ]
+  },
+  {
+    "id":"make_porsche" ,
+    "name_en": "Porsche",
+    "name_ar": "بورش",
+    "url": "/images/27.png",
+    "classes": [
+      "class_911",
+      "class_718_Cayman",
+      "class_718_Boxster",
+      "class_Panamera",
+      "class_Macan",
+      "class_Cayenne",
+      "class_Taycan"
+    ]
+  },
+  {
+    "id":"make_jaguar" ,
+    "name_en": "Jaguar",
+    "name_ar": "جاقوار",
+    "url": "/images/28.png",
+    "classes": [
+      "class_XE",
+      "class_XF",
+      "class_XJ",
+      "class_E_PACE",
+      "class_F_PACE",
+      "class_I_PACE",
+      "class_F_TYPE"
+    ]
+  }]

@@ -1,0 +1,30 @@
+[{
+  "id": "fuel_gasoline",
+  "name_en": "Gasoline",
+  "name_ar": "بترول"
+  
+},
+  {
+    "id": "fuel_diesel",
+    "name_en": "Deisle",
+    "name_ar": "ديزل"
+    
+  },
+  {
+    "id": "fuel_hybrid",
+    "name_en": "Hybrid",
+    "name_ar": "هايبريد"
+    
+  },
+  {
+    "id": "fuel_electric",
+    "name_en": "Electric",
+    "name_ar": "كهرباء"
+    
+  },
+  {
+    "id": "fuel_gas",
+    "name_en": "Gas",
+    "name_ar": "غاز"
+    
+  }]

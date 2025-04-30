@@ -1,0 +1,152 @@
+[
+  {
+    "id": "color_black",
+    "name_en": "Black",
+    "name_ar": "أسود"
+  },
+  {
+    "id": "color_blue",
+    "name_en": "Blue",
+    "name_ar": "أزرق"
+  },
+  {
+    "id": "color_red",
+    "name_en": "Red",
+    "name_ar": "أحمر"
+  },
+  {
+    "id": "color_brown",
+    "name_en": "Brown",
+    "name_ar": "بني"
+  },
+  {
+    "id": "color_beige",
+    "name_en": "Beige",
+    "name_ar": "بيج"
+  },
+  {
+    "id": "color_green",
+    "name_en": "Green",
+    "name_ar": "أخضر"
+  },
+  {
+    "id": "color_yellow",
+    "name_en": "Yellow",
+    "name_ar": "أصفر"
+  },
+  {
+    "id": "color_gold",
+    "name_en": "Gold",
+    "name_ar": "ذهبي"
+  },
+  {
+    "id": "color_orange",
+    "name_en": "Orange",
+    "name_ar": "برتقالي"
+  },
+  {
+    "id": "color_white",
+    "name_en": "White",
+    "name_ar": "أبيض"
+  },
+  {
+    "id": "color_silver",
+    "name_en": "Silver",
+    "name_ar": "فضي"
+  },
+  {
+    "id": "color_gray",
+    "name_en": "Gray",
+    "name_ar": "رمادي"
+  },
+  {
+    "id": "color_pearl_white",
+    "name_en": "Pearl White",
+    "name_ar": "أبيض لؤلؤي"
+  },
+  {
+    "id": "color_metallic_black",
+    "name_en": "Metallic Black",
+    "name_ar": "أسود معدني"
+  },
+  {
+    "id": "color_gunmetal",
+    "name_en": "Gunmetal",
+    "name_ar": "معدني داكن"
+  },
+  {
+    "id": "color_burgundy",
+    "name_en": "Burgundy",
+    "name_ar": "عنابي"
+  },
+  {
+    "id": "color_purple",
+    "name_en": "Purple",
+    "name_ar": "بنفسجي"
+  },
+  {
+    "id": "color_pink",
+    "name_en": "Pink",
+    "name_ar": "وردي"
+  },
+  {
+    "id": "color_teal",
+    "name_en": "Teal",
+    "name_ar": "أزرق مخضر"
+  },
+  {
+    "id": "color_turquoise",
+    "name_en": "Turquoise",
+    "name_ar": "فيروزي"
+  },
+  {
+    "id": "color_champagne",
+    "name_en": "Champagne",
+    "name_ar": "شمبانيا"
+  },
+  {
+    "id": "color_bronze",
+    "name_en": "Bronze",
+    "name_ar": "برونزي"
+  },
+  {
+    "id": "color_copper",
+    "name_en": "Copper",
+    "name_ar": "نحاسي"
+  },
+  {
+    "id": "color_maroon",
+    "name_en": "Maroon",
+    "name_ar": "كستنائي"
+  },
+  {
+    "id": "color_midnight_blue",
+    "name_en": "Midnight Blue",
+    "name_ar": "أزرق ليلي"
+  },
+  {
+    "id": "color_racing_green",
+    "name_en": "Racing Green",
+    "name_ar": "أخضر سباق"
+  },
+  {
+    "id": "color_candy_red",
+    "name_en": "Candy Red",
+    "name_ar": "أحمر حلوى"
+  },
+  {
+    "id": "color_pearl_blue",
+    "name_en": "Pearl Blue",
+    "name_ar": "أزرق لؤلؤي"
+  },
+  {
+    "id": "color_steel_gray",
+    "name_en": "Steel Gray",
+    "name_ar": "رمادي فولاذي"
+  },
+  {
+    "id": "color_ivory",
+    "name_en": "Ivory",
+    "name_ar": "عاجي"
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "id": "shape_suv",
+    "name_en": "SUV",
+    "name_ar": "سيارة دفع رباعي"
+  },
+  {
+    "id": "shape_hatchback",
+    "name_en": "Hatchback",
+    "name_ar": "هاتشباك"
+  },
+  {
+    "id": "shape_convertible",
+    "name_en": "Convertible",
+    "name_ar": "كابريوليه"
+  },
+  {
+    "id": "shape_pickup",
+    "name_en": "Pickup Truck",
+    "name_ar": "شاحنة صغيرة"
+  },
+  {
+    "id": "shape_van",
+    "name_en": "Van",
+    "name_ar": "فان"
+  },
+  {
+    "id": "shape_limousine",
+    "name_en": "Limousine",
+    "name_ar": "ليموزين"
+  },
+  {
+    "id": "shape_sedan",
+    "name_en": "Sedan",
+    "name_ar": "سيدان"
+  },
+  {
+    "id": "shape_coupe",
+    "name_en": "Coupe",
+    "name_ar": "كوبيه"
+  },
+  {
+    "id": "shape_minivan",
+    "name_en": "Minivan",
+    "name_ar": "ميني فان"
+  },
+  {
+    "id": "shape_crossover",
+    "name_en": "Crossover",
+    "name_ar": "كراس أوفر"
+  },
+  {
+    "id": "shape_sports",
+    "name_en": "Sports Car",
+    "name_ar": "سيارة رياضية"
+  },
+  {
+    "id": "shape_muscle",
+    "name_en": "Muscle Car",
+    "name_ar": "سيارة عضلات"
+  },
+  {
+    "id": "shape_roadster",
+    "name_en": "Roadster",
+    "name_ar": "رودستر"
+  },
+  {
+    "id": "shape_mpv",
+    "name_en": "MPV",
+    "name_ar": "سيارة عائلية"
+  },
+  {
+    "id": "shape_compact",
+    "name_en": "Compact",
+    "name_ar": "سيارة صغيرة"
+  },
+  {
+    "id": "shape_truck",
+    "name_en": "Truck",
+    "name_ar": "شاحنة"
+  },
+  {
+    "id": "shape_bus",
+    "name_en": "Bus",
+    "name_ar": "حافلة"
+  }
+
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "id": "feature_leather_seats",
+    "name_en": "Premium Leather Seats",
+    "name_ar": "مقاعد جلدية فاخرة"
+  },
+  {
+    "id": "feature_heated_seats",
+    "name_en": "Heated Seats",
+    "name_ar": "مقاعد مدفأة"
+  },
+  {
+    "id": "feature_ventilated_seats",
+    "name_en": "Ventilated Seats",
+    "name_ar": "مقاعد مهواة"
+  },
+  {
+    "id": "feature_massage_seats",
+    "name_en": "Massage Seats",
+    "name_ar": "مقاعد مزودة بخاصية التدليك"
+  },
+  {
+    "id": "feature_power_seats",
+    "name_en": "Power Adjustable Seats",
+    "name_ar": "مقاعد كهربائية قابلة للتعديل"
+  },
+  {
+    "id": "feature_memory_seats",
+    "name_en": "Memory Seats",
+    "name_ar": "مقاعد ذاكرة"
+  },
+  {
+    "id": "feature_panoramic_roof",
+    "name_en": "Panoramic Sunroof",
+    "name_ar": "فتحة سقف بانورامية"
+  },
+  {
+    "id": "feature_ambient_lighting",
+    "name_en": "Multi-Color Ambient Lighting",
+    "name_ar": "إضاءة محيطية متعددة الألوان"
+  },
+  {
+    "id": "feature_premium_audio",
+    "name_en": "Premium Sound System",
+    "name_ar": "نظام صوتي فاخر"
+  },
+  {
+    "id": "feature_touchscreen",
+    "name_en": "Touchscreen Infotainment",
+    "name_ar": "شاشة لمس للترفيه"
+  },
+  {
+    "id": "feature_wireless_charging",
+    "name_en": "Wireless Charging",
+    "name_ar": "شحن لاسلكي"
+  },
+  {
+    "id": "feature_hud",
+    "name_en": "Head-Up Display",
+    "name_ar": "شاشة عرض أمامية"
+  },
+  {
+    "id": "feature_digital_cluster",
+    "name_en": "Digital Instrument Cluster",
+    "name_ar": "لوحة عدادات رقمية"
+  },
+  {
+    "id": "feature_rear_entertainment",
+    "name_en": "Rear Seat Entertainment",
+    "name_ar": "شاشات ترفيهية خلفية"
+  },
+  {
+    "id": "feature_4zone_climate",
+    "name_en": "4-Zone Climate Control",
+    "name_ar": "تحكم مناخي رباعي المناطق"
+  },
+  {
+    "id": "feature_keyless_entry",
+    "name_en": "Keyless Entry & Start",
+    "name_ar": "تشغيل ودخول بدون مفتاح"
+  },
+  {
+    "id": "feature_soft_close",
+    "name_en": "Soft-Close Doors",
+    "name_ar": "أبواب بإغلاق آلي"
+  },
+  {
+    "id": "feature_power_tailgate",
+    "name_en": "Hands-Free Power Tailgate",
+    "name_ar": "باب خلفي كهربائي بالتحكم عن بعد"
+  },
+  {
+    "id": "feature_premium_trim",
+    "name_en": "Premium Interior Trim",
+    "name_ar": "تشطيب داخلي فاخر"
+  },
+  {
+    "id": "feature_electric_shades",
+    "name_en": "Power Window Shades",
+    "name_ar": "ستائر كهربائية للنوافذ"
+  },
+  {
+    "id": "feature_air_purifier",
+    "name_en": "Advanced Air Purification",
+    "name_ar": "نظام متقدم لتنقية الهواء"
+  },
+  {
+    "id": "feature_night_vision",
+    "name_en": "Night Vision Assist",
+    "name_ar": "رؤية ليلية"
+  },
+  {
+    "id": "feature_360_camera",
+    "name_en": "360-Degree Camera",
+    "name_ar": "كاميرا 360 درجة"
+  },
+  {
+    "id": "feature_automatic_parking",
+    "name_en": "Automatic Parking Assist",
+    "name_ar": "مساعد الركن الآلي"
+  },
+  {
+    "id": "feature_adaptive_cruise",
+    "name_en": "Adaptive Cruise Control",
+    "name_ar": "مثبت سرعة متكيف"
+  },
+  {
+    "id": "feature_lane_assist",
+    "name_en": "Lane Keeping Assist",
+    "name_ar": "مساعد الحفاظ على المسار"
+  },
+  {
+    "id": "feature_heated_steering",
+    "name_en": "Heated Steering Wheel",
+    "name_ar": "مقود مدفأ"
+  },
+  {
+    "id": "feature_cooled_glovebox",
+    "name_en": "Cooled Glove Compartment",
+    "name_ar": "حجرة قفازات مبردة"
+  },
+  {
+    "id": "feature_rear_axle_steering",
+    "name_en": "Rear-Axle Steering",
+    "name_ar": "توجيه بالمحور الخلفي"
+  },
+  {
+    "id": "feature_active_suspension",
+    "name_en": "Active Suspension",
+    "name_ar": "نظام تعليق نشط"
+  },
+  {
+    "id": "feature_ar_navigation",
+    "name_en": "Augmented Reality Navigation",
+    "name_ar": "ملاحة بالواقع المعزز"
+  },
+  {
+    "id": "feature_gesture_control",
+    "name_en": "Gesture Control",
+    "name_ar": "تحكم بالإيماءات"
+  },
+  {
+    "id": "feature_voice_control",
+    "name_en": "Advanced Voice Control",
+    "name_ar": "تحكم صوتي متقدم"
+  },
+  {
+    "id": "feature_digital_key",
+    "name_en": "Digital Key",
+    "name_ar": "مفتاح رقمي"
+  },
+  {
+    "id": "feature_biometric_access",
+    "name_en": "Biometric Access",
+    "name_ar": "دخول بيومتري"
+  },
+  {
+    "id": "feature_remote_parking",
+    "name_en": "Remote Parking Assist",
+    "name_ar": "ركن عن بعد"
+  }
+]

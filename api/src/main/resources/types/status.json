@@ -1,0 +1,26 @@
+[{
+  "id": "status_new",
+  "name_en": "New",
+  "name_ar": "جديد"
+},
+  {
+    "id": "status_used",
+    "name_en": "Used",
+    "name_ar": "مستخدم"
+  },
+  {
+    "id": "status_us_imported",
+    "name_en": "American",
+    "name_ar": "أمريكي"
+  },
+  {
+    "id": "status_korean_imported",
+    "name_en": "Korean",
+    "name_ar": "كوري"
+  },
+  {
+    "id": "status_gulf_imported",
+    "name_en": "Gulf",
+    "name_ar": "خليجي"
+  }
+]

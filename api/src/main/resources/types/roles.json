@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ROLE_USER",
+    "name_en": "User",
+    "name_ar": "مستخدم"
+  },
+  {
+    "id": "ROLE_ADMIN",
+    "name_en": "Admin",
+    "name_ar": "مدير"
+  },
+  {
+    "id": "ROLE_DEALER",
+    "name_en": "Dealer",
+    "name_ar": "بائع"
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "abs",
+    "name_en": "Anti-lock Braking System (ABS)",
+    "name_ar": "نظام المكابح المانعة للانغلاق (ABS)"
+  },
+  {
+    "id": "esc",
+    "name_en": "Electronic Stability Control (ESC)",
+    "name_ar": "نظام الثبات الإلكتروني (ESC)"
+  },
+  {
+    "id": "tcs",
+    "name_en": "Traction Control System (TCS)",
+    "name_ar": "نظام التحكم في الجر (TCS)"
+  },
+  {
+    "id": "airbags",
+    "name_en": "Airbags",
+    "name_ar": "الوسائد الهوائية"
+  },
+  {
+    "id": "ldw",
+    "name_en": "Lane Departure Warning (LDW)",
+    "name_ar": "نظام تنبيه مغادرة المسار (LDW)"
+  },
+  {
+    "id": "lka",
+    "name_en": "Lane Keeping Assist (LKA)",
+    "name_ar": "مساعد البقاء في المسار (LKA)"
+  },
+  {
+    "id": "acc",
+    "name_en": "Adaptive Cruise Control (ACC)",
+    "name_ar": "نظام تثبيت السرعة المتكيف (ACC)"
+  },
+  {
+    "id": "bsm",
+    "name_en": "Blind Spot Monitoring (BSM)",
+    "name_ar": "مراقبة النقطة العمياء (BSM)"
+  },
+  {
+    "id": "rcta",
+    "name_en": "Rear Cross Traffic Alert (RCTA)",
+    "name_ar": "تنبيه حركة المرور الخلفية (RCTA)"
+  },
+  {
+    "id": "aeb",
+    "name_en": "Automatic Emergency Braking (AEB)",
+    "name_ar": "الكبح التلقائي في حالات الطوارئ (AEB)"
+  },
+  {
+    "id": "fcw",
+    "name_en": "Forward Collision Warning (FCW)",
+    "name_ar": "نظام التحذير من الاصطدام الأمامي (FCW)"
+  },
+  {
+    "id": "dms",
+    "name_en": "Driver Monitoring System (DMS)",
+    "name_ar": "نظام مراقبة السائق (DMS)"
+  },
+  {
+    "id": "tpms",
+    "name_en": "Tire Pressure Monitoring System (TPMS)",
+    "name_ar": "نظام مراقبة ضغط الإطارات (TPMS)"
+  },
+  {
+    "id": "parkassist",
+    "name_en": "Parking Assist System",
+    "name_ar": "نظام المساعدة على الركن"
+  },
+  {
+    "id": "surroundview",
+    "name_en": "360° Surround View Camera",
+    "name_ar": "كاميرا الرؤية المحيطية بزاوية 360 درجة"
+  }
+]

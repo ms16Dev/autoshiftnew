@@ -311,7 +311,7 @@ public class ReferenceController {
 
     @GetMapping("/fuel")
     public Mono<ResponseEntity<Flux<Fuel>>> getFuels() {
-        Flux<Fuel> data = mongoTemplate.findAll(Fuel.class, "fuels");
+        Flux<Fuel> data = mongoTemplate.findAll(Fuel.class, "fuel");
 
         // Return a ResponseEntity wrapping the Flux
         return Mono.just(ResponseEntity.ok(data));
@@ -350,7 +350,7 @@ public class ReferenceController {
         // Set the ID from path variable to ensure we're updating the correct document
         fuel.setId(id);
 
-        return mongoTemplate.save(fuel, "fuels")
+        return mongoTemplate.save(fuel, "fuel")
                 .map(savedEngine -> ResponseEntity.ok("Fuel updated successfully"))
                 .onErrorResume(e -> Mono.just(
                         ResponseEntity.internalServerError().body("Error updating fuel: " + e.getMessage())
@@ -361,7 +361,7 @@ public class ReferenceController {
     public Mono<ResponseEntity<String>> deleteFuel(@PathVariable String id) {
         return mongoTemplate.remove(
                         Query.query(Criteria.where("_id").is(id)),
-                        "fuels"
+                        "fuel"
                 )
                 .map(deleteResult -> {
                     if (deleteResult.getDeletedCount() > 0) {
