@@ -5,6 +5,7 @@ import router from './router';
 import ApiService from "./core/services/ApiService.ts";
 import {createPinia} from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import i18n from './plugins/i18n.ts'
 
 const app = createApp(App);
 
@@ -20,6 +21,7 @@ setupLanguage(); // Call it before mounting the app
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 
+app.use(i18n)
 
 app.use(router);
 ApiService.init(app)

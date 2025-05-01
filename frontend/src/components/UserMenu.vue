@@ -3,6 +3,7 @@
 import IconButtonLink from './IconButtonLink.vue';
 import {useAuthStore} from "../stores/auth.ts";
 
+const staticData = useStaticDataStore();
 const store =  useAuthStore();
 
 defineProps({
@@ -16,6 +17,8 @@ const emit = defineEmits(['close']);
 
 
 import {computed, ref, watch} from "vue";
+import {useStaticDataStore} from "../stores/staticDataStore.ts";
+import i18n from "../plugins/i18n.ts";
 
 const currentLang = ref(localStorage.getItem("lang") || "en");
 
@@ -25,13 +28,18 @@ const toggleLanguage = (lang: string) => {
   }
 
   currentLang.value = lang; // Set the selected language
+  i18n.global.locale.value = lang as 'en' | 'ar';
 
   // Update `html` direction
   document.documentElement.lang = currentLang.value;
   document.documentElement.dir = currentLang.value === "ar" ? "rtl" : "ltr";
 
+
   // Save preference
   localStorage.setItem("lang", currentLang.value);
+
+  staticData.toggleLanguage(lang)
+
 };
 
 // Apply saved language on load
