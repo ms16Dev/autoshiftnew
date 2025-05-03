@@ -1,6 +1,8 @@
 <script setup lang="ts" xmlns="http://www.w3.org/1999/html">
 
 import {ref} from "vue";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 
 const props = defineProps({
 
@@ -57,7 +59,7 @@ const savePrice = () => {
 
 
     <div class="flex flex-col">
-      <p class="text-white text-3xl my-12"> Set price</p>
+      <p class="text-white text-3xl my-12">{{t('car_price_title') }}</p>
 
     <div class="flex flex-row items-center justify-between">
       <!-- decrease button -->

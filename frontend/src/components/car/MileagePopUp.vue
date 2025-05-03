@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 const props = defineProps({
 
   position: {
@@ -53,7 +54,7 @@ const saveMileage = () => {
   >
 
     <div class="flex flex-col">
-      <p class="text-white text-3xl my-12"> Set mileage</p>
+      <p class="text-white text-3xl my-12"> {{t('car_mileage_title') }}</p>
 
       <div class="flex flex-row items-center justify-between">
         <!-- decrease button -->

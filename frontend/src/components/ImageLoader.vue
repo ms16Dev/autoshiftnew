@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue';
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 
 const props = defineProps({
   bg: {
@@ -78,7 +80,7 @@ function removeImage() {
           class="absolute inset-0 flex items-center justify-center text-gray-600 group-hover:text-pink-500"
       >
         <i class="fas fa-image text-2xl text-gray-400 pe-3"></i>
-        Add image
+        {{ t('add_image') }}
       </div>
     </div>
 

@@ -15,7 +15,7 @@ export interface Car {
     color: string;
     luxury: string[];
     safety: string[];
-    location: string[];
+    location: string;
     sold: boolean;
     stars: number;
     description: string;

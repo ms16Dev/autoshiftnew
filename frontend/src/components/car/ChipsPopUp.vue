@@ -2,7 +2,10 @@
 import {computed, PropType, ref} from "vue";
 import ChipItem from "./ChipItem.vue";
 import ChipItemChecked from "./ChipItemChecked.vue";
-import { RefOption } from "./CarFormNew.vue";
+import {DataItem} from "../../types/staticData.ts";
+
+import {useStaticDataStore} from "../../stores/staticDataStore.ts";
+const staticData = useStaticDataStore();
 
 // Props
 const props = defineProps({
@@ -15,11 +18,11 @@ const props = defineProps({
     default: 'bottom',
   },
   options: {
-    type: Array as PropType<RefOption[]>,
+    type: Array as PropType<DataItem[]>,
     required: true,
   },
   checked: {
-    type: Array as PropType<string[]>,
+    type: Array as PropType<DataItem[]>,
     default: () => [],
   },
 });
@@ -27,32 +30,39 @@ const props = defineProps({
 const emit = defineEmits(['choice', 'close']);
 
 // Reactive checked state from props
-const checked = ref<string[]>([...props.checked]);
+const checked = ref<DataItem[]>([...props.checked]);
 
 // Save selected options (string array)
 const saveOptions = () => {
   emit('choice', checked.value);
 };
 
-// Toggle selected/unselected state
-function toggleOption(value: string, fromChecked: boolean) {
+function toggleOption(value: DataItem, fromChecked: boolean) {
   if (fromChecked) {
-    checked.value = checked.value.filter(v => v !== value);
+    checked.value = checked.value.filter(v => v.id !== value.id);
   } else {
-    checked.value.push(value);
+    const alreadyExists = checked.value.some(v => v.id === value.id);
+    if (!alreadyExists) {
+      checked.value.push(value);
+    }
   }
 }
 
-// Only show options that are NOT checked
+
+const isRtl = computed(() => document.documentElement.dir === 'rtl');
+
+
 const availableOptions = computed(() => {
-  return props.options.filter(opt => !checked.value.includes(opt.name_en));
+  const checkedIds = checked.value.map(item => item.id);
+  return props.options.filter(opt => !checkedIds.includes(opt.id));
 });
+
 </script>
 
 <template>
   <div
       :class="[
-      'absolute bg-pink-700 z-100 w-full h-full',
+      'absolute overflow-y-scroll scrollbar-none bg-pink-700 z-100 w-full h-full',
       position === 'bottom' ? 'top-0 end-0' : '',
       position === 'top' ? 'bottom-full end-0' : '',
       position === 'left' ? 'mr-2 right-full top-0' : '',
@@ -62,7 +72,10 @@ const availableOptions = computed(() => {
     <div class="overflow-y-scroll h-full scrollbar-none">
       <div class="flex items-center h-24">
         <button @click="emit('close')" class="w-24 h-24 hover:bg-pink-500 flex items-center justify-center">
-          <span class="fas fa-arrow-left text-white text-2xl"></span>
+          <span class="text-white text-2xl" :class="{
+            'fas fa-arrow-right': isRtl,
+            'fas fa-arrow-left': !isRtl
+          }"></span>
         </button>
         <h1 class="text-white text-2xl text-center">{{ title }}</h1>
       </div>
@@ -72,7 +85,7 @@ const availableOptions = computed(() => {
         <ChipItemChecked
             v-for="(opt, index) in checked"
             :key="index"
-            :option="opt"
+            :option="staticData.getLocalizedName(opt)"
             class="p-2 text-white hover:bg-pink-500"
             @click="toggleOption(opt, true)"
         />
@@ -85,9 +98,9 @@ const availableOptions = computed(() => {
         <ChipItem
             v-for="(opt, index) in availableOptions"
             :key="index"
-            :option="opt.name_en"
+            :option="staticData.getLocalizedName(opt)"
             class="p-2 text-white hover:bg-pink-500"
-            @click="toggleOption(opt.name_en, false)"
+            @click="toggleOption(opt, false)"
         />
       </div>
 
