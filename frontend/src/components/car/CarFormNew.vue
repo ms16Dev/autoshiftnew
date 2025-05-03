@@ -159,6 +159,7 @@ const saveCar = async () => {
       luxury: state.luxury.map(item => item.id),
       safety: state.safety.map(item => item.id),
       location: state.location.id,
+      country: staticData.getCurrentCountry().id,
       sold: false,
       stars: 0,
       description: state.description,
