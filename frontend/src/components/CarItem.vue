@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import {computed, defineProps, withDefaults} from "vue";
 import type { CarListDto } from '../core/models/CarListDto';
+import {useStaticDataStore} from "../stores/staticDataStore.ts";
+import {config} from "../../config.ts";
 
+const staticData = useStaticDataStore();
 
 
 
@@ -56,26 +59,30 @@ const formattedCreatedDate = computed(() => {
 
 <!-- Cover image-->
         <div class="overflow-hidden">
-          <img class="w-full h-[200px] transition-transform duration-700 object-contain  group-hover:scale-110" :src="'http://localhost:8080'+car.coverImage"/>
+          <img class="w-full h-[200px] transition-transform duration-700 object-contain  group-hover:scale-110"
+               :src="config.getImageUrl(car.coverImage)"
+               alt=""/>
 
         </div>
-<!--Devider-->
+<!--Divider-->
       <div class="w-full border-b-2 border-b-pink-700 "></div>
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <div class="z-10">
           <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px]">$ {{ car.price }}</div>
-          <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">{{ car.origin }}</p>
+          <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">{{ staticData.getLocalizedName(staticData.getStatusById(car.origin)) }}</p>
         </div>
         <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
-          <img class="object-contain w-full h-full" :src="'/carmakes/' + car.makeUrl" />
+          <img class="object-contain w-full h-full"
+               :src="config.getImageUrl(car.makeUrl)"
+               alt=""/>
         </div>
 
 
 
 
         <div class="flex flex-col">
-        <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px] ">{{car.model}}</div>
+        <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px] ">{{staticData.getLocalizedName(staticData.getClassById(car.model))}}</div>
         <div class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{ car.year }}</div>
         </div>
 
