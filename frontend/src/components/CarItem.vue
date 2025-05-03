@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<{ car?: CarListDto }>(), {
     id: 1,
     coverImage: "/car_plchldr1.jpg",
     price: "12,000",
+    currency: "$",
     origin: "USA",
     make: "Toyota",
     makeUrl: "https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg",
@@ -69,7 +70,7 @@ const formattedCreatedDate = computed(() => {
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <div class="z-10">
-          <div class="flex-box bg-pink-700 text-white font-bold text-lg px-2 h-[30px]">$ {{ car.price }}</div>
+          <div class="flex-box bg-pink-700 text-white font-bold text-sm px-2 h-[30px]">{{ staticData.getLocalizedName(staticData.getCurrencyById(car.currency)) }} {{ car.price }}</div>
           <p class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]">{{ staticData.getLocalizedName(staticData.getStatusById(car.origin)) }}</p>
         </div>
         <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">

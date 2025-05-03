@@ -3,6 +3,7 @@ export interface CarListDto {
     id: number;
     coverImage: string;
     price: string;
+    currency: string;
     origin: string;
     make: string;
     makeUrl: string;

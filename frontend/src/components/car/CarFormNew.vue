@@ -35,6 +35,7 @@ const classes = ref<DataItem[]>([])
 
 const state = reactive({
   price: 0,
+  currency: '',
   mileage: 0,
   year: 0,
   origin: {} as DataItem,
@@ -145,6 +146,7 @@ const saveCar = async () => {
     const car: Car = {
       coverImage: coverUrl,
       price: state.price,
+      currency: state.currency,
       origin: state.origin.id,
       make: make.value?.name_en!!,
       makeUrl: make.value?.url!!,
@@ -207,7 +209,8 @@ const saveCar = async () => {
 
 
         <div class="flex flex-col">
-          <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('pricePopUp')">$ {{state.price > 0 ? formatNumber(state.price) : t('car_price')}}</button>
+          <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('pricePopUp')">
+            {{ staticData.getLocalizedName(staticData.getCurrencyById(state.currency)) }} {{state.price > 0 ? formatNumber(state.price) : t('car_price')}}</button>
           <button class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]" @click="togglePopUp('originPopUp')">{{ staticData.getLocalizedName(state.origin) || t('car_status') }}</button>
         </div>
 
@@ -276,6 +279,7 @@ const saveCar = async () => {
         v-if="state.pricePopUp"
         @close="state.pricePopUp = false"
         @save="(value) => handleSave('price')(value)"
+        @currency="(value) => handleSave('currency')(value)"
         position="top"
         :value="state.price"></PricePopUp>
 

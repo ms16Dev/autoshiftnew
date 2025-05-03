@@ -118,16 +118,24 @@ export const useStaticDataStore = defineStore('staticData', () => {
     const getClassById = (id: string): DataItem => {
         return findItemById<DataItem>('classes', id) || {
             id: '',
-            name_en: 'Unknown',
-            name_ar: 'غير معروف'
+            name_en: '?',
+            name_ar: '?'
         };
     }
 
     const getStatusById = (id: string): DataItem => {
         return findItemById<DataItem>('status', id) || {
             id: '',
-            name_en: 'Unknown',
-            name_ar: 'غير معروف'
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
+    const getCurrencyById = (id: string): DataItem => {
+        return findItemById<DataItem>('currencies', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
         };
     }
 
@@ -151,6 +159,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
         getCountryForCurrency,
         getClassById,
         getStatusById,
+        getCurrencyById,
         initialize
     }
 })

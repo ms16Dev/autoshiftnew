@@ -2,6 +2,7 @@
 export interface Car {
     coverImage: string;
     price: number;
+    currency: string;
     origin: string;
     make: string;
     makeUrl: string;
