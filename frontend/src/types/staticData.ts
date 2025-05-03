@@ -37,6 +37,7 @@ export type DataType =
     | 'countries'
     | 'cities'
     | 'currencies'
+    | 'classes'
 
 export type DataItem = BaseItem | Make | City | Currency | Country
 

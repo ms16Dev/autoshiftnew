@@ -10,6 +10,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
         roles: [],
         status: [],
         makes: [],
+        classes: [],
         fuel: [],
         engines: [],
         gears: [],
@@ -109,10 +110,27 @@ export const useStaticDataStore = defineStore('staticData', () => {
         const types: DataType[] = [
             'roles', 'status', 'makes', 'fuel', 'engines', 'gears',
             'colors', 'shapes', 'luxury', 'safety', 'countries',
-            'cities', 'currencies'
+            'cities', 'currencies', 'classes'
         ]
         await Promise.all(types.map(type => fetchData(type)))
     }
+
+    const getClassById = (id: string): DataItem => {
+        return findItemById<DataItem>('classes', id) || {
+            id: '',
+            name_en: 'Unknown',
+            name_ar: 'غير معروف'
+        };
+    }
+
+    const getStatusById = (id: string): DataItem => {
+        return findItemById<DataItem>('status', id) || {
+            id: '',
+            name_en: 'Unknown',
+            name_ar: 'غير معروف'
+        };
+    }
+
 
     return {
         data,
@@ -131,6 +149,8 @@ export const useStaticDataStore = defineStore('staticData', () => {
         getMakeClasses,
         getCountryForCity,
         getCountryForCurrency,
+        getClassById,
+        getStatusById,
         initialize
     }
 })
