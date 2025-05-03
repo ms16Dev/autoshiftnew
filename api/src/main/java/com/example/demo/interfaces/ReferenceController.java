@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -817,6 +818,12 @@ public class ReferenceController {
                 });
     }
 
+    @GetMapping("/cities")
+    public Mono<ResponseEntity<Flux<City>>> getCities() {
+        Flux<City> data = mongoTemplate.findAll(City.class, "cities");
+        return Mono.just(ResponseEntity.ok(data));
+    }
+
     @PutMapping("/cities/{id}")
     public Mono<ResponseEntity<String>> updateCity(@PathVariable String id, @RequestBody City city) {
         city.setId(id);
@@ -884,6 +891,13 @@ public class ReferenceController {
                             .flatMap(currencyId -> mongoTemplate.findById(currencyId, Currency.class));
                 });
     }
+
+    @GetMapping("/currencies")
+    public Mono<ResponseEntity<Flux<Currency>>> getCurrencies() {
+        Flux<Currency> data = mongoTemplate.findAll(Currency.class, "currencies");
+        return Mono.just(ResponseEntity.ok(data));
+    }
+
 
     @PutMapping("/currencies/{id}")
     public Mono<ResponseEntity<String>> updateCurrency(@PathVariable String id, @RequestBody Currency currency) {
