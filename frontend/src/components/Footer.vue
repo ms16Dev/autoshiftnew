@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300 py-12 px-4">
+  <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-300 py-12 px-4 sm:ms-20">
     <div class="container mx-auto text-center">
       <!-- Logo or Title -->
       <div class="mb-6 text-center">

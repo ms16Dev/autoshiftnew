@@ -40,12 +40,12 @@ const handlePageChange = async (page: number) => {
 </script>
 
 <template>
-  <div class="flex md:flex-row-reverse flex-wrap w-full bg-gray-200">
-    <div class="w-full md:w-1/5 p-4 text-center text-gray-400">
+  <div class="flex xl:flex-row-reverse flex-wrap w-full bg-gray-200">
+    <div class="w-full xl:w-1/5 p-4 text-center text-gray-400">
       <AdItem />
     </div>
 
-    <div class="w-full md:w-3/5 p-4 text-center text-gray-200">
+    <div class="w-full xl:w-3/5 p-4 text-center text-gray-200">
       <div v-if="loading" class="text-center text-gray-600">Loading cars...</div>
       <div v-else class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4 gap-3">
         <CarItem v-for="car in cars" :key="car.id" :car="car" />
@@ -60,7 +60,7 @@ const handlePageChange = async (page: number) => {
       />
     </div>
 
-    <div class="w-full md:w-1/5 p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full xl:w-1/5 p-4 text-center text-gray-700 fixed sticky">
       <AdItem />
     </div>
   </div>
