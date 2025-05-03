@@ -203,6 +203,12 @@ public class ReferenceController {
                 });
     }
 
+    @GetMapping("/classes")
+    public Mono<ResponseEntity<Flux<CarClass>>> getAllClasses() {
+        Flux<CarClass> data = mongoTemplate.findAll(CarClass.class, "classes");
+        return Mono.just(ResponseEntity.ok(data));
+    }
+
 
     @PutMapping("/classes/{id}")
     public Mono<ResponseEntity<String>> updateClass(

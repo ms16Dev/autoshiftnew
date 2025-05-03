@@ -69,8 +69,11 @@ public class Car implements Serializable {
     @Builder.Default
     private String[] safety = new String[]{};
 
-    @Builder.Default
-    private String[] location = new String[]{};
+    @NotBlank
+    private String location;
+
+    @NotBlank
+    private String country;
 
     @Builder.Default
     private Boolean sold = false;
