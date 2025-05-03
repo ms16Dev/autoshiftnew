@@ -20,7 +20,7 @@ const emit = defineEmits(['close']);
 
 <template>
   <div
-      class="absolute   bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important top-full start-1/2  md:block  "
+      class="absolute   bg-gradient-to-br from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important top-full start-1/2  md:block  "
   >
 
     <div class="flex-col p-2">
