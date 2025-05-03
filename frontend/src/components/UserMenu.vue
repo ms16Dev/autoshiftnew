@@ -3,7 +3,6 @@
 import IconButtonLink from './IconButtonLink.vue';
 import {useAuthStore} from "../stores/auth.ts";
 
-const staticData = useStaticDataStore();
 const store =  useAuthStore();
 
 defineProps({
@@ -16,37 +15,8 @@ defineProps({
 const emit = defineEmits(['close']);
 
 
-import {computed, ref, watch} from "vue";
-import {useStaticDataStore} from "../stores/staticDataStore.ts";
-import i18n from "../plugins/i18n.ts";
+import {computed} from "vue";
 
-const currentLang = ref(localStorage.getItem("lang") || "en");
-
-const toggleLanguage = (lang: string) => {
-  if (currentLang.value === lang) {
-    return; // Do nothing if the selected language is already active
-  }
-
-  currentLang.value = lang; // Set the selected language
-  i18n.global.locale.value = lang as 'en' | 'ar';
-
-  // Update `html` direction
-  document.documentElement.lang = currentLang.value;
-  document.documentElement.dir = currentLang.value === "ar" ? "rtl" : "ltr";
-
-
-  // Save preference
-  localStorage.setItem("lang", currentLang.value);
-
-  staticData.toggleLanguage(lang)
-
-};
-
-// Apply saved language on load
-watch(currentLang, (newLang) => {
-  document.documentElement.lang = newLang;
-  document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-}, { immediate: true });
 
 const userRole = computed(() => {
   if (store?.userInfo?.roles?.includes("ROLE_ADMIN")) {
@@ -65,7 +35,7 @@ const logout = () => {
 
 <template>
   <div
-      class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 bottom-full  end-0 md:block xl:hidden "
+      class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important bottom-full  end-0 md:block xl:hidden "
   >
 
     <div class="flex-col p-2">
@@ -93,22 +63,11 @@ const logout = () => {
       <li v-if="!store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" text="Login" icon="fas fa-sign-in"/>
       </li>
-      <li>
-        <div class="flex flex-row justify-between p-2">
-          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
-            En
-          </button>
-          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
-            ع
-          </button>
-        </div>
-
-      </li>
     </ul>
 
   </div>
   <div
-      class="absolute  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 top-full md:hidden xl:block"
+      class="absolute bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 top-full md:hidden xl:block"
   >
     <div class="flex-col p-2">
       <h1 class="text-white text-lg">{{store?.userInfo?.name}}</h1>
@@ -135,17 +94,6 @@ const logout = () => {
       </li>
       <li v-if="!store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" text="Login" icon="fas fa-sign-in"/>
-      </li>
-      <li>
-        <div class="flex flex-row justify-between p-2">
-          <button :disabled="currentLang === 'en'" @click="() => { toggleLanguage('en'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
-            En
-          </button>
-          <button :disabled="currentLang === 'ar'" @click="() => { toggleLanguage('ar'); $emit('close'); }" class="rounded-full bg-pink-400 hover:bg-pink-700 text-white w-full m-1 disabled:bg-gray-300 disabled:cursor-not-allowed p-1">
-            ع
-          </button>
-        </div>
-
       </li>
     </ul>
 

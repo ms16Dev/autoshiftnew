@@ -1,7 +1,7 @@
 // stores/staticData.ts
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import type { DataType, DataItem, Make, City, Currency, Country } from '../types/staticData.ts'
+import {defineStore} from 'pinia'
+import {computed, ref} from 'vue'
+import type {City, Country, Currency, DataItem, DataType, Make} from '../types/staticData.ts'
 import apiService from "../core/services/ApiService.ts";
 
 export const useStaticDataStore = defineStore('staticData', () => {
@@ -39,8 +39,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
     const fetchData = async (type: DataType) => {
         try {
             const response = await apiService.get1(`/ref-data/${type}`)
-            const jsonData = await response.data
-            data.value[type] = jsonData
+            data.value[type] = await response.data
         } catch (error) {
             console.error(`Error fetching ${type}:`, error)
         }
@@ -101,6 +100,10 @@ export const useStaticDataStore = defineStore('staticData', () => {
         return findItemById<Country>('countries', currency.countryId)
     }
 
+    const getCurrentCountry = (): Country => {
+        return <Country>findItemById<Country>('countries', currentCountry.value)
+    }
+
     // Initialize store by fetching all data types
     const initialize = async () => {
         const types: DataType[] = [
@@ -118,6 +121,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
         currencies,
         countries,
         currentLanguage,
+        getCurrentCountry,
         fetchData,
         getLocalizedName,
         findItemById,

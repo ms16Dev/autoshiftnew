@@ -36,6 +36,8 @@ const messages = {
         car_luxury_title: 'List luxury features',
         car_safety_title: 'List safety features',
         enter_description: 'Enter a description...',
+        choose_country: 'Choose country',
+
 
     },
     ar: {
@@ -72,6 +74,7 @@ const messages = {
         car_luxury_title: 'اختر مواصفات الرفاهية',
         car_safety_title: 'اختر مواصفات الحماية',
         enter_description: 'أدخل المزيد من المواصفات',
+        choose_country: 'اختر الدولة',
 
 
     },
