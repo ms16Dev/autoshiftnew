@@ -15,8 +15,24 @@ defineProps({
 const emit = defineEmits(['close']);
 
 
-import {computed} from "vue";
+import {computed, nextTick, onMounted, onUnmounted, ref} from "vue";
 
+const popupRef = ref<HTMLElement | null>(null)
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (popupRef.value && !popupRef.value.contains(event.target as Node)) {
+    emit('close')
+  }
+}
+
+onMounted(() => {
+  // Delay adding the listener to avoid immediate close
+  nextTick(() => {
+    document.addEventListener('click', handleClickOutside)
+  })
+})
+
+onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 
 const userRole = computed(() => {
   if (store?.userInfo?.roles?.includes("ROLE_ADMIN")) {
@@ -34,7 +50,7 @@ const logout = () => {
 </script>
 
 <template>
-  <div
+  <div ref="popupRef"
       class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important bottom-full  end-0 md:block xl:hidden "
   >
 

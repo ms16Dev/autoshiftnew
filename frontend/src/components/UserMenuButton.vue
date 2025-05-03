@@ -23,14 +23,18 @@ const currentIcon = ref(props.icon);
 const currentText = ref(props.text);
 
 // Function to toggle the visibility of the menu
-const toggleMenu = () => {
+const toggleMenu = (event: MouseEvent) => {
   if(showMenu.value){
+    event.stopPropagation() // Prevent event from bubbling to document
+
     currentIcon.value = props.icon
     currentText.value = props.text
 
   }else {
   }
   showMenu.value = !showMenu.value;
+  event.stopPropagation() // Prevent event from bubbling to document
+
 };
 </script>
 
