@@ -6,6 +6,7 @@ public record CarSummary(
         String id,
         String coverImage,
         int price,
+        String currency,
         String make,
         String makeUrl,
         String model,

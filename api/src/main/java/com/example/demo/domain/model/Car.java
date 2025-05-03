@@ -30,6 +30,9 @@ public class Car implements Serializable {
     @NotNull
     private Integer price;
 
+    @NotNull
+    private String currency;
+
     @NotBlank
     private String origin;
 
@@ -92,7 +95,8 @@ public class Car implements Serializable {
 
     private Set<String> sharedBy = new HashSet<>();
 
-    private String description;
+    @Builder.Default
+    private String description ="";
 
     @Builder.Default
     private String[] images = new String[]{};

@@ -48,6 +48,7 @@ public class MongoCarRepository implements CarRepository {
                                 it.getId(),
                                 it.getCoverImage(),
                                 it.getPrice(),
+                                it.getCurrency(),
                                 it.getMake(),
                                 it.getMakeUrl(),
                                 it.getModel(),
