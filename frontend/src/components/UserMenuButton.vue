@@ -46,7 +46,7 @@ const toggleMenu = (event: MouseEvent) => {
         class="flex items-center space-x-2 px-3 py-2 bg-gray-50 text-white hover:transform
                transition-transform duration-900 ease-in-out hover:bg-pink-600 hover:scale-110 rounded-full shadow-lg"
     >
-      <img src="/vite.svg">
+      <i class="fas fa-user text-2xl  text-purple-300 "/>
     </button>
 
     <!-- Popup menu -->
