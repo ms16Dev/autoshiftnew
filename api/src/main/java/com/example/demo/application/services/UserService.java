@@ -25,7 +25,7 @@ public class UserService {
                             newUser.setUsername(request.getUsername());
                             newUser.setPassword(passwordEncoder.encode(request.getPassword()));
                             newUser.setEmail(request.getEmail());
-                            newUser.setActive(true);
+                            newUser.setActive(false);
                             newUser.setRoles(List.of("ROLE_USER"));
                             return userRepository.create(newUser); // Ensure this returns Mono<User>
                         })

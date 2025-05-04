@@ -1,7 +1,8 @@
 package com.example.demo.interfaces;
 
+import com.example.demo.application.services.EmailService;
 import com.example.demo.application.services.UserService;
-import com.example.demo.domain.model.User;
+import com.example.demo.application.services.VerificationTokenService;
 import com.example.demo.interfaces.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,16 +16,23 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
+    private final VerificationTokenService verificationTokenService;
+    private final EmailService emailService;
     private final KeyPair keyPair;
 
     @Autowired
-    public AuthController(UserService userService) throws NoSuchAlgorithmException {
+    public AuthController(UserService userService,
+                          VerificationTokenService verificationTokenService,
+                          EmailService emailService) throws NoSuchAlgorithmException {
         this.userService = userService;
+        this.verificationTokenService = verificationTokenService;
+        this.emailService = emailService;
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
         generator.initialize(2048);
         this.keyPair = generator.generateKeyPair();
@@ -42,18 +50,21 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Mono<User> register(@RequestBody RegisterRequest request) {
-        try {
-            // Decrypt the password here before passing it to the service
-
-
-            // Pass the modified request to UserService
-            return userService.registerUser(request);
-        } catch (Exception e) {
-            return Mono.error(new RuntimeException("Password decryption failed"));
-        }
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Mono<ResponseEntity<Map<String, String>>> register(@RequestBody RegisterRequest request) {
+        return userService.registerUser(request)
+                .flatMap(user -> verificationTokenService.generateVerificationToken(user)
+                        .flatMap(token -> emailService.sendVerificationEmail(token.getUser().getEmail(), token.getToken())
+                                .thenReturn(ResponseEntity.accepted()
+                                        .body(Map.of(
+                                                "message", "Registration successful. Verification email sent.",
+                                                "email", request.getEmail()
+                                        ))))
+                )
+                .onErrorResume(e -> Mono.just(ResponseEntity.badRequest()
+                        .body(Map.of("error", e.getMessage()))));
     }
+
 
     public String decryptPassword(String encryptedPassword) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
@@ -61,5 +72,4 @@ public class AuthController {
         byte[] decodedBytes = Base64.getDecoder().decode(encryptedPassword);
         return new String(cipher.doFinal(decodedBytes));
     }
-
 }

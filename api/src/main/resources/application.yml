@@ -8,13 +8,24 @@ spring:
     serialization:
       indent-output: true
 
-  server:
-    address: 0.0.0.0
-    port: 8080
-
   web:
     resources:
       static-locations: file:./images/
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fs.vue.info@gmail.com
+    password: icyi tpxs kkty cwxs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+server:
+  address: 0.0.0.0
+  port: 8080
 
 logging:
   level:
@@ -23,3 +34,4 @@ logging:
     web: TRACE
     com.example: DEBUG
     org.springframework.security: DEBUG
+

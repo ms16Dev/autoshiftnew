@@ -1,6 +1,8 @@
 package com.example.demo.interfaces;
 
+import com.example.demo.domain.exception.InvalidTokenException;
 import com.example.demo.domain.exception.PostNotFoundException;
+import com.example.demo.domain.exception.TokenExpiredException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,9 +24,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-// see: https://stackoverflow.com/questions/47631243/spring-5-reactive-webexceptionhandler-is-not-getting-called
-// and https://docs.spring.io/spring-boot/docs/2.0.0.M7/reference/html/boot-features-developing-web-applications.html#boot-features-webflux-error-handling
-// and https://stackoverflow.com/questions/48047645/how-to-write-messages-to-http-body-in-spring-webflux-webexceptionhandlder/48057896#48057896
 @Component
 @Order(-2)
 @Slf4j
@@ -36,34 +35,52 @@ public class RestExceptionHandler implements WebExceptionHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         if (ex instanceof WebExchangeBindException) {
-            var webExchangeBindException = (WebExchangeBindException) ex;
-
-            log.debug("errors:" + webExchangeBindException.getFieldErrors());
-            var errors = new Errors("validation_failure", "Validation failed.");
-            webExchangeBindException.getFieldErrors().forEach(e -> errors.add(e.getField(), e.getCode(), e.getDefaultMessage()));
-
-            log.debug("handled errors::" + errors);
-            try {
-                exchange.getResponse().setStatusCode(HttpStatus.UNPROCESSABLE_ENTITY);
-                exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-
-                var db = new DefaultDataBufferFactory().wrap(objectMapper.writeValueAsBytes(errors));
-
-                // write the given data buffer to the response
-                // and return a Mono that signals when it's done
-                return exchange.getResponse().writeWith(Mono.just(db));
-
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return Mono.empty();
-            }
+            return handleValidationException(exchange, (WebExchangeBindException) ex);
         } else if (ex instanceof PostNotFoundException) {
-            exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
-
-            // marks the response as complete and forbids writing to it
-            return exchange.getResponse().setComplete();
+            return handleNotFoundException(exchange);
+        } else if (ex instanceof InvalidTokenException) {
+            return handleTokenException(exchange, (InvalidTokenException) ex);
+        } else if (ex instanceof TokenExpiredException) {
+            return handleTokenExpiredException(exchange, (TokenExpiredException) ex);
         }
         return Mono.error(ex);
+    }
+
+    private Mono<Void> handleValidationException(ServerWebExchange exchange, WebExchangeBindException ex) {
+        log.debug("errors:" + ex.getFieldErrors());
+        var errors = new Errors("validation_failure", "Validation failed.");
+        ex.getFieldErrors().forEach(e -> errors.add(e.getField(), e.getCode(), e.getDefaultMessage()));
+
+        log.debug("handled errors::" + errors);
+        return writeErrorResponse(exchange, HttpStatus.UNPROCESSABLE_ENTITY, errors);
+    }
+
+    private Mono<Void> handleNotFoundException(ServerWebExchange exchange) {
+        exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
+        return exchange.getResponse().setComplete();
+    }
+
+    private Mono<Void> handleTokenException(ServerWebExchange exchange, InvalidTokenException ex) {
+        var errors = new Errors("invalid_token", ex.getMessage());
+        return writeErrorResponse(exchange, HttpStatus.BAD_REQUEST, errors);
+    }
+
+    private Mono<Void> handleTokenExpiredException(ServerWebExchange exchange, TokenExpiredException ex) {
+        var errors = new Errors("token_expired", ex.getMessage());
+        errors.add("token", "expired", "The verification token has expired");
+        return writeErrorResponse(exchange, HttpStatus.BAD_REQUEST, errors);
+    }
+
+    private Mono<Void> writeErrorResponse(ServerWebExchange exchange, HttpStatus status, Errors errors) {
+        try {
+            exchange.getResponse().setStatusCode(status);
+            exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
+            var db = new DefaultDataBufferFactory().wrap(objectMapper.writeValueAsBytes(errors));
+            return exchange.getResponse().writeWith(Mono.just(db));
+        } catch (JsonProcessingException e) {
+            log.error("Error writing error response", e);
+            return Mono.empty();
+        }
     }
 }
 
@@ -98,5 +115,7 @@ class Error implements Serializable {
         this.code = code;
         this.message = message;
     }
-
 }
+
+
+

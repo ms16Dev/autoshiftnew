@@ -5,7 +5,6 @@
  */
 package com.example.demo.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -35,7 +34,10 @@ public class User {
     private String email;
 
     @Builder.Default()
-    private boolean active = true;
+    private boolean active = false;
+
+    @Builder.Default()
+    private boolean verified = false;
 
     @Builder.Default()
     private List<String> roles = Collections.emptyList();
