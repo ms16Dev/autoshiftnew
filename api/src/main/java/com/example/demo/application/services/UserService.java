@@ -15,6 +15,8 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileService profileService;
+
 
     public Mono<User> registerUser(RegisterRequest request) {
         Mono<Boolean> emailExists = userRepository.findByEmail(request.getEmail()).hasElement();
@@ -39,7 +41,8 @@ public class UserService {
                     newUser.setUsername(request.getUsername());
                     // Set other properties here (e.g., hashed password, etc.)
 
-                    return userRepository.save(newUser);
+                    return userRepository.save(newUser)
+                            .flatMap(user -> profileService.createEmptyProfile(user.getUsername()).thenReturn(user));
                 });
     }
 }
