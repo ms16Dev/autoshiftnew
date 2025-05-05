@@ -5,17 +5,12 @@ import com.example.demo.application.services.UserService;
 import com.example.demo.application.services.VerificationTokenService;
 import com.example.demo.interfaces.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.Cipher;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -85,10 +80,6 @@ public class AuthController {
                     return Mono.just(ResponseEntity.badRequest().body(errorMessage));
                 });
     }
-
-
-
-
 
 
     public String decryptPassword(String encryptedPassword) throws Exception {
