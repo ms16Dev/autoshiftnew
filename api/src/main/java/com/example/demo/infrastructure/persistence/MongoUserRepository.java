@@ -24,6 +24,11 @@ public class MongoUserRepository  implements UserRepository {
     }
 
     @Override
+    public Mono<User> findByEmail(String email) {
+        return this.mongoTemplate.findOne(query(where("email").is(email)), User.class);
+    }
+
+    @Override
     public Mono<User> create(User user) {
         return this.mongoTemplate.insert(user);
     }

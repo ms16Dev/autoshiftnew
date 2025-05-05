@@ -17,20 +17,30 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public Mono<User> registerUser(RegisterRequest request) {
-        return userRepository.findByUsername(request.getUsername())
-                .flatMap(existingUser -> Mono.error(new RuntimeException("Username already exists")))
-                .switchIfEmpty(
-                        Mono.defer(() -> {
-                            User newUser = new User();
-                            newUser.setUsername(request.getUsername());
-                            newUser.setPassword(passwordEncoder.encode(request.getPassword()));
-                            newUser.setEmail(request.getEmail());
-                            newUser.setActive(false);
-                            newUser.setRoles(List.of("ROLE_USER"));
-                            return userRepository.create(newUser); // Ensure this returns Mono<User>
-                        })
-                )
-                .cast(User.class);
-    }
+        Mono<Boolean> emailExists = userRepository.findByEmail(request.getEmail()).hasElement();
+        Mono<Boolean> usernameExists = userRepository.findByUsername(request.getUsername()).hasElement();
 
+        return Mono.zip(emailExists, usernameExists)
+                .flatMap(results -> {
+                    boolean emailTaken = results.getT1();
+                    boolean usernameTaken = results.getT2();
+
+                    if (emailTaken && usernameTaken) {
+                        return Mono.error(new IllegalStateException("Email and Username are already registered"));
+                    } else if (emailTaken) {
+                        return Mono.error(new IllegalStateException("Email is already registered"));
+                    } else if (usernameTaken) {
+                        return Mono.error(new IllegalStateException("Username is already taken"));
+                    }
+
+                    // Both email and username are unique — continue to register
+                    User newUser = new User();
+                    newUser.setEmail(request.getEmail());
+                    newUser.setUsername(request.getUsername());
+                    // Set other properties here (e.g., hashed password, etc.)
+
+                    return userRepository.save(newUser);
+                });
+    }
 }
+

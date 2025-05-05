@@ -17,6 +17,8 @@ public interface UserRepository {
 
     Mono<User> findByUsername(String username);
 
+    Mono<User> findByEmail(String email);
+
     Mono<User> create(User user);
 
     Mono<Long> deleteAll();
