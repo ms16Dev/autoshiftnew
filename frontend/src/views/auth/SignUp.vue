@@ -3,20 +3,64 @@ import {ref} from "vue";
 import router from "../../router";
 import {useAuthStore} from "../../stores/auth.ts";
 import forge from "node-forge";
+import { computed } from "vue";
 
 
 defineOptions({
-  name: "Sign-Up",
+  username: "Sign-Up",
 });
 
 const authStore = useAuthStore();
 
 // Reactive form inputs
-const name = ref("");
+const username = ref("");
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const errorMessage = ref("");
+
+const usernameError = ref("");
+
+
+const isValid = computed(() => {
+  return (
+      username.value &&
+      email.value &&
+      password.value &&
+      !usernameError.value &&
+      !passwordError.value
+  );
+});
+
+// Validate username on input
+const validateUsername = () => {
+  // Convert username to lowercase
+  username.value = username.value.toLowerCase();
+
+  // Regex to check if it contains only lowercase letters, numbers, or underscores,
+  // doesn't start with a number or an underscore, and is at least 6 characters long
+  const regex = /^[a-z][a-z0-9_]{5,}$/;
+
+  if (!regex.test(username.value)) {
+    usernameError.value = "Username must be at least 6 characters, start with a letter, and can only contain lowercase letters, numbers, and underscores.";
+  } else {
+    usernameError.value = "";
+  }
+};
+
+const passwordError = ref("");
+
+// Validate password on input
+const validatePassword = () => {
+  // Regex to check that the password is at least 6 characters long and doesn't contain spaces
+  const regex = /^(?!.*\s).{6,}$/;
+
+  if (!regex.test(password.value)) {
+    passwordError.value = "Password must be at least 6 characters and cannot contain spaces.";
+  } else {
+    passwordError.value = "";
+  }
+};
 
 
 // Function to encrypt the password using RSA
@@ -52,6 +96,14 @@ async function encryptPassword(password: string): Promise<string> {
 
 
 async function submitForm() {
+  // Ensure latest validation is run
+  validateUsername();
+  validatePassword();
+
+  if (!isValid.value) {
+    return; // Stop form submission if validation fails
+  }
+
   loading.value = true;
   errorMessage.value = "";
 
@@ -60,7 +112,7 @@ async function submitForm() {
     console.debug(encryptedPass);
 
     await authStore.register({
-      username: name.value,
+      username: username.value,
       email: email.value,
       password: password.value,
     });
@@ -87,12 +139,18 @@ async function submitForm() {
       <!-- Error Message -->
       <p v-if="errorMessage" class="text-red-500 text-center font-bold">{{ errorMessage }}</p>
 
-      <!-- Name Input -->
       <div class="flex flex-col">
-        <label for="name" class="font-bold text-pink-700">Name</label>
-        <input v-model="name" type="text" id="name" required
-               class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700 invalid:border-red-500"
-               placeholder="Your Name" />
+        <label for="username" class="font-bold text-pink-700">Username</label>
+        <input
+            v-model="username"
+            type="text"
+            id="username"
+            required
+            class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700 invalid:border-red-500"
+            placeholder="Your Username"
+            @input="validateUsername"
+        />
+        <p v-if="usernameError" class="text-red-500 text-sm mt-1">{{ usernameError }}</p>
       </div>
 
       <!-- Email Input -->
@@ -106,14 +164,24 @@ async function submitForm() {
       <!-- Password Input -->
       <div class="flex flex-col">
         <label for="password" class="font-bold text-pink-700">Password</label>
-        <input v-model="password" type="password" id="password" required
-               class="w-full px-3 py-2 rounded-lg border-2 border-pink-700 focus:border-pink-700 invalid:border-red-500"
-               placeholder="Your Password" />
+        <input
+            v-model="password"
+            type="password"
+            id="password"
+            required
+            class="w-full px-3 py-2 rounded-lg border-2 border-pink-700 focus:border-pink-700 invalid:border-red-500"
+            placeholder="Your Password"
+            @input="validatePassword"
+        />
+        <p v-if="passwordError" class="text-red-500 text-sm mt-1">{{ passwordError }}</p>
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" :disabled="loading"
-              class="w-full py-3 font-bold text-white bg-pink-700 rounded-lg hover:bg-pink-600">
+      <button
+          type="submit"
+          :disabled="loading || !isValid"
+          class="w-full py-3 font-bold text-white bg-pink-700 rounded-lg hover:bg-pink-600"
+      >
         {{ loading ? "Registering..." : "Register" }}
       </button>
     </form>
