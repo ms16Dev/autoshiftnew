@@ -63,21 +63,29 @@ class ApiService {
 
     // Response Interceptor - Handle 401 errors (session expiration)
     ApiService.axiosInstance.interceptors.response.use(
-        (response) => response, // Pass through successful responses
+        (response) => response,
         (error) => {
-          if (error.response?.status === 401) {
-            // Handle session expiration
-            alert("Your session has expired. Please log in again.");
+          try {
+            const fullUrl = new URL(error.config?.url, window.location.origin); // works even if url is relative
+            const path = fullUrl.pathname;
 
-            // Clear stored token
-            localStorage.removeItem("X-AUTH-TOKEN");
+            const isLoginRequest = path === "/auth/login";
 
-            // Redirect to login page
-            window.location.href = "/auth/sign-in";
+            if (error.response?.status === 401 && !isLoginRequest) {
+              alert("Your session has expired. Please log in again.");
+              localStorage.removeItem("X-AUTH-TOKEN");
+              window.location.href = "/auth/sign-in";
+            }
+          } catch (e) {
+            console.warn("Interceptor error URL parse failed", e);
           }
+
           return Promise.reject(error);
         }
     );
+
+
+
   }
 
 }

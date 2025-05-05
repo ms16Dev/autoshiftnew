@@ -14,22 +14,14 @@ const password = ref('');
 const store = useAuthStore();
 
 const onSubmitLogin = async () => {
-
   const login: UserLoginDto = {
     username: username.value,
     password: password.value
   };
 
-  console.log(login)
-  // Clear existing errors
-  // await store.logout();
+  try {
+    await store.login(login);
 
-
-  // Send login request
-  await store.login(login);
-  const error = Object.values(store.errors);
-
-  if (error.length === 0) {
     Swal.fire({
       text: "Login Successful",
       icon: "success",
@@ -40,12 +32,13 @@ const onSubmitLogin = async () => {
         confirmButton: "btn fw-semibold btn-light-primary",
       },
     }).then(() => {
-      // Go to page after successfully login
       router.push({ name: "home" });
     });
-  } else {
-    Swal.fire({
-      text: error[0] as string,
+  } catch (err) {
+    const errorMessages = Object.values(store.errors);
+
+    await Swal.fire({
+      text: errorMessages[0]  || "Login failed. Please try again.",
       icon: "error",
       buttonsStyling: false,
       confirmButtonText: "Try again!",
@@ -53,11 +46,10 @@ const onSubmitLogin = async () => {
       customClass: {
         confirmButton: "btn fw-semibold btn-light-danger",
       },
-    }).then(() => {
-      store.errors = {};
     });
-  }
 
+    store.resetStore();
+  }
 };
 
 

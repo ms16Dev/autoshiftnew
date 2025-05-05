@@ -8,54 +8,62 @@ import type { UserLoginDto } from "../core/models/UserLoginDto";
 export const useAuthStore = defineStore(
     "auth",
     () => {
+        // Define the refs
         const errors = ref<Record<string, any>>({});
         const isAuthenticated = ref<boolean>(false);
         const userInfo = ref<UserDto | null>(null);
 
+        // Set authentication details
         const setAuth = (authUser: UserDto) => {
             isAuthenticated.value = true;
             userInfo.value = authUser;
-            errors.value = {};
+            errors.value = {}; // Reset errors on successful login
         };
 
+        // Set error messages
         const setError = (error: any) => {
-            errors.value = { ...error };
+            errors.value = { ...error }; // Spread the error object to avoid direct mutation
         };
 
+        // Manually reset the store state
+        const resetStore = () => {
+            errors.value = {};
+            isAuthenticated.value = false;
+            userInfo.value = null;
+        };
+
+        // Reset authentication details
         const purgeAuth = () => {
             isAuthenticated.value = false;
             userInfo.value = null;
-            errors.value = {};
+            errors.value = {}; // Reset errors on logout
         };
 
+        // Login logic
         const login = async (credentials: UserLoginDto) => {
             try {
                 const response = await ApiService.post("auth/login", credentials, {
-                    withCredentials: true,  // Ensures cookies are sent if needed
+                    withCredentials: true,
                 });
 
-                // Convert headers to lowercase keys for reliable access
                 const headers = response.headers;
-                console.log("Headers:", headers);
                 const authToken = headers["x-auth-token"] || headers["X-Auth-Token"] || headers["X_AUTH_TOKEN"];
 
                 if (authToken) {
-                    // Store the token in localStorage
                     localStorage.setItem("X-AUTH-TOKEN", authToken);
                     console.log("Token stored:", authToken);
                 } else {
                     console.warn("No auth token received!");
                 }
 
-                // Set authentication state
                 setAuth(response.data);
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
+                throw error; // This ensures the error is propagated
             }
         };
 
-
-
+        // Logout logic
         const logout = async () => {
             try {
                 await ApiService.post("auth/logout", {});
@@ -65,6 +73,7 @@ export const useAuthStore = defineStore(
             }
         };
 
+        // Register logic
         const register = async (credentials: UserRegisterDto) => {
             try {
                 console.log("Registering with:", credentials);
@@ -72,29 +81,31 @@ export const useAuthStore = defineStore(
             } catch (error: any) {
                 console.error("Error during registration:", error);
                 setError(error.response?.data?.errors || {});
-                throw error;  // <-- This line is required
+                throw error;  // Ensure the error is thrown after setting the error
             }
         };
 
+        // Forgot password logic
         const forgotPassword = async (email: string) => {
             try {
                 await ApiService.post("auth/forgot-password", { email });
-                setError({});
+                setError({}); // Clear errors after successful operation
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
             }
         };
 
+        // Update password logic
         const updatePassword = async (password: string, token: string) => {
             try {
                 await ApiService.post("auth/reset-password", { password, token });
-                setError({});
+                setError({}); // Clear errors after successful operation
             } catch (error: any) {
                 setError(error.response?.data?.errors || {});
             }
         };
 
-        /** Check if the session is still valid and update the store */
+        // Check session status logic
         const checkSession = async () => {
             try {
                 const { data } = await ApiService.get1("/me");
@@ -104,12 +115,11 @@ export const useAuthStore = defineStore(
                     purgeAuth();
                 }
             } catch (error) {
-                purgeAuth();
+                purgeAuth(); // Reset state on error
             }
         };
 
-
-        /** Fetch the public key from the backend */
+        // Fetch public key logic
         const fetchPublicKey = async (): Promise<string> => {
             try {
                 const { data } = await ApiService.get1("auth/public-key");
@@ -121,12 +131,12 @@ export const useAuthStore = defineStore(
             }
         };
 
-
-        /** Role-based authorization */
+        // Role-based authorization check
         const hasRole = (role: string) => {
             return userInfo.value?.roles.includes(role) ?? false;
         };
 
+        // Check for any of the roles
         const hasAnyRole = (roles: string[]) => {
             return roles.some((role) => userInfo.value?.roles.includes(role));
         };
@@ -143,7 +153,8 @@ export const useAuthStore = defineStore(
             checkSession,
             hasRole,
             hasAnyRole,
-            fetchPublicKey
+            fetchPublicKey,
+            resetStore
         };
     },
     {
