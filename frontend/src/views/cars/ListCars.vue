@@ -47,7 +47,7 @@ const handlePageChange = async (page: number) => {
 
     <div class="w-full xl:w-3/5 p-4 text-center text-gray-200">
       <div v-if="loading" class="text-center text-gray-600">Loading cars...</div>
-      <div v-else class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4 gap-3">
+      <div v-else class="flex-col grid grid-cols-1 md:grid-cols-2  px-4 gap-3">
         <CarItem v-for="car in cars" :key="car.id" :car="car" />
       </div>
 
@@ -60,7 +60,7 @@ const handlePageChange = async (page: number) => {
       />
     </div>
 
-    <div class="w-full xl:w-1/5 p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full xl:w-1/5 p-4 text-center text-gray-700 sticky">
       <AdItem />
     </div>
   </div>
