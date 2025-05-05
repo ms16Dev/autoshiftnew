@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -18,17 +17,17 @@ public class VerificationToken {
     @Indexed(unique = true)
     private String token;
 
-    @DBRef
-    private User user;  // Reference to user, not embedded
+    private String username; // Replace DBRef
+
 
     private Instant createdAt;
     private Instant expiresAt;
     private Instant verifiedAt;
     private boolean used = false;
 
-    public VerificationToken(String token, User user, Instant expiresAt) {
+    public VerificationToken(String token, String username, Instant expiresAt) {
         this.token = token;
-        this.user = user;
+        this.username = username;
         this.createdAt = Instant.now();
         this.expiresAt = expiresAt;
     }

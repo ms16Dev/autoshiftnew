@@ -8,7 +8,7 @@ import java.time.Instant;
 
 public interface VerificationTokenRepository {
     Mono<VerificationToken> findByToken(String token);
-    Mono<VerificationToken> findByUserAndUsedFalse(User user);
+    Mono<VerificationToken> findByUsernameAndUsedFalse(String username);
     Mono<Long> deleteExpiredTokens(Instant now);
     Mono<VerificationToken> save(VerificationToken token);
     Mono<Void> delete(VerificationToken token);

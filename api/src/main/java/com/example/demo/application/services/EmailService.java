@@ -19,7 +19,7 @@ public class EmailService {
             message.setFrom(fromEmail);
             message.setTo(toEmail);
             message.setSubject("Verify Your Email Address");
-            message.setText("Please verify your email by clicking this link: https://localhost:8080/verify?token=" + token);
+            message.setText("Please verify your email by clicking this link: https://localhost:3000/auth/verify?token=" + token);
             mailSender.send(message);
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }

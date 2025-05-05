@@ -23,18 +23,24 @@ public class VerificationTokenService {
     private final VerificationTokenRepository tokenRepository;
     private final UserRepository userRepository;
 
-    public Mono<VerificationToken> generateVerificationToken(User user) {
-        // Invalidate any existing tokens for this user
-        return tokenRepository.findByUserAndUsedFalse(user)
-                .flatMap(token -> tokenRepository.delete(token).thenReturn(token))
-                .then(Mono.defer(() -> {
-                    // Create new token after ensuring previous is deleted
-                    String tokenValue = UUID.randomUUID().toString();
-                    Instant expiryDate = Instant.now().plus(24, ChronoUnit.HOURS);
-                    VerificationToken token = new VerificationToken(tokenValue, user, expiryDate);
-                    return tokenRepository.save(token);
-                }));
+    public Mono<VerificationToken> generateVerificationToken(String username) {
+        // Find user by username first
+        return userRepository.findByUsername(username)
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("User not found: " + username)))
+                .flatMap(user ->
+                        // Delete existing unused token
+                        tokenRepository.findByUsernameAndUsedFalse(user.getUsername())
+                                .flatMap(existing -> tokenRepository.delete(existing).thenReturn(existing))
+                                .then(Mono.defer(() -> {
+                                    // Create new token
+                                    String tokenValue = UUID.randomUUID().toString();
+                                    Instant expiryDate = Instant.now().plus(24, ChronoUnit.HOURS);
+                                    VerificationToken token = new VerificationToken(tokenValue, user.getUsername(), expiryDate);
+                                    return tokenRepository.save(token);
+                                }))
+                );
     }
+
 
     public Mono<User> verifyUser(String tokenValue) {
         return tokenRepository.findByToken(tokenValue)
@@ -48,17 +54,19 @@ public class VerificationTokenService {
                         return Mono.error(new TokenExpiredException("Token expired"));
                     }
 
-                    // Mark token as used
                     token.setUsed(true);
                     token.setVerifiedAt(Instant.now());
 
                     return tokenRepository.save(token)
-                            .flatMap(savedToken -> {
-                                // Verify the user
-                                User user = savedToken.getUser();
-                                user.setVerified(true);
-                                return userRepository.save(user);
-                            });
+                            .flatMap(savedToken ->
+                                    userRepository.findByUsername(savedToken.getUsername())
+                                            .switchIfEmpty(Mono.error(new IllegalStateException("User not found")))
+                                            .flatMap(user -> {
+                                                user.setVerified(true);
+                                                user.setActive(true);
+                                                return userRepository.save(user);
+                                            })
+                            );
                 });
     }
 

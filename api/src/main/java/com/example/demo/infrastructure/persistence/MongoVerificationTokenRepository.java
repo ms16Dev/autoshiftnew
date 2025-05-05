@@ -1,6 +1,5 @@
 package com.example.demo.infrastructure.persistence;
 
-import com.example.demo.domain.model.User;
 import com.example.demo.domain.model.VerificationToken;
 import com.example.demo.domain.repository.VerificationTokenRepository;
 import com.mongodb.client.result.DeleteResult;
@@ -31,10 +30,9 @@ public class MongoVerificationTokenRepository implements VerificationTokenReposi
     }
 
     @Override
-    public Mono<VerificationToken> findByUserAndUsedFalse(User user) {
+    public Mono<VerificationToken> findByUsernameAndUsedFalse(String username) {
         return mongoTemplate.findOne(
-                query(where("user.$id").is(user.getId())
-                        .and("used").is(false)),
+                query(where("username").is(username).and("used").is(false)),
                 VerificationToken.class
         );
     }

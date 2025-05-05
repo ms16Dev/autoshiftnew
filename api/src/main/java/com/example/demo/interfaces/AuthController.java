@@ -5,12 +5,17 @@ import com.example.demo.application.services.UserService;
 import com.example.demo.application.services.VerificationTokenService;
 import com.example.demo.interfaces.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.Cipher;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -53,8 +58,8 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Mono<ResponseEntity<Map<String, String>>> register(@RequestBody RegisterRequest request) {
         return userService.registerUser(request)
-                .flatMap(user -> verificationTokenService.generateVerificationToken(user)
-                        .flatMap(token -> emailService.sendVerificationEmail(token.getUser().getEmail(), token.getToken())
+                .flatMap(user -> verificationTokenService.generateVerificationToken(user.getUsername())
+                        .flatMap(token -> emailService.sendVerificationEmail(user.getEmail(), token.getToken())
                                 .thenReturn(ResponseEntity.accepted()
                                         .body(Map.of(
                                                 "message", "Registration successful. Verification email sent.",
@@ -64,6 +69,26 @@ public class AuthController {
                 .onErrorResume(e -> Mono.just(ResponseEntity.badRequest()
                         .body(Map.of("error", e.getMessage()))));
     }
+
+
+    @GetMapping("/verify")
+    public Mono<ResponseEntity<Map<String, String>>> verifyUser(@RequestParam("token") String token) {
+        return verificationTokenService.verifyUser(token)
+                .map(user -> {
+                    Map<String, String> successMessage = Map.of(
+                            "message", "Email verification successful. You may now log in."
+                    );
+                    return ResponseEntity.ok(successMessage);
+                })
+                .onErrorResume(e -> {
+                    Map<String, String> errorMessage = Map.of("error", e.getMessage());
+                    return Mono.just(ResponseEntity.badRequest().body(errorMessage));
+                });
+    }
+
+
+
+
 
 
     public String decryptPassword(String encryptedPassword) throws Exception {
