@@ -7,14 +7,13 @@ import {DealerListDto} from "../../core/models/DealerListDto";
 withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
   dealer: () => ({
     id: 1,
-    coverImage: "/car_plchldr1.jpg",
-    logo: "/car_plchldr1.jpg",
-    name: "kdjsdldfj",
-    address: "Sana'a",
-    title: "dasdsdasd",
-    subtitle: "dsadsadsad",
-    likes: 900,
-    date_joined: "2 days ago",
+    coverUrl: "/car_plchldr1.jpg",
+    avatarUrl: "/car_plchldr1.jpg",
+    username: "kdjsdldfj",
+    name: "Sana'a",
+    subtitle: "dasdsdasd",
+    location: "dsadsadsad",
+    likeCount: 900,
   })
 });
 </script>
@@ -30,19 +29,19 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
 
           <!-- Cover image-->
           <div class="overflow-hidden">
-            <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer.coverImage"/>
+            <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer.coverUrl || '/src/assets/cover_placeholder.jpg'"/>
 
           </div>
-          <!--Devider-->
+          <!--Divider-->
           <div class="w-full border-b-2 border-b-pink-700 "></div>
           <div class="flex flex-row w-full justify-center">
             <div class="z-10"></div>
             <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
-              <img src="https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg">
+              <img :src="dealer.avatarUrl || '/src/assets/user.jpeg'">
             </div>
           </div>
-          <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">{{ dealer.address }}</div>
-          <div class="flex  justify-center text-gray-500 text-lg -translate-y-8"> {{ dealer.date_joined }}</div>
+          <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">{{ dealer.name }}</div>
+          <div class="flex  justify-center text-gray-500 text-lg -translate-y-8"> {{ dealer.subtitle }}</div>
 
 
 
@@ -53,13 +52,13 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
             <!-- Likes -->
             <div class="flex items-center gap-2">
               <i class="fas fa-map-marker text-pink-300"/>
-              <span class="text-sm text-gray-700">{{ dealer.name }}</span>
+              <span class="text-sm text-gray-700">{{ dealer.location }}</span>
             </div>
 
             <!-- Name -->
             <div class="flex items-center gap-2">
               <i class="fas fa-heart text-pink-300"/>
-              <span class="text-sm text-gray-700">{{ dealer.likes }}</span>
+              <span class="text-sm text-gray-700">{{ dealer.likeCount }}</span>
             </div>
 
           </div>

@@ -1,34 +1,47 @@
 <script setup lang="ts">
 
-import dealers from "../../core/data/DealersData.ts";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import TablePagination from "../../components/TablePagenition.vue";
 import DealerItem from "../../components/dealer/DealerItem.vue";
 import AdItem from "../../components/AdItem.vue";
+import apiService from "../../core/services/ApiService.ts";
+import { DealerListDto } from "../../core/models/DealerListDto.ts";
+
 
 defineOptions({
   name: 'list-dealers'
 });
-
+const dealers = ref<DealerListDto[]>([]);
+const count = ref(0);
 const currentPage = ref(1);  // Initialize at page 1
 const itemsPerPage = ref(15); // Number of questions to show per page
+const loading = ref(true);
 
-const totalPages = computed(() => {
-  return Math.ceil(dealers.length / itemsPerPage.value);
+onMounted(async () => {
+  await handlePageChange(1)
 });
 
-// Compute the paginated questions to display based on the current page
-const paginatedDealers = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage.value;
-  const endIndex = startIndex + itemsPerPage.value;
-  return dealers.slice(startIndex, endIndex);
-});
 
-const handlePageChange = (page: number) => {
+const totalPages = computed(() => Math.ceil(count.value / itemsPerPage.value));
 
 
-  currentPage.value = page;  // Update current page
+
+
+const handlePageChange = async (page: number) => {
+  const offset = (page-1)*itemsPerPage.value
+  try {
+    const response = await apiService.get1("profiles?offset="+offset+"&limit="+itemsPerPage.value);
+    dealers.value = response.data.data || [];
+    count.value = response.data.count || 0;
+
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    dealers.value = [];
+  } finally {
+    loading.value = false;
+  }
 };
+
 
 
 
@@ -45,7 +58,7 @@ const handlePageChange = (page: number) => {
 
       <div class="flex-col grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 -px-4 gap-3">
 
-        <DealerItem v-for="dealer in paginatedDealers" :key="dealer.id" :dealer="dealer"/>
+        <DealerItem v-for="dealer in dealers" :key="dealer.id" :dealer="dealer"/>
 
 
 
@@ -54,7 +67,7 @@ const handlePageChange = (page: number) => {
       <TablePagination
           :current-page="currentPage"
           :per-page="itemsPerPage"
-          :total="dealers.length"
+          :total="count"
           :total-pages="totalPages"
           @page-change="handlePageChange"
       ></TablePagination>
@@ -62,7 +75,7 @@ const handlePageChange = (page: number) => {
 
     </div>
 
-    <div class="w-full xl:w-1/5 p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full xl:w-1/5 p-4 text-center text-gray-700 sticky">
       <AdItem/>
 
     </div>
