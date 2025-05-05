@@ -57,7 +57,7 @@ async function submitForm() {
 
   try {
     const encryptedPass = await encryptPassword(password.value);
-    console.debug(encryptedPass);  // Log any errors
+    console.debug(encryptedPass);
 
     await authStore.register({
       username: name.value,
@@ -68,7 +68,11 @@ async function submitForm() {
     await router.push("/auth/verify-email");
   } catch (error) {
     const axiosError = error as any;
-    errorMessage.value = axiosError.response?.data?.message || "Signup failed. Please try again.";
+    const responseMessage =
+        axiosError.response?.data?.error ||
+        axiosError.response?.data?.message ||
+        "Signup failed. Please try again.";
+    errorMessage.value = responseMessage;
   } finally {
     loading.value = false;
   }

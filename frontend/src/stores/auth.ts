@@ -67,12 +67,12 @@ export const useAuthStore = defineStore(
 
         const register = async (credentials: UserRegisterDto) => {
             try {
-                console.log("Registering with:", credentials);  // Add a log here
+                console.log("Registering with:", credentials);
                 await ApiService.post("auth/register", credentials);
             } catch (error: any) {
-                console.error("Error during registration:", error);  // Log any errors
-
+                console.error("Error during registration:", error);
                 setError(error.response?.data?.errors || {});
+                throw error;  // <-- This line is required
             }
         };
 
