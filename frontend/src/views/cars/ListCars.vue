@@ -5,11 +5,13 @@ import TablePagination from "../../components/TablePagenition.vue";
 import AdItem from "../../components/AdItem.vue";
 import apiService from "../../core/services/ApiService.ts";
 import { CarListDto } from "../../core/models/CarListDto.ts";
+import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 
 defineOptions({
   name: "List-Cars",
 });
 
+const statData = useStaticDataStore();
 const cars = ref<CarListDto[]>([]);
 const count = ref(0);
 const currentPage = ref(1);
@@ -26,7 +28,8 @@ const totalPages = computed(() => Math.ceil(count.value / itemsPerPage.value));
 const handlePageChange = async (page: number) => {
   const offset = (page-1)*itemsPerPage.value
   try {
-    const response = await apiService.get1("cars?offset="+offset+"&limit="+itemsPerPage.value);
+    const response = await apiService.get1(`cars/by-country/${statData.getCurrentCountry().id}?offset=${offset}&limit=${itemsPerPage.value}`);
+
     cars.value = response.data.data || [];
     count.value = response.data.count || 0;
 

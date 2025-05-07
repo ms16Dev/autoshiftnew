@@ -11,17 +11,20 @@ import BrandsSlider from "../components/BrandsSlider.vue";
 import apiService from "../core/services/ApiService.ts";
 import {onMounted, ref} from "vue";
 import {CarListDto} from "../core/models/CarListDto.ts";
+import {useStaticDataStore} from "../stores/staticDataStore.ts";
 
 defineOptions({
   name: 'Home'
 })
 
+const staticData = useStaticDataStore();
+
 const cars = ref<CarListDto[]>([]);
 
 
-const fetchFeaturedCars = async () => {
+const fetchRecentCars = async () => {
   try {
-    const response = await apiService.get1("cars?&limit=5");
+    const response = await apiService.get1(`cars/by-country/${staticData.getCurrentCountry().id}?&limit=5`);
     cars.value = response.data.data || [];
   } catch (error) {
     console.error("Error fetching cars:", error);
@@ -30,7 +33,7 @@ const fetchFeaturedCars = async () => {
 };
 
 onMounted(async () => {
-  await fetchFeaturedCars();
+  await fetchRecentCars();
 });
 
 const slidesData = [
@@ -177,7 +180,7 @@ const recentPosts = [
 
 
     </div>
-    <div class="w-full xl:w-1/5  p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full xl:w-1/5  p-4 text-center text-gray-700 sticky">
       <AdItem/>
 
     </div>

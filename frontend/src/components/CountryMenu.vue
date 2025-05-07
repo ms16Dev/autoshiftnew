@@ -2,6 +2,7 @@
 
 import {useI18n} from "vue-i18n";
 import {useStaticDataStore} from "../stores/staticDataStore.ts";
+
 const { t } = useI18n()
 
 const staticData = useStaticDataStore();
@@ -15,6 +16,12 @@ defineProps({
 
 const emit = defineEmits(['close']);
 
+const switchCountry = (countryId: string) => {
+  staticData.setCurrentCountry(countryId);
+  emit('close');
+  window.location.reload();
+
+};
 
 </script>
 
@@ -28,10 +35,8 @@ const emit = defineEmits(['close']);
     </div>
 
     <ul v-for="(country,index) in staticData.data.countries"  class="divide-y divide-gray-200">
-      <li v-if="country" :key="index" class="p-2 text-white hover:bg-pink-500 hover:scale-105 cursor-pointer">
+      <li v-if="country" :key="index" @click="switchCountry(country.id)" class="p-2 text-white hover:bg-pink-500 hover:scale-105 cursor-pointer">
         {{staticData.getLocalizedName(country)}}
-
-
       </li>
     </ul>
 

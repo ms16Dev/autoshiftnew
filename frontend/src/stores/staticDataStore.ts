@@ -105,6 +105,11 @@ export const useStaticDataStore = defineStore('staticData', () => {
         return <Country>findItemById<Country>('countries', currentCountry.value)
     }
 
+    const setCurrentCountry = (countryId: string) => {
+        currentCountry.value = countryId
+        localStorage.setItem("country", countryId)
+    }
+
     // Initialize store by fetching all data types
     const initialize = async () => {
         const types: DataType[] = [
@@ -160,6 +165,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
         getClassById,
         getStatusById,
         getCurrencyById,
+        setCurrentCountry,
         initialize
     }
 })
