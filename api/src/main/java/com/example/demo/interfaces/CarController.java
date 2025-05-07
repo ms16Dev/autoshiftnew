@@ -34,13 +34,15 @@ public class CarController {
     private final CommentRepository comments;
 
 
-    @GetMapping("")
-    public Mono<PaginatedResult<CarSummary>> all(@RequestParam(value = "q", required = false) String q,
-                                                 @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                                 @RequestParam(value = "limit", defaultValue = "10") int limit) {
+    @GetMapping("/by-country/{country}")
+    public Mono<PaginatedResult<CarSummary>> all(
+            @PathVariable String country,
+            @RequestParam(value = "q", required = false) String q,
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "10") int limit) {
 
-        return this.cars.findByKeyword(q, offset, limit).collectList()
-                .zipWith(this.cars.countByKeyword(q), PaginatedResult::new);
+        return this.cars.findByCountryAndKeyword(country, q, offset, limit).collectList()
+                .zipWith(this.cars.countByCountryAndKeyword(country, q), PaginatedResult::new);
     }
 
 

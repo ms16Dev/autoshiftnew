@@ -7,6 +7,7 @@ import com.example.demo.interfaces.dto.CarSummary;
 import com.mongodb.client.result.DeleteResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -30,13 +31,19 @@ public class MongoCarRepository implements CarRepository {
     }
 
     @Override
-    public Flux<CarSummary> findByKeyword(String keyword, int offset, int limit) {
+    public Flux<CarSummary> findByCountryAndKeyword(String country,String keyword, int offset, int limit) {
         Query query = new Query();
+
+        query.addCriteria(Criteria.where("country").is(country));
 
         // Apply keyword filter only if provided
         if (keyword != null && !keyword.isBlank()) {
-            query.addCriteria(Criteria.where("title").regex(".*" + keyword + ".*", "i"));
+            query.addCriteria(Criteria.where("description").regex(".*" + keyword + ".*", "i"));
         }
+
+
+        query.with(Sort.by(Sort.Direction.DESC, "createdDate"));
+
 
         // Apply pagination
         query.skip(offset).limit(limit);
@@ -67,12 +74,15 @@ public class MongoCarRepository implements CarRepository {
 
 
     @Override
-    public Mono<Long> countByKeyword(String keyword) {
+    public Mono<Long> countByCountryAndKeyword(String country, String keyword) {
         Query query = new Query();
+
+        query.addCriteria(Criteria.where("country").is(country));
+
 
         // Apply keyword filter only if provided
         if (keyword != null && !keyword.isBlank()) {
-            query.addCriteria(Criteria.where("title").regex(".*" + keyword + ".*", "i"));
+            query.addCriteria(Criteria.where("description").regex(".*" + keyword + ".*", "i"));
         }
 
         return mongoTemplate.count(query, Car.class);

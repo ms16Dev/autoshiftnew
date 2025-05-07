@@ -10,9 +10,9 @@ public interface CarRepository {
 
     Flux<Car> findAll();
 
-    Flux<CarSummary> findByKeyword(String keyword, int offset, int limit);
+    Flux<CarSummary> findByCountryAndKeyword(String country, String keyword, int offset, int limit);
 
-    Mono<Long> countByKeyword(String keyword);
+    Mono<Long> countByCountryAndKeyword(String country, String keyword);
 
     Mono<Car> findById(String id);
 
