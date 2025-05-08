@@ -59,21 +59,30 @@ const fetchDealerProfile = async () => {
 const handleSubmit = async () => {
   try {
 
-    console.log("Submitting images to:", config.endpoints.images);
-    const response1 = await axios.post(config.endpoints.images, coverImage.value, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    if (coverImage.value.get('file') != null) {
+      const response1 = await axios.post(config.endpoints.images, coverImage.value, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
 
-    dealer.value.coverUrl = response1.data.urls[0]
+      dealer.value.coverUrl = response1.data.urls[0];
+    }
 
-    const response2 = await axios.post(config.endpoints.images, avatarImage.value, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    dealer.value.avatarUrl = response2.data.urls[0]
+
+    if (avatarImage.value.get('file') != null) {
+
+      const response2 = await axios.post(config.endpoints.images, avatarImage.value, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      dealer.value.avatarUrl = response2.data.urls[0]
+
+    }
+
+
+
 
     // Use PUT for updates (since we're modifying an existing role)
     await apiService.update("/profiles", props.username, dealer.value);
