@@ -19,13 +19,15 @@ public class ProfileController {
     private final ProfileRepository profiles;
 
 
-    @GetMapping("")
-    public Mono<PaginatedResult<ProfileSummary>> all(@RequestParam(value = "q", required = false) String q,
-                                                     @RequestParam(value = "offset", defaultValue = "0") int offset,
-                                                     @RequestParam(value = "limit", defaultValue = "10") int limit) {
+    @GetMapping("/by-country/{country}")
+    public Mono<PaginatedResult<ProfileSummary>> all(
+            @PathVariable String country,
+            @RequestParam(value = "q", required = false) String q,
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "10") int limit) {
 
-        return this.profiles.findByKeyword(q, offset, limit).collectList()
-                .zipWith(this.profiles.countByKeyword(q), PaginatedResult::new);
+        return this.profiles.findByCountryAndKeyword(country, q, offset, limit).collectList()
+                .zipWith(this.profiles.countByCountryAndKeyword(country, q), PaginatedResult::new);
     }
 
 
