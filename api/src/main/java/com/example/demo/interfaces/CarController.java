@@ -45,6 +45,16 @@ public class CarController {
                 .zipWith(this.cars.countByCountryAndKeyword(country, q), PaginatedResult::new);
     }
 
+    @GetMapping("/by-dealer/{username}")
+    public Mono<PaginatedResult<CarSummary>> getDealerCars(
+            @PathVariable String username,
+            @RequestParam(value = "offset", defaultValue = "0") int offset,
+            @RequestParam(value = "limit", defaultValue = "10") int limit) {
+
+        return this.cars.findByDealer(username, offset, limit).collectList()
+                .zipWith(this.cars.countByDealer(username), PaginatedResult::new);
+    }
+
 
     @PostMapping("")
     public Mono<ResponseEntity> create(@RequestBody @Valid Car car) {

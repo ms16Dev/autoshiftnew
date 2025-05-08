@@ -14,6 +14,10 @@ public interface CarRepository {
 
     Mono<Long> countByCountryAndKeyword(String country, String keyword);
 
+    Flux<CarSummary> findByDealer(String username, int offset, int limit);
+
+    Mono<Long> countByDealer(String username);
+
     Mono<Car> findById(String id);
 
     Mono<Car> create(Car car);

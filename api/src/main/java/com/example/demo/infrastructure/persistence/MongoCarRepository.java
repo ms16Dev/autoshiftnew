@@ -89,6 +89,52 @@ public class MongoCarRepository implements CarRepository {
     }
 
     @Override
+    public Flux<CarSummary> findByDealer(String username, int offset, int limit) {
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("createdBy").is(username));
+
+
+        query.with(Sort.by(Sort.Direction.DESC, "createdDate"));
+
+
+        // Apply pagination
+        query.skip(offset).limit(limit);
+
+        return mongoTemplate
+                .find(query, Car.class)
+                .map(it ->
+                        new CarSummary(
+                                it.getId(),
+                                it.getCoverImage(),
+                                it.getPrice(),
+                                it.getCurrency(),
+                                it.getMake(),
+                                it.getMakeUrl(),
+                                it.getModel(),
+                                it.getOrigin(),
+                                it.getYear(),
+                                it.getSeenCount(),
+                                it.getLikeCount(),
+                                it.getShareCount(),
+                                it.getComments().size(),
+                                it.getDescription(),
+                                it.getCreatedBy(),
+                                it.getCreatedDate()
+                        )
+                );
+    }
+
+    @Override
+    public Mono<Long> countByDealer(String username) {
+        Query query = new Query();
+
+        query.addCriteria(Criteria.where("createdBy").is(username));
+
+        return mongoTemplate.count(query, Car.class);
+    }
+
+    @Override
     public Mono<Car> findById(String id) {
         return mongoTemplate.findById(id, Car.class);
     }
