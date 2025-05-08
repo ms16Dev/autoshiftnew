@@ -127,7 +127,7 @@
       <div class="w-full">
 
         <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Recent Cars</h1>
-        <FeaturedDealers :posts="recentPosts" />
+        <RecentCars :cars="cars" />
         <div class="flex justify-end">
           <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
             Browse All ..
@@ -150,24 +150,17 @@
 import AdItem from "../../components/AdItem.vue";
 
 import {onMounted, ref} from "vue";
-import FeaturedDealers from "../../components/FeaturedDealers.vue";
 import {Dealer} from "../../types/Dealer.ts";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
+import RecentCars from "../../components/RecentCars.vue";
+import {CarListDto} from "../../core/models/CarListDto.ts";
 
 defineOptions({
   name: 'user-profile'
 });
 
 const activeTab = ref(1);
-const recentPosts = [
-  { title: "Post 1", image: "post1.jpg", link: "/post1" },
-  { title: "Post 2", image: "post2.jpg", link: "/post2" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-];
-
 
 
 // Car details state
@@ -177,6 +170,7 @@ const loading = ref(true);
 // Get the car ID from the route params
 const route = useRoute();
 const dealerId = route.params.id as string;
+const cars = ref<CarListDto[]>([]);
 
 // Fetch car details from the backend
 const fetchDealerProfile = async () => {
@@ -190,8 +184,19 @@ const fetchDealerProfile = async () => {
   }
 };
 
+const fetchRecentCars = async () => {
+  try {
+    const response = await apiService.get1(`cars/by-dealer/${dealerId}?&limit=5`);
+    cars.value = response.data.data || [];
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    cars.value = [];
+  }
+};
+
 onMounted(() => {
   fetchDealerProfile();
+  fetchRecentCars();
 });
 
 
