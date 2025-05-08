@@ -6,6 +6,7 @@ import DealerItem from "../../components/dealer/DealerItem.vue";
 import AdItem from "../../components/AdItem.vue";
 import apiService from "../../core/services/ApiService.ts";
 import { DealerListDto } from "../../core/models/DealerListDto.ts";
+import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 
 
 defineOptions({
@@ -21,6 +22,7 @@ onMounted(async () => {
   await handlePageChange(1)
 });
 
+const staticData = useStaticDataStore();
 
 const totalPages = computed(() => Math.ceil(count.value / itemsPerPage.value));
 
@@ -30,7 +32,7 @@ const totalPages = computed(() => Math.ceil(count.value / itemsPerPage.value));
 const handlePageChange = async (page: number) => {
   const offset = (page-1)*itemsPerPage.value
   try {
-    const response = await apiService.get1("profiles?offset="+offset+"&limit="+itemsPerPage.value);
+    const response = await apiService.get1(`profiles/by-country/${staticData.getCurrentCountry().id}?offset=${offset}&limit=${itemsPerPage.value}`);
     dealers.value = response.data.data || [];
     count.value = response.data.count || 0;
 

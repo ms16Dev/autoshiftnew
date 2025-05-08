@@ -12,6 +12,7 @@ import apiService from "../core/services/ApiService.ts";
 import {onMounted, ref} from "vue";
 import {CarListDto} from "../core/models/CarListDto.ts";
 import {useStaticDataStore} from "../stores/staticDataStore.ts";
+import {DealerListDto} from "../core/models/DealerListDto.ts";
 
 defineOptions({
   name: 'Home'
@@ -20,6 +21,7 @@ defineOptions({
 const staticData = useStaticDataStore();
 
 const cars = ref<CarListDto[]>([]);
+const dealers = ref<DealerListDto[]>([]);
 
 
 const fetchRecentCars = async () => {
@@ -31,9 +33,19 @@ const fetchRecentCars = async () => {
     cars.value = [];
   }
 };
+const fetchRecentDealers = async () => {
+  try {
+    const response = await apiService.get1(`profiles/by-country/${staticData.getCurrentCountry().id}?&limit=5`);
+    dealers.value = response.data.data || [];
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    dealers.value = [];
+  }
+};
 
 onMounted(async () => {
   await fetchRecentCars();
+  await fetchRecentDealers();
 });
 
 const slidesData = [
@@ -117,13 +129,7 @@ const brands = [
 
 ];
 
-const recentPosts = [
-  { title: "Post 1", image: "post1.jpg", link: "/post1" },
-  { title: "Post 2", image: "post2.jpg", link: "/post2" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-  { title: "Post 3", image: "post3.jpg", link: "/post3" },
-];
+
 </script>
 
 <template>
@@ -156,7 +162,7 @@ const recentPosts = [
 
 
         <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Featured Dealers</h1>
-        <FeaturedDealers :posts="recentPosts" />
+        <FeaturedDealers :dealers="dealers" />
 
 
         <div class="flex justify-end">

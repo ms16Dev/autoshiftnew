@@ -6,9 +6,7 @@
         class="flex gap-4 overflow-x-auto scroll-smooth no-scrollbar"
     >
       <DealerItem
-          v-for="(post, index) in posts"
-          :key="index"
-          :data="post"
+          v-for="(dealer, index) in dealers" :key="dealer.id" :dealer="dealer"
           class="flex-shrink-0 w-[300px]"
       />
     </div>
@@ -34,7 +32,7 @@ import { ref } from "vue";
 import DealerItem from "./dealer/DealerItem.vue"; // Ensure this path is correct
 
 const props = defineProps({
-  posts: {
+  dealers: {
     type: Array,
     required: true,
   },
