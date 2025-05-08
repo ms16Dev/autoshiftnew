@@ -7,7 +7,7 @@ export const config = {
     apiBaseUrl: env.VITE_API_BASE_URL,
 
     endpoints: {
-        images: `${env.VITE_API_BASE_URL}/images`,
+        images: `${env.VITE_API_BASE_URL}/media/image`,
         api: `${env.VITE_API_BASE_URL}/api/v1`
     },
 

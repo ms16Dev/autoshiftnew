@@ -13,21 +13,28 @@
     <div class="flex flex-col items-center w-full lg:w-3/5 p-4 text-gray-400">
 
       <!-- Sidebar - Dealer Card -->
-      <div class="flex xl:max-w-lg p-4 text-center text-gray-400">
-        <div class="flex flex-col overflow-hidden rounded-lg bg-white">
+      <div class="flex xl:max-w-lg p-4 text-center text-gray-400 relative me-2 ">
+        <div class="flex flex-col overflow-hidden rounded-lg bg-white ">
           <div class="group flex-col inset-px shadow-md">
 
             <!-- Cover image-->
             <div class="overflow-hidden">
-              <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer?.coverUrl || '/src/assets/cover_placeholder.jpg'" alt="Cover Image"/>
+              <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer?.coverUrl ? config.apiBaseUrl+dealer?.coverUrl : '/src/assets/cover_placeholder.jpg'" alt="Cover Image"/>
+              <button
+                  v-if="dealer?.username === authStore.userInfo?.name"
+                  class="absolute top-6 end-6 text-sm bg-pink-500 rounded-lg text-white hover:bg-pink-700 font-semibold py-2 px-4 "
+                  @click="toggleUpdateProfilePopup">
+                <i class="fas fa-pen"/>
+                Edit
 
+              </button>
             </div>
             <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700 "></div>
             <div class="flex flex-row w-full justify-center">
               <div class="z-10"></div>
               <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
-                <img :src="dealer?.avatarUrl || '/src/assets/user.jpeg'" alt="Avatar">
+                <img :src="dealer?.avatarUrl ? config.apiBaseUrl+dealer?.avatarUrl : '/src/assets/user.jpeg'" alt="Avatar">
               </div>
             </div>
             <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">{{ dealer?.name }}</div>
@@ -45,31 +52,29 @@
 
 
               <div v-show="activeTab === 2" class="text-gray-600 pb-4">
-                Free car listing space
-                Access to premium customer leads
-                Flexible financing options
+                {{ dealer?.info }}
               </div>
               <div v-show="activeTab === 3" class="text-gray-600 pb-4">
                 <div class="flex-col  -px-4 gap-3">
                   <div class="p-6  max-w-md mx-auto space-y-4">
                     <div class="flex items-center space-x-3 text-gray-700">
                       <i class="fas fa-phone-alt text-pink-500"></i>
-                      <a href="tel:+1769778159236" class="hover:underline">+1 769 778 159 236</a>
+                      <a :href="'tel:' + dealer?.contact[0]" class="hover:underline">{{ dealer?.contact[0] }}</a>
                     </div>
 
                     <div class="flex items-center space-x-3 text-gray-700">
                       <i class="fab fa-facebook text-blue-600"></i>
-                      <a href="https://facebook.com/fbidname" target="_blank" class="hover:underline">facebook.com/facebook-id</a>
+                      <a :href="dealer?.contact[1]" class="hover:underline">{{ dealer?.contact[1] }}</a>
                     </div>
 
                     <div class="flex items-center space-x-3 text-gray-700">
                       <i class="fab fa-instagram text-pink-600"></i>
-                      <a href="https://instagram.com/fbidname" target="_blank" class="hover:underline">instagram.com/instagram</a>
+                      <a :href="dealer?.contact[2]" class="hover:underline">{{ dealer?.contact[2] }}</a>
                     </div>
 
                     <div class="flex items-center space-x-3 text-gray-700">
                       <i class="fas fa-globe text-green-500"></i>
-                      <a href="https://somesite.com/" target="_blank" class="hover:underline">some-ite.com</a>
+                      <a :href="dealer?.contact[3]" class="hover:underline">{{ dealer?.contact[3] }}</a>
                     </div>
                   </div>
                 </div>
@@ -109,6 +114,7 @@
                 />
               </button>
 
+
             </div>
 
 
@@ -116,12 +122,15 @@
 
 
           </div>
-
-
-
-
         </div>
+
+        <UpdateProfilePopup
+            v-if="profilePopup"
+            :username="dealer?.username!!"
+            @close="toggleUpdateProfilePopup"
+            @profile-updated="handleProfileUpdated"/>
       </div>
+
 
 
       <div class="w-full">
@@ -155,17 +164,22 @@ import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
 import RecentCars from "../../components/RecentCars.vue";
 import {CarListDto} from "../../core/models/CarListDto.ts";
+import UpdateProfilePopup from "../../components/profile/UpdateProfilePopup.vue";
+import {config} from "../../../config.ts";
+import {useAuthStore} from "../../stores/auth.ts";
 
 defineOptions({
   name: 'user-profile'
 });
 
+const authStore = useAuthStore();
 const activeTab = ref(1);
 
 
 // Car details state
 const dealer = ref<Dealer | null>(null);
 const loading = ref(true);
+const profilePopup = ref(false);
 
 // Get the car ID from the route params
 const route = useRoute();
@@ -192,6 +206,16 @@ const fetchRecentCars = async () => {
     console.error("Error fetching cars:", error);
     cars.value = [];
   }
+};
+
+const toggleUpdateProfilePopup = () => {
+  profilePopup.value = !profilePopup.value
+
+};
+
+const handleProfileUpdated = async () => {
+  profilePopup.value = false;
+  await fetchDealerProfile(); // Refresh the dealer profile
 };
 
 onMounted(() => {
