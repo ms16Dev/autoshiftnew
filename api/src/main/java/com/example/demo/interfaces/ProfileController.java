@@ -36,7 +36,6 @@ public class ProfileController {
         return this.profiles.findByUsername(id)
                 .switchIfEmpty(Mono.error(new ProfileNotFoundException(id)));
     }
-
     @PutMapping("/{username}")
     public Mono<ResponseEntity<String>> updateUserProfile(
             @PathVariable String username,
@@ -44,39 +43,15 @@ public class ProfileController {
 
         return profiles.findByUsername(username)
                 .flatMap(existingProfile -> {
-                    // Update fields if provided
-                    if (updatedProfile.getName() != null) {
-                        existingProfile.setName(updatedProfile.getName());
-                    }
-                    if (updatedProfile.getAvatarUrl() != null) {
-                        existingProfile.setAvatarUrl(updatedProfile.getAvatarUrl());
-                    }
-                    if (updatedProfile.getCoverUrl() != null) {
-                        existingProfile.setCoverUrl(updatedProfile.getCoverUrl());
-                    }
-                    if (updatedProfile.getSubtitle() != null) {
-                        existingProfile.setSubtitle(updatedProfile.getSubtitle());
-                    }
-                    if (updatedProfile.getInfo() != null) {
-                        existingProfile.setInfo(updatedProfile.getInfo());
-                    }
-                    if (updatedProfile.getCountry() != null) {
-                        existingProfile.setCountry(updatedProfile.getCountry());
-                    }
-                    if (updatedProfile.getLocation() != null) {
-                        existingProfile.setLocation(updatedProfile.getLocation());
-                    }
-                    if (updatedProfile.getContact() != null) {
-                        existingProfile.setContact(updatedProfile.getContact());
-                    }
+                    // Overwrite the existing profile with the new data
+                    updatedProfile.setId(existingProfile.getId()); // Ensure existing DB ID is retained
+                    updatedProfile.setUsername(username);          // Retain the path variable username
 
-                    existingProfile.setDealer(updatedProfile.isDealer());
-                    existingProfile.setComplete(updatedProfile.isComplete());
-
-                    return profiles.save(existingProfile)
+                    return profiles.save(updatedProfile)
                             .thenReturn(ResponseEntity.ok("Profile updated successfully"));
                 })
                 .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Profile not found")));
     }
+
 }
