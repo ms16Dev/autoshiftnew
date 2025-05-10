@@ -1,7 +1,7 @@
 <template>
-  <section class=" relative w-full h-auto mx-auto flex flex-col items-center text-center bg-purple-200 pattern-bg overflow-hidden shadow-lg p-8 rounded-lg opacity-70">
+  <section class=" relative w-full h-auto mx-auto flex flex-col items-center text-center bg-purple-200 pattern-bg overflow-hidden shadow-lg p-8 rounded-xl opacity-70">
 
-    <div class="bg-white opacity-85 p-10">
+    <div class="bg-white opacity-85 p-10 rounded-xl">
       <!-- Header -->
       <h2 class="text-2xl font-bold text-purple-600">Advertise With Us 🚀</h2>
       <p class="text-md text-gray-600 mt-2 max-w-lg ">
@@ -22,7 +22,7 @@
 <style scoped>
 .pattern-bg {
   background-image: url('/pattern1.svg'); /* If stored in assets */
-  background-size: 50px 50px;
+  background-size: 20px 20px;
   background-repeat: repeat;
   background-position: center;
 }

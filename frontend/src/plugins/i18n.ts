@@ -67,6 +67,14 @@ const messages = {
         twitter: 'Twitter',
         contact_us: 'Contact Us',
         copyright: '2025 AUTOSHIFT. All rights reserved.',
+        joinUsNow: "Join Us Now",
+        freeSpaceText : "Get free space to showcase your cars and reach more clients easily.",
+        registerNow: "Register Now",
+        soon_in_as: "Soon in AUTOSHIFT",
+        parts: "Parts ",
+        services: "Services ",
+        auctions: "Auctions ",
+
 
 
 
@@ -140,6 +148,14 @@ const messages = {
         twitter: 'تويتر',
         contact_us: 'تواصل معنا',
         copyright: 'أوتو شيفت 2025 . جميع الحقوق محفوظة.',
+        joinUsNow: "انضم إلينا الآن",
+        freeSpaceText: "احصل على مساحة مجانية لعرض سياراتك والوصول إلى المزيد من العملاء بسهولة.",
+        registerNow: "سجل الآن",
+        soon_in_as: "قريبا ",
+        parts: "قطع غيار ",
+        services: "خدمات ",
+        auctions: "مزادات ",
+
 
 
 
