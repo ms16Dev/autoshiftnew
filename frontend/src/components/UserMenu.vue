@@ -53,7 +53,7 @@ const logout = () => {
 
 <template>
   <div ref="popupRef"
-      class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important bottom-full  end-0 md:block xl:hidden "
+      class="absolute rtl:-translate-x-3 ltr:translate-x-3  bg-gradient-to-r from-[#ff80b5] to-[#9089fc]  rounded-lg shadow-lg ring-1 ring-gray-300 z-50 !important bottom-full  end-0 hidden md:block xl:hidden  "
   >
 
     <div class="flex-col p-2">
