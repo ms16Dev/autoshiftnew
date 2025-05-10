@@ -83,7 +83,7 @@ watch(currentLang, (newLang) => {
           </div>
           <IconButtonLink
               :text="t('dealers')"
-              :icon="['fas', 'fa-heartbeat']"
+              :icon="['fas', 'fa-store']"
               target="/dealers"
               :class="{ '!bg-pink-600': $route.path.startsWith('/dealers') }"
 
