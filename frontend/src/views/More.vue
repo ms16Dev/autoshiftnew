@@ -51,7 +51,7 @@ watch(currentLang, (newLang) => {
       <div class="flex justify-between bg-pink-500 rounded-full h-[50px]  md:hidden">
         <user-menu-button icon="" text=""/>
 
-        <p class="text-white text-xl font-extrabold">AUTOSHIFT</p>
+        <img src="../assets/asl.png" alt="logo" >
 
         <div class="flex flex-row justify-between p-2">
           <button
