@@ -45,6 +45,33 @@ const messages = {
         logout: 'Logout',
         admin: 'Admin',
         profile: 'Profile',
+        close: 'Close',
+        quick_add: 'Quick add',
+        car: 'Car',
+        recent_cars: 'Recent cars',
+        recent_dealers: 'Recent dealers',
+        find_more: 'Find more ...',
+        brands: 'Brands',
+        lets_connect: 'Lets Connect',
+        reach_anytime: 'Feel free to reach out anytime!',
+        your_name: 'Your name',
+        your_email: 'Your Email',
+        your_message: 'Your message',
+        send: 'Send',
+        autoshift: 'AUTOSHIFT',
+        site_subtitle: 'Connecting buyers and sellers in the car market',
+        quick_links: 'Quick Links',
+        connect: 'Connect',
+        facebook: 'Facebook',
+        instagram: 'Instagram',
+        twitter: 'Twitter',
+        contact_us: 'Contact Us',
+        copyright: '2025 AUTOSHIFT. All rights reserved.',
+
+
+
+
+
 
 
     },
@@ -91,6 +118,32 @@ const messages = {
         logout: 'تسجيل خروج',
         admin: 'ادارة',
         profile: 'البروفايل',
+        close: 'اغلاق',
+        quick_add: 'أضف سيارة',
+        car: 'سيارة',
+        recent_cars: 'أحدث السيارات',
+        recent_dealers: 'المعارض الجديدة',
+        find_more: ' ... عرض المزيد',
+        brands: 'الماركات',
+        lets_connect: 'تواصل معنا',
+        reach_anytime: 'اتصل بنا في أي وقت!',
+        your_name: 'الاسم',
+        your_email: 'البريد الالكتروني',
+        your_message: 'الرسالة',
+        send: 'ارسال',
+        autoshift: 'أوتو شيفت',
+        site_subtitle: 'سوق خاص بالسيارات فقط',
+        quick_links: 'روابط سريعة',
+        connect: 'تابعنا',
+        facebook: 'فيسبوك',
+        instagram: 'انستجرام',
+        twitter: 'تويتر',
+        contact_us: 'تواصل معنا',
+        copyright: 'أوتو شيفت 2025 . جميع الحقوق محفوظة.',
+
+
+
+
 
 
 

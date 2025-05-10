@@ -5,9 +5,9 @@
       <div v-for="(slide, index) in slides" :key="index" class="w-full flex-shrink-0 flex">
         <!-- Left Section: Text -->
         <div class="w-1/2 flex flex-col justify-center px-10">
-          <h2 class="text-3xl font-bold">{{ slide.title }}</h2>
-          <h3 class="text-xl mt-2">{{ slide.subtitle }}</h3>
-          <p class="mt-4 text-gray-300">{{ slide.description }}</p>
+          <h2 class="text-2xl font-bold">{{ slide.title }}</h2>
+          <h3 class="text-lg mt-2">{{ slide.subtitle }}</h3>
+          <p class="mt-4 text-sm text-gray-300">{{ slide.description }}</p>
         </div>
 
         <!-- Right Section: Image -->

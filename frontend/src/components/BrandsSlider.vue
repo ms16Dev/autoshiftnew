@@ -1,43 +1,53 @@
 <template>
-  <div ref="carouselContainer" class="relative h-[250px] flex items-center overflow-hidden ">
+  <div ref="carouselContainer" class="relative h-[250px] flex items-center overflow-hidden">
     <!-- Carousel Wrapper -->
     <div
         ref="carousel"
         class="flex items-center whitespace-nowrap"
-        :style="{ transform: `translateX(${offset}px)`, transition: 'transform 0.02s linear' }"
+        :style="{
+        transform: `translateX(${offset}px)`,
+        transition: 'transform 0.02s linear'
+      }"
     >
-      <div v-for="(slide, index) in duplicatedSlides" :key="index" class="carousel-item mx-4">
-        <img :src="slide.image" class="h-full max-w-[150px]" />
+      <div
+          v-for="(slide, index) in duplicatedSlides"
+          :key="index"
+          class="carousel-item mx-4"
+      >
+        <img
+            :src="config.apiBaseUrl + slide.image"
+            class="h-full w-[150px] object-contain"
+            @load="updateCarouselSettings"
+            alt="brands"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed, nextTick } from "vue";
+import { config } from "../../config.ts";
 
-const props = defineProps({
-  slides: {
-    type: Array,
-    required: true,
-  },
-});
+const props = defineProps<{
+  slides: Array<{ image: string }>;
+}>();
 
 const offset = ref(0);
-const speed = 1.5; // Adjust speed for smooth scrolling
-let animationFrame;
-const carouselContainer = ref(null);
-const carousel = ref(null);
+const speed = 1.5;
+let animationFrame: number;
+const carouselContainer = ref<HTMLElement | null>(null);
+const carousel = ref<HTMLElement | null>(null);
 let itemWidth = 0;
 
-// **Duplicate slides** to create an **infinite loop effect**
 const duplicatedSlides = computed(() => [...props.slides, ...props.slides]);
 
 const updateCarouselSettings = () => {
-  if (carouselContainer.value && carousel.value) {
+  if (carousel.value) {
     const firstItem = carousel.value.querySelector(".carousel-item");
-    if (firstItem) {
-      itemWidth = firstItem.clientWidth + 16; // Include margin
+    if (firstItem instanceof HTMLElement) {
+      const margin = 32; // total horizontal margin (mx-4 = 1rem * 2 = 16px * 2)
+      itemWidth = firstItem.offsetWidth + margin;
     }
   }
 };
@@ -45,18 +55,22 @@ const updateCarouselSettings = () => {
 const animateCarousel = () => {
   offset.value -= speed;
 
-  // Reset when the original list fully scrolls out of view
-  if (offset.value <= -props.slides.length * itemWidth) {
-    offset.value += props.slides.length * itemWidth; // Move it back to the start smoothly
+  const totalWidth = (duplicatedSlides.value.length * itemWidth);
+
+  if (Math.abs(offset.value) >= totalWidth / 2) {
+    offset.value = 0;
   }
 
   animationFrame = requestAnimationFrame(animateCarousel);
 };
 
 onMounted(() => {
-  updateCarouselSettings();
-  animationFrame = requestAnimationFrame(animateCarousel);
-  window.addEventListener("resize", updateCarouselSettings);
+  nextTick(() => {
+    updateCarouselSettings();
+    setTimeout(updateCarouselSettings, 300); // Ensure images have loaded
+    animationFrame = requestAnimationFrame(animateCarousel);
+    window.addEventListener("resize", updateCarouselSettings);
+  });
 });
 
 onUnmounted(() => {
@@ -65,8 +79,9 @@ onUnmounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .carousel-item {
   flex-shrink: 0;
+  width: 150px; /* Ensures uniformity */
 }
 </style>

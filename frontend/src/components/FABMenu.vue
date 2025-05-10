@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import IconButtonLink, { IconButtonLinkProps } from './IconButtonLink.vue';
+import {useI18n} from "vue-i18n";
+import {computed} from "vue";
+const { t } = useI18n()
 
-defineProps({
+
+const props = defineProps({
   items: {
     type: Array as () => IconButtonLinkProps[],
-    default: () => [
-      { text: 'Car', icon: 'fas fa-car', target: '/cars/add-car' },
-      { text: 'Part', icon: 'fas fa-cogs', target: '/home' },
-      { text: 'Rental', icon: 'fas fa-tag', target: '/home' },
-      { text: 'Auction', icon: 'fas fa-hammer', target: '/home' },
-    ],
+    default: () => [],
   },
   position: {
     type: String,
     default: 'bottom', // Can be 'top', 'bottom', 'left', 'right'
   },
 });
+
+const defaultLinks = [
+  { text: t('car'), icon: 'fas fa-car', target: '/cars/add-car' }
+]
+
+const items = computed(() => props.items ?? defaultLinks)
 
 defineEmits(['close']);
 </script>

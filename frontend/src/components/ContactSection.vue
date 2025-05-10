@@ -3,23 +3,17 @@
 
     <!-- Left Side (Contact Info / Illustration) -->
     <div class="w-full md:w-1/2 flex flex-col items-center justify-center text-gray-900 bg-gray-50 pattern-bg p-6">
-      <h2 class="text-2xl font-bold">Let's Connect</h2>
-      <p class="text-md text-gray-700 mt-2 text-center">Feel free to reach out anytime.</p>
-      <div class="mt-4 flex space-x-3">
-        <a href="#" class="text-xl hover:text-gray-300 transition">📧</a>
-        <a href="#" class="text-xl hover:text-gray-300 transition">📞</a>
-        <a href="#" class="text-xl hover:text-gray-300 transition">🌐</a>
-      </div>
+      <h2 class="text-2xl font-bold">{{t('lets_connect')}}</h2>
     </div>
 
     <!-- Right Side (Form) -->
     <div class="w-full md:w-1/2 p-6 bg-pink-100 backdrop-blur-md flex flex-col justify-center">
       <form @submit.prevent="submitForm" class="space-y-2">
-        <input type="text" v-model="form.name" placeholder="Your Name" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
-        <input type="email" v-model="form.email" placeholder="Your Email" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
-        <input type="text" v-model="form.message" placeholder="Your Message" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
+        <input type="text" v-model="form.name" :placeholder="t('your_name')" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
+        <input type="email" v-model="form.email" :placeholder="t('your_email')" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
+        <input type="text" v-model="form.message" :placeholder="t('your_message')" class="w-full p-2 border-b border-gray-400 text-gray-900 focus:ring-0 outline-none" required>
         <button type="submit" class="w-full bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 rounded-lg transition shadow-md mt-3">
-          Send 🚀
+          {{ t('send') }}
         </button>
       </form>
     </div>
@@ -29,6 +23,8 @@
 
 <script setup>
 import { reactive } from "vue";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
 
 const form = reactive({
   name: "",
