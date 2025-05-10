@@ -6,6 +6,7 @@ import UserMenuButton from "../components/UserMenuButton.vue";
 import {ref, watch} from "vue";
 import i18n from "../plugins/i18n.ts";
 import {useStaticDataStore} from "../stores/staticDataStore.ts";
+import CountryMenuButton from "../components/CountryMenuButton.vue";
 const { t } = useI18n()
 defineOptions({
   name: 'More'
@@ -48,10 +49,14 @@ watch(currentLang, (newLang) => {
 <template>
   <div class="flex xl:flex-row-reverse flex-wrap w-full bg-gray-200">
     <div class="w-full xl:w-1/5  p-4 text-center text-gray-400">
-      <div class="flex justify-between bg-pink-500 rounded-full h-[50px]  md:hidden">
+      <div class="flex justify-between bg-pink-500 rounded-full h-[50px]   md:hidden">
+
         <user-menu-button icon="" text=""/>
 
-        <img src="../assets/asl.png" alt="logo" >
+        <div class="relative pt-2">
+          <country-menu-button/>
+
+        </div>
 
         <div class="flex flex-row justify-between p-2">
           <button
@@ -70,6 +75,9 @@ watch(currentLang, (newLang) => {
             عربي
           </button>
         </div>
+
+
+
 
 
       </div>
