@@ -7,6 +7,8 @@ import {ref, watch} from "vue";
 import {useStaticDataStore} from "../stores/staticDataStore.ts";
 import i18n from "../plugins/i18n.ts";
 import CountryMenuButton from "./CountryMenuButton.vue";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 
 const staticData = useStaticDataStore();
 
@@ -55,13 +57,13 @@ watch(currentLang, (newLang) => {
 
         <div class="flex justify-center h-full md:h-[100px] md:w-full md:flex-col md:absolute md:top-1/2 md:-translate-y-1/2  xl:flex-row xl:h-full xl:justify-center">
           <IconButtonLink
-              :text="'Home'"
+              :text="t('home')"
               :icon="['fas', 'fa-home']"
               target="/home"
               :class="{ '!bg-pink-600': $route.path === '/home' }"
           />
           <IconButtonLink
-              :text="'Cars'"
+              :text="t('cars')"
               :icon="['fas', 'fa-car']"
               target="/cars"
               :class="{ '!bg-pink-600': $route.path.startsWith('/cars') }"
@@ -80,7 +82,7 @@ watch(currentLang, (newLang) => {
 
           </div>
           <IconButtonLink
-              :text="'Dealers'"
+              :text="t('dealers')"
               :icon="['fas', 'fa-heartbeat']"
               target="/dealers"
               :class="{ '!bg-pink-600': $route.path.startsWith('/dealers') }"
@@ -91,7 +93,7 @@ watch(currentLang, (newLang) => {
           >> Dealer Profile
           </div>
           <IconButtonLink
-              :text="'More'"
+              :text="t('more')"
               :icon="['fas', 'fa-ellipsis-h']"
               target="/more"
               :class="{ '!bg-pink-600': $route.path === '/more' }"

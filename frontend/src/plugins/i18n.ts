@@ -37,6 +37,14 @@ const messages = {
         car_safety_title: 'List safety features',
         enter_description: 'Enter a description...',
         choose_country: 'Choose country',
+        home: 'Home',
+        cars: 'Cars',
+        dealers: 'Dealers',
+        more: 'More',
+        login: 'Login',
+        logout: 'Logout',
+        admin: 'Admin',
+        profile: 'Profile',
 
 
     },
@@ -75,6 +83,15 @@ const messages = {
         car_safety_title: 'اختر مواصفات الحماية',
         enter_description: 'أدخل المزيد من المواصفات',
         choose_country: 'اختر الدولة',
+        home: 'الرئيسية',
+        cars: 'سيارات',
+        dealers: 'معارض',
+        more: 'المزيد',
+        login: 'تسجيل دخول',
+        logout: 'تسجيل خروج',
+        admin: 'ادارة',
+        profile: 'البروفايل',
+
 
 
     },

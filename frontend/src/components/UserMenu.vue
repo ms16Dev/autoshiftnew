@@ -2,6 +2,8 @@
 
 import IconButtonLink from './IconButtonLink.vue';
 import {useAuthStore} from "../stores/auth.ts";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
 
 const store =  useAuthStore();
 
@@ -61,14 +63,14 @@ const logout = () => {
     <ul class="divide-y divide-gray-200">
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Profile"
+            :text="t('profile')"
             icon="fas fa-user"
             :target="`/users/${store.userInfo?.name ?? ''}`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Admin"
+            :text="t('admin')"
             icon="fas fa-cogs"
             :target="`/admin`"
             class="text-pink-500" @click="$emit('close')"/>
@@ -93,23 +95,23 @@ const logout = () => {
     <ul class="divide-y divide-gray-200">
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Profile"
+            :text="t('profile')"
             icon="fas fa-user"
             :target="`/users/${store.userInfo?.name ?? ''}`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated" class="p-2">
         <IconButtonLink
-            text="Admin"
+            :text="t('admin')"
             icon="fas fa-cogs"
             :target="`/admin`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
       <li v-if="store.isAuthenticated">
-        <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
+        <IconButtonLink  class="text-pink-500" @click="logout" target="#" :text="t('logout')" icon="fas fa-sign-out"/>
       </li>
       <li v-if="!store.isAuthenticated">
-        <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" text="Login" icon="fas fa-sign-in"/>
+        <IconButtonLink  class="text-pink-500" @click="store.logout()" target="/auth/sign-in" :text="t('login')" icon="fas fa-sign-in"/>
       </li>
     </ul>
 
