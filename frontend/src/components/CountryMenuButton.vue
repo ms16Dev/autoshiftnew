@@ -9,7 +9,8 @@ const showMenu = ref(false);
 
 
 // Function to toggle the visibility of the menu
-const toggleMenu = () => {
+const toggleMenu = (event: MouseEvent) => {
+  event.stopPropagation() // Prevent event from bubbling to document
 
   showMenu.value = !showMenu.value;
 };
