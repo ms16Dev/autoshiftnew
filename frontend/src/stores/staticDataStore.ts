@@ -102,7 +102,7 @@ export const useStaticDataStore = defineStore('staticData', () => {
     }
 
     const getCurrentCountry = (): Country => {
-        return <Country>findItemById<Country>('countries', currentCountry.value)
+        return <Country>findItemById<Country>('countries', currentCountry.value) || 'Yemen'
     }
 
     const setCurrentCountry = (countryId: string) => {

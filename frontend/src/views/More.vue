@@ -49,32 +49,36 @@ watch(currentLang, (newLang) => {
 <template>
   <div class="flex xl:flex-row-reverse flex-wrap w-full bg-gray-200">
     <div class="w-full xl:w-1/5  p-4 text-center text-gray-400">
-      <div class="flex justify-between bg-pink-500 rounded-full h-[50px]   md:hidden">
+      <div class="grid grid-cols-3 gap-6 bg-pink-500 rounded-full h-[50px]   md:hidden">
+          <user-menu-button icon="" text=""/>
 
-        <user-menu-button icon="" text=""/>
 
-        <div class="relative pt-2">
-          <country-menu-button/>
+        <div>
+          <div class="relative pt-2">
+            <country-menu-button/>
 
+          </div>
         </div>
 
-        <div class="flex flex-row justify-between p-2">
-          <button
-              v-if="currentLang !== 'en'"
-              @click="() => { toggleLanguage('en'); $emit('close'); }"
-              class="rounded-full text-sm xl:text-sm bg-purple-400 hover:bg-purple-700 text-white w-full m-1 p-1"
-          >
-            English
-          </button>
 
-          <button
-              v-if="currentLang !== 'ar'"
-              @click="() => { toggleLanguage('ar'); $emit('close'); }"
-              class="rounded-full text-sm bg-purple-400 hover:bg-purple-700 text-white w-full m-1 p-1"
-          >
-            عربي
-          </button>
-        </div>
+          <div class="flex flex-row justify-between p-2">
+            <button
+                v-if="currentLang !== 'en'"
+                @click="() => { toggleLanguage('en'); $emit('close'); }"
+                class="rounded-full text-sm xl:text-sm bg-purple-400 hover:bg-purple-700 text-white w-full m-1 p-1"
+            >
+              English
+            </button>
+
+            <button
+                v-if="currentLang !== 'ar'"
+                @click="() => { toggleLanguage('ar'); $emit('close'); }"
+                class="rounded-full text-sm bg-purple-400 hover:bg-purple-700 text-white w-full m-1 p-1"
+            >
+              عربي
+            </button>
+          </div>
+
 
 
 
