@@ -128,6 +128,14 @@ export const useStaticDataStore = defineStore('staticData', () => {
         };
     }
 
+    const getMakeById = (id: string): DataItem => {
+        return findItemById<DataItem>('makes', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
     const getStatusById = (id: string): DataItem => {
         return findItemById<DataItem>('status', id) || {
             id: '',
@@ -138,6 +146,45 @@ export const useStaticDataStore = defineStore('staticData', () => {
 
     const getCurrencyById = (id: string): DataItem => {
         return findItemById<DataItem>('currencies', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
+    const getGearById = (id: string): DataItem => {
+        return findItemById<DataItem>('gears', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
+    const getFuelById = (id: string): DataItem => {
+        return findItemById<DataItem>('fuel', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+    const getEngineById = (id: string): DataItem => {
+        return findItemById<DataItem>('engines', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
+    const getShapeById = (id: string): DataItem => {
+        return findItemById<DataItem>('shapes', id) || {
+            id: '',
+            name_en: '?',
+            name_ar: '?'
+        };
+    }
+
+    const getColorById = (id: string): DataItem => {
+        return findItemById<DataItem>('colors', id) || {
             id: '',
             name_en: '?',
             name_ar: '?'
@@ -166,6 +213,12 @@ export const useStaticDataStore = defineStore('staticData', () => {
         getStatusById,
         getCurrencyById,
         setCurrentCountry,
+        getMakeById,
+        getGearById,
+        getFuelById,
+        getEngineById,
+        getColorById,
+        getShapeById,
         initialize
     }
 })

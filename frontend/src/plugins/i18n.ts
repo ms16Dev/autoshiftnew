@@ -62,6 +62,7 @@ const messages = {
         site_subtitle: 'Connecting buyers and sellers in the car market',
         quick_links: 'Quick Links',
         connect: 'Connect',
+        whatsapp: 'Whatsapp',
         facebook: 'Facebook',
         instagram: 'Instagram',
         twitter: 'Twitter',
@@ -74,6 +75,18 @@ const messages = {
         parts: "Parts ",
         services: "Services ",
         auctions: "Auctions ",
+        share_post: "Share post ",
+        like: "Like",
+        unlike: "Unlike",
+        specs: "Specifications",
+        km: "Km",
+        comments: "Comments",
+        no_comments_yet: "No comments yet. Be the first to comment!",
+        login_to_comment: "Login to comment",
+        dealer_profile: "> Dealer Profile",
+        car_details: "> Car Details",
+        add_car: "> Add Car",
+
 
 
 
@@ -143,6 +156,7 @@ const messages = {
         site_subtitle: 'سوق خاص بالسيارات فقط',
         quick_links: 'روابط سريعة',
         connect: 'تابعنا',
+        whatsapp: 'واتساب',
         facebook: 'فيسبوك',
         instagram: 'انستجرام',
         twitter: 'تويتر',
@@ -155,6 +169,21 @@ const messages = {
         parts: "قطع غيار ",
         services: "خدمات ",
         auctions: "مزادات ",
+        share_post: "شارك المنشور",
+        like: "اعجاب",
+        unlike: "الغاء الاعجاب",
+        specs: "المواصفات",
+        km: "كم",
+        comments: "التعليقات",
+        no_comments_yet: "لا يوجد تعليقت .. أضف تعليقك",
+        login_to_comment: "تسجيل دخول للاضافة تعليق",
+        dealer_profile: ">معلومات المعرض",
+        car_details: ">معلومات السيارة",
+        add_car: ">أضف سيارة",
+
+
+
+
 
 
 

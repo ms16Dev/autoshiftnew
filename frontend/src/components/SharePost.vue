@@ -1,14 +1,14 @@
 <template>
   <div class="flex justify-center items-center gap-2">
-    <span class="text-sm">Share post</span>
+    <span class="text-sm">{{t('share_post')}}</span>
     <button @click="shareOnWhatsApp" class="flex items-center gap-2 px-2 py-1 bg-green-600 text-white text-xs rounded-lg shadow-md hover:bg-green-400 transition">
-      <i class="fab fa-whatsapp"></i> Whatsapp
+      <i class="fab fa-whatsapp"></i> {{ t('whatsapp') }}
     </button>
     <button @click="shareOnFacebook" class="flex items-center gap-2 px-2 py-1 bg-blue-800 text-white text-xs rounded-lg shadow-md hover:bg-blue-500 transition">
-      <i class="fab fa-facebook-f"></i> Facebook
+      <i class="fab fa-facebook-f"></i> {{ t('facebook') }}
     </button>
     <button @click="shareOnTwitter" class="flex items-center gap-2 px-2 py-1 bg-black text-white text-xs rounded-lg shadow-md hover:bg-gray-500 transition">
-      <i class="fab fa-x"></i> Twitter
+      <i class="fab fa-x"></i> {{ t('twitter') }}
     </button>
 
   </div>
@@ -16,6 +16,9 @@
 
 <script setup>
 import { ref } from "vue";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n()
+
 
 const currentUrl = ref(window.location.href); // Get the current page URL
 

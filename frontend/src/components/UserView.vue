@@ -28,13 +28,13 @@ const props = defineProps({
     default: () => ({
       name: 'User Name',
       date: "2days ago",
-      avatar: '',
+      avatar:  '../assets/user.jpeg',
       id: null
     })
   }
 });
 
-const defaultAvatar = 'https://via.placeholder.com/150?text=User'; // Placeholder image
+const defaultAvatar = '../assets/user.jpeg'; // Placeholder image
 
 const goToProfile = () => {
   if (props.user.id) {

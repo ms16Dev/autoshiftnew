@@ -7,12 +7,23 @@ import IconButton from "../../components/IconButton.vue";
 import IconButtonH from "../../components/IconButtonH.vue";
 import ChipItemCheckedSm from "../../components/car/ChipItemCheckedSm.vue";
 import SharePost from "../../components/SharePost.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
 import {Car} from "../../types/Car.ts";
 import {useAuthStore} from "../../stores/auth.ts";
 import axios from "axios";
+import {useI18n} from "vue-i18n";
+import {config} from "../../../config.ts";
+import {useStaticDataStore} from "../../stores/staticDataStore.ts";
+import {formatRelativeDate} from "../../utils/dateUtils.ts";
+import {Dealer} from "../../types/Dealer.ts";
+const { t } = useI18n()
+const staticData = useStaticDataStore();
+
+const { locale } = useI18n();
+
+
 
 
 defineOptions({
@@ -27,6 +38,7 @@ const authStore = useAuthStore();
 
 // Car details state
 const car = ref<Car | null>(null);
+const dealer = ref<Dealer | null>(null);
 const loading = ref(true);
 
 // Get the car ID from the route params
@@ -38,12 +50,34 @@ const fetchCarDetails = async () => {
   try {
     const response = await apiService.get1(`cars/${carId}`);
     car.value = response.data;
+    // Once car is fetched and createdBy is available, fetch user
+    if (car.value?.createdBy) {
+      await fetchUserDetails(car.value.createdBy);
+    }
   } catch (error) {
     console.error('Error fetching car details:', error);
   } finally {
     loading.value = false;
   }
 };
+
+// Fetch user details from the backend
+const fetchUserDetails = async (createdBy: string) => {
+  try {
+    const response = await apiService.get1(`profiles/${createdBy}`);
+    dealer.value = response.data;
+  } catch (error) {
+    console.error('Error fetching dealer details:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+const formattedCreatedDate = computed(() =>
+    car.value
+        ? formatRelativeDate(car.value.lastModifiedDate, locale.value as 'en' | 'ar')
+        : ''
+);
 
 
 onMounted(() => {
@@ -55,7 +89,7 @@ const hasLiked = ref(false);
 
 const fetchLikeStatus = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/cars/${carId}/hasLiked`, {
+    const response = await axios.get(config.apiBaseUrl+`${carId}/hasLiked`, {
       params: { username: authStore.userInfo?.name },
     });
     hasLiked.value = response.data;
@@ -67,7 +101,7 @@ const fetchLikeStatus = async () => {
 
 const toggleLike = async () => {
   try {
-    const response = await axios.post(`/cars/${carId}/like`, {
+    const response = await axios.post(config.apiBaseUrl+`/cars/${carId}/like`, {
       username: authStore.userInfo?.name,
     });
 
@@ -95,22 +129,23 @@ const toggleLike = async () => {
 <!--        Headline-->
 
         <div class="flex flex-wrap text-3xl text-pink-500 font-extrabold col-span-2 text-center">
-          <span>{{ car?.make }} -</span>
-          <span>{{ car?.model }} -</span>
+          <span>{{ staticData.getLocalizedName(staticData.getMakeById(car?.make!!)) }}  -</span>
+          <span>{{ staticData.getLocalizedName(staticData.getClassById(car?.model!!)) }} -</span>
           <span>{{ car?.year }} -</span>
-          <span>{{ car?.origin }}</span>
+          <span>{{staticData.getLocalizedName(staticData.getStatusById(car?.origin!!)) }}</span>
         </div>
         <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center items-center gap-2">
-          <UserView :user="{ id: 1, name: 'John Doe', date: '3 weeks ago', avatar: 'https://spine-mena.com/wp-content/uploads/2023/03/Lexus-Logo-Vector-730x730-1.jpeg' }" />
+          <UserView :user="{ id: car?.createdBy, name: dealer?.name , date: formattedCreatedDate, avatar: config.apiBaseUrl+dealer?.avatarUrl }" />
           <div class="ltr:ml-auto rtl:mr-auto ">
             <SharePost />
           </div>
           <button
+              v-if="authStore.isAuthenticated"
               @click="toggleLike"
               class="flex-row px-3 text-white text-sm font-bold py-2 rounded-lg transition shadow-md bg-pink-500 hover:bg-pink-700"
           >
-            <i :class="hasLiked ? 'fas fa-thumbs-down text-white' : 'fas fa-thumbs-up text-white'"></i>
-            {{ hasLiked ? 'Unlike' : 'Like' }}
+            <i  :class="hasLiked ? 'fas fa-thumbs-down text-white' : 'fas fa-thumbs-up text-white'"></i>
+            {{ hasLiked ? t('unlike') : t('like') }}
           </button>
         </div>
 
@@ -121,16 +156,16 @@ const toggleLike = async () => {
              :imageList="car?.images || []"
         />
 
-        <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">Specifications</h1>
+        <h1 class="pt-12 pb-4 text-xl col-span-2 text-pink-500 font-extrabold">{{t('specs')}}</h1>
 
         <div class="flex justify-center items-center flex-wrap col-span-2 gap-3">
 
-          <IconButton icon="fa-gears" :label="formatNumber(Number(car?.mileage)) + 'Km' || ''" />
-          <IconButton icon="fa-gears" :label="car?.gear || ''" />
-          <IconButton icon="fa-gas-pump" :label="car?.type || ''" />
-          <IconButton icon="fa-bolt" :label="car?.engine || ''" />
-          <IconButton icon="fa-car" :label="car?.shape || ''" />
-          <IconButton icon="fa-brush" :label="car?.color || ''" />
+          <IconButton icon="fa-tachometer" :label="formatNumber(Number(car?.mileage)) + t('km') || ''" />
+          <IconButton icon="fa-gears" :label="staticData.getLocalizedName(staticData.getGearById(car?.gear!!)) || ''" />
+          <IconButton icon="fa-gas-pump" :label="staticData.getLocalizedName(staticData.getFuelById(car?.type!!)) || ''" />
+          <IconButton icon="fa-bolt" :label="staticData.getLocalizedName(staticData.getEngineById(car?.engine!!)) || ''" />
+          <IconButton icon="fa-car" :label="staticData.getLocalizedName(staticData.getShapeById(car?.shape!!)) || ''" />
+          <IconButton icon="fa-brush" :label="staticData.getLocalizedName(staticData.getColorById(car?.color!!)) || ''" />
         </div>
 
 
@@ -139,17 +174,17 @@ const toggleLike = async () => {
 
         <div class="flex flex-col items-start col-span-2">
 
-          <IconButtonH icon="fa-leaf" label="Luxury" />
-          <div v-for="(luxuryItem, index) in car?.luxury" :key="index" class="flex flex-wrap col-span-2 mb-8">
-            <ChipItemCheckedSm :option="luxuryItem" />
+          <IconButtonH icon="fa-leaf" :label="t('car_luxury')" />
+          <div  v-for="(luxuryItem, index) in car?.luxury" :key="index" class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm :option="staticData.getLocalizedName(staticData.findItemById('luxury',luxuryItem)!)" />
           </div>
 
-          <IconButtonH icon="fa-life-ring" label="Safety" />
+          <IconButtonH icon="fa-life-ring" :label="t('car_safety')" />
           <div v-for="(safetytem, index) in car?.safety" :key="index" class="flex flex-wrap col-span-2 mb-8">
-            <ChipItemCheckedSm :option="safetytem" />
+            <ChipItemCheckedSm :option="staticData.getLocalizedName(staticData.findItemById('safety',safetytem)!)" />
           </div>
 
-          <IconButtonH icon="fa-info" label="Notes" />
+          <IconButtonH icon="fa-info" :label="t('description')" />
           <p class="text-gray-400 text-lg mb-12">
             {{ car?.description }}
           </p>

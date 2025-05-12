@@ -2,6 +2,10 @@
 import {ref, onMounted} from "vue";
 import apiService from "../core/services/ApiService.ts";
 import {useAuthStore} from "../stores/auth.ts";
+import {formatRelativeDate} from "../utils/dateUtils.ts";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const { t } = useI18n()
 
 interface Comment {
   id: number;
@@ -11,6 +15,12 @@ interface Comment {
 }
 
 const authStore = useAuthStore();
+
+const formatCreatedDate = (comment: Comment | undefined): string => {
+  return comment
+      ? formatRelativeDate(comment.createdDate, locale.value as 'en' | 'ar')
+      : '';
+};
 
 
 // Props to get car ID from parent
@@ -51,22 +61,7 @@ const addComment = async () => {
   }
 };
 
-const formatCreatedDate = (dateString: string): string => {
-  const createdDate = new Date(dateString); // Convert input to Date object
-  const currentDate = new Date();
 
-  // Ensure it's a valid date
-  if (isNaN(createdDate.getTime())) {
-    return "Invalid date";
-  }
-
-  const differenceInTime = currentDate.getTime() - createdDate.getTime();
-  const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
-
-  if (differenceInDays <= 0) return "Today";
-  if (differenceInDays === 1) return "1 day ago";
-  return `${differenceInDays} days ago`;
-};
 
 // Fetch comments when the component mounts
 onMounted(fetchComments);
@@ -74,7 +69,7 @@ onMounted(fetchComments);
 
 <template>
   <div class="w-full bg-white p-4 shadow mt-4">
-    <h2 class="text-xl text-gray-600 text-start font-semibold mb-4">Comments</h2>
+    <h2 class="text-xl text-gray-600 text-start font-semibold mb-4">{{ t('comments') }}</h2>
 
     <!-- Loading Indicator -->
     <p v-if="loading" class="text-gray-500">Loading comments...</p>
@@ -83,12 +78,12 @@ onMounted(fetchComments);
     <div v-else-if="comments.length">
       <div v-for="comment in comments" :key="comment.id" class="border-b py-2 text-start">
         <p class="text-sm text-gray-600">
-          {{ comment.createdBy }} - <span class="text-xs">{{ formatCreatedDate(comment.createdDate) }}</span>
+          {{ comment.createdBy }} - <span class="text-xs">{{ formatCreatedDate(comment) }}</span>
         </p>
         <p class="text-gray-800">{{ comment.content }}</p>
       </div>
     </div>
-    <p v-else class="text-gray-500">No comments yet. Be the first to comment!</p>
+    <p v-else class="text-gray-500">{{ t('no_comments_yet') }}</p>
 
     <!-- Add Comment -->
     <div
@@ -113,7 +108,7 @@ onMounted(fetchComments);
         v-else
         class="mt-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition"
         to="/auth/sign-in">
-      Login to Add Comment
+      {{t('login_to_comment')}}
     </router-link>
   </div>
 </template>
