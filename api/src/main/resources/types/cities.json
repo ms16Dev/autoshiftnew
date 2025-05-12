@@ -1,170 +1,28 @@
 [
-  {
-    "id": "city_sanaa",
-    "name_en": "Sanaa",
-    "name_ar": "صنعاء",
-    "countryId": "country_yemen"
-  },
-  {
-    "id": "city_aden",
-    "name_en": "Aden",
-    "name_ar": "عدن",
-    "countryId": "country_yemen"
-  },
-  {
-    "id": "city_al_hodeidah",
-    "name_en": "Al Hodeidah",
-    "name_ar": "الحديدة",
-    "countryId": "country_yemen"
-  },
-  {
-    "id": "city_riyadh",
-    "name_en": "Riyadh",
-    "name_ar": "الرياض",
-    "countryId": "country_ksa"
-  },
-  {
-    "id": "city_jeddah",
-    "name_en": "Jeddah",
-    "name_ar": "جدة",
-    "countryId": "country_ksa"
-  },
-  {
-    "id": "city_cairo",
-    "name_en": "Cairo",
-    "name_ar": "القاهرة",
-    "countryId": "country_egypt"
-  },
-  {
-    "id": "city_alexandria",
-    "name_en": "Alexandria",
-    "name_ar": "الإسكندرية",
-    "countryId": "country_egypt"
-  },
-  {
-    "id": "city_baghdad",
-    "name_en": "Baghdad",
-    "name_ar": "بغداد",
-    "countryId": "country_iraq"
-  },
-  {
-    "id": "city_basra",
-    "name_en": "Basra",
-    "name_ar": "البصرة",
-    "countryId": "country_iraq"
-  },
-  {
-    "id": "city_dubai",
-    "name_en": "Dubai",
-    "name_ar": "دبي",
-    "countryId": "country_uae"
-  },
-  {
-    "id": "city_abu_dhabi",
-    "name_en": "Abu Dhabi",
-    "name_ar": "أبو ظبي",
-    "countryId": "country_uae"
-  },
-  {
-    "id": "city_doha",
-    "name_en": "Doha",
-    "name_ar": "الدوحة",
-    "countryId": "country_qatar"
-  },
-  {
-    "id": "city_muscat",
-    "name_en": "Muscat",
-    "name_ar": "مسقط",
-    "countryId": "country_oman"
-  },
-  {
-    "id": "city_kuwait_city",
-    "name_en": "Kuwait City",
-    "name_ar": "مدينة الكويت",
-    "countryId": "country_kuwait"
-  },
-  {
-    "id": "city_rabat",
-    "name_en": "Rabat",
-    "name_ar": "الرباط",
-    "countryId": "country_morocco"
-  },
-  {
-    "id": "city_casablanca",
-    "name_en": "Casablanca",
-    "name_ar": "الدار البيضاء",
-    "countryId": "country_morocco"
-  },
-  {
-    "id": "city_amman",
-    "name_en": "Amman",
-    "name_ar": "عمان",
-    "countryId": "country_jordan"
-  },
-  {
-    "id": "city_beirut",
-    "name_en": "Beirut",
-    "name_ar": "بيروت",
-    "countryId": "country_lebanon"
-  },
-  {
-    "id": "city_khartoum",
-    "name_en": "Khartoum",
-    "name_ar": "الخرطوم",
-    "countryId": "country_sudan"
-  },
-  {
-    "id": "city_algiers",
-    "name_en": "Algiers",
-    "name_ar": "الجزائر",
-    "countryId": "country_algeria"
-  },
-  {
-    "id": "city_tunis",
-    "name_en": "Tunis",
-    "name_ar": "تونس",
-    "countryId": "country_tunisia"
-  },
-  {
-    "id": "city_manama",
-    "name_en": "Manama",
-    "name_ar": "المنامة",
-    "countryId": "country_bahrain"
-  },
-  {
-    "id": "city_tripoli_libya",
-    "name_en": "Tripoli",
-    "name_ar": "طرابلس",
-    "countryId": "country_libya"
-  },
-  {
-    "id": "city_gaza",
-    "name_en": "Gaza",
-    "name_ar": "غزة",
-    "countryId": "country_palestine"
-  },
-  {
-    "id": "city_nouakchott",
-    "name_en": "Nouakchott",
-    "name_ar": "نواكشوط",
-    "countryId": "country_mauritania"
-  },
-  {
-    "id": "city_moroni",
-    "name_en": "Moroni",
-    "name_ar": "موروني",
-    "countryId": "country_comoros"
-  },
-  {
-    "id": "city_mogadishu",
-    "name_en": "Mogadishu",
-    "name_ar": "مقديشو",
-    "countryId": "country_somalia"
-  },
-  {
-    "id": "city_djibouti",
-    "name_en": "Djibouti",
-    "name_ar": "جيبوتي",
-    "countryId": "country_djibouti"
-  }
+  { "id": "city_sanaa", "name_en": "Sanaa", "name_ar": "صنعاء" },
+  { "id": "city_aden", "name_en": "Aden", "name_ar": "عدن" },
+  { "id": "city_taiz", "name_en": "Taiz", "name_ar": "تعز" },
+  { "id": "city_hodeidah", "name_en": "Hodeidah", "name_ar": "الحديدة" },
+  { "id": "city_mukalla", "name_en": "Mukalla", "name_ar": "المكلا" },
+  { "id": "city_riyadh", "name_en": "Riyadh", "name_ar": "الرياض" },
+  { "id": "city_jeddah", "name_en": "Jeddah", "name_ar": "جدة" },
+  { "id": "city_dammam", "name_en": "Dammam", "name_ar": "الدمام" },
+  { "id": "city_mecca", "name_en": "Mecca", "name_ar": "مكة" },
+  { "id": "city_madinah", "name_en": "Madinah", "name_ar": "المدينة" },
+  { "id": "city_cairo", "name_en": "Cairo", "name_ar": "القاهرة" },
+  { "id": "city_alexandria", "name_en": "Alexandria", "name_ar": "الإسكندرية" },
+  { "id": "city_giza", "name_en": "Giza", "name_ar": "الجيزة" },
+  { "id": "city_mansoura", "name_en": "Mansoura", "name_ar": "المنصورة" },
+  { "id": "city_tanta", "name_en": "Tanta", "name_ar": "طنطا" },
+  { "id": "city_baghdad", "name_en": "Baghdad", "name_ar": "بغداد" },
+  { "id": "city_basra", "name_en": "Basra", "name_ar": "البصرة" },
+  { "id": "city_erbil", "name_en": "Erbil", "name_ar": "أربيل" },
+  { "id": "city_mosul", "name_en": "Mosul", "name_ar": "الموصل" },
+  { "id": "city_najaf", "name_en": "Najaf", "name_ar": "النجف" },
+  { "id": "city_muscat", "name_en": "Muscat", "name_ar": "مسقط" },
+  { "id": "city_salamat", "name_en": "Salamat", "name_ar": "سلامات" },
+  { "id": "city_suhar", "name_en": "Suhar", "name_ar": "صحار" },
+  { "id": "city_amman", "name_en": "Amman", "name_ar": "عمان" },
+  { "id": "city_irbid", "name_en": "Irbid", "name_ar": "إربد" },
+  { "id": "city_zarqa", "name_en": "Zarqa", "name_ar": "الزرقاء" }
 ]

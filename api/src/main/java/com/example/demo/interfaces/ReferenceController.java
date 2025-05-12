@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.Currency;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -792,7 +791,6 @@ public class ReferenceController {
 
     @PostMapping("/countries/{id}/cities")
     public Mono<ResponseEntity<String>> createCityOf(@PathVariable String id, @RequestBody @Valid City city) {
-        city.setCountryId(id); // denormalized ref
 
         return mongoTemplate.insert(city, "cities")
                 .flatMap(savedCity ->
@@ -857,7 +855,6 @@ public class ReferenceController {
 
     @PostMapping("/countries/{id}/currencies")
     public Mono<ResponseEntity<String>> createCurrencyOf(@PathVariable String id, @RequestBody @Valid Currency currency) {
-        currency.setCountryId(id); // denormalized ref
 
         // First check if currency with the same ID already exists
         return mongoTemplate.findOne(Query.query(Criteria.where("_id").is(currency.getId())), Currency.class)
@@ -1173,7 +1170,6 @@ public class ReferenceController {
         private String name_en;
         private String name_ar;
 
-        private String countryId;
     }
 
 
@@ -1190,8 +1186,6 @@ public class ReferenceController {
         private String id;
         private String name_en;
         private String name_ar;
-
-        private String countryId;
 
     }
 
