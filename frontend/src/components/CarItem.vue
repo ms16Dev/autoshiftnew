@@ -3,6 +3,9 @@ import {computed, defineProps, withDefaults} from "vue";
 import type { CarListDto } from '../core/models/CarListDto';
 import {useStaticDataStore} from "../stores/staticDataStore.ts";
 import {config} from "../../config.ts";
+import {formatRelativeDate} from "../utils/dateUtils.ts";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
 
 const staticData = useStaticDataStore();
 
@@ -30,22 +33,13 @@ const props = withDefaults(defineProps<{ car?: CarListDto }>(), {
   }),
 });
 
-const formattedCreatedDate = computed(() => {
-  const createdDate = new Date(props.car.createdDate);  // Ensure this is a Date object
-  const currentDate = new Date();
 
-  // Make sure both are valid Date objects
-  if (isNaN(createdDate.getTime())) {
-    return "Invalid date";  // Handle invalid date case
-  }
+const formattedCreatedDate = computed(() =>
+    props.car
+        ? formatRelativeDate(props.car.createdDate, locale.value as 'en' | 'ar')
+        : ''
+);
 
-  const differenceInTime = currentDate.getTime() - createdDate.getTime();  // Use getTime() to get timestamps
-  const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)); // Convert to days
-
-  if (differenceInDays <= 0) return "Today";
-  else if (differenceInDays === 1) return "1 day ago";
-  else return `${differenceInDays} days ago`;
-});
 </script>
 
 
