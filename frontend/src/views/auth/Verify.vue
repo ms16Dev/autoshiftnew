@@ -2,8 +2,10 @@
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import { config } from "../../../config.ts"
+import { config } from '../../../config.ts'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 
@@ -15,7 +17,7 @@ onMounted(async () => {
   const token = route.query.token as string
 
   if (!token) {
-    errorMessage.value = 'Missing token'
+    errorMessage.value = t('missing_token')
     isLoading.value = false
     return
   }
@@ -26,11 +28,10 @@ onMounted(async () => {
     })
     isVerified.value = true
   } catch (error: any) {
-    // Extract backend error message
     errorMessage.value =
         error.response?.data?.message ||
         error.response?.data?.error ||
-        'Verification failed'
+        t('verification_failed')
   } finally {
     isLoading.value = false
   }
@@ -42,18 +43,18 @@ onMounted(async () => {
     <div class="absolute inset-px shadow-lg rounded-lg bg-white dark:bg-gray-900 group-hover:bg-pink-50"></div>
 
     <div class="relative flex flex-col p-6 space-y-6 overflow-hidden rounded-lg">
-      <h2 class="text-xl font-bold text-center text-pink-700">Email Verification</h2>
+      <h2 class="text-xl font-bold text-center text-pink-700">{{ t('email_verification') }}</h2>
 
       <!-- Default loading state -->
       <div v-if="isLoading">
-        <p class="text-center text-gray-500">Verifying your email...</p>
+        <p class="text-center text-gray-500">{{ t('verifying_email') }}</p>
       </div>
 
       <!-- Success -->
       <div v-else-if="isVerified">
-        <p class="text-center text-green-600">Verification successful! You can now log in.</p>
+        <p class="text-center text-green-600">{{ t('verification_successful') }}</p>
         <div class="text-center">
-          <router-link to="/sign-in" class="text-pink-500">Go to Login</router-link>
+          <router-link to="/sign-in" class="text-pink-500">{{ t('go_to_login') }}</router-link>
         </div>
       </div>
 
@@ -65,7 +66,7 @@ onMounted(async () => {
               to="/resend-verification"
               class="w-full inline-block p-3 mt-4 font-bold text-white bg-pink-700 rounded-lg hover:bg-pink-600"
           >
-            Resend Verification Email
+            {{ t('resend_verification_email') }}
           </router-link>
         </div>
       </div>

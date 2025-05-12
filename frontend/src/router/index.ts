@@ -13,7 +13,6 @@ import ForgotPassword from "../views/auth/ForgotPassword.vue";
 import VerifyEmail from "../views/auth/VerifyEmail.vue";
 import Verify from "../views/auth/Verify.vue";
 import ResetPassword from "../views/auth/ResetPassword.vue";
-import OtpVerify from "../views/auth/OtpVerify.vue";
 import ProfileOverviewVue from '../views/profile/ProfileOverview.vue';
 import NotFound from "../views/NotFound.vue";
 import Admin from "../views/admin/Admin.vue";
@@ -95,7 +94,6 @@ const routes: Array<RouteRecordRaw> = [
             { path: 'verify-email', name: 'Verify Email', component: VerifyEmail },
             { path: 'verify', name: 'Verify', component: Verify},
             { path: 'reset-password', name: 'Reset Password', component: ResetPassword },
-            { path: 'otp-verify', name: 'OTP Verify', component: OtpVerify },
 
         ]
     },

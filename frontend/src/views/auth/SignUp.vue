@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref, computed } from "vue";
 import router from "../../router";
-import {useAuthStore} from "../../stores/auth.ts";
+import { useAuthStore } from "../../stores/auth.ts";
 import forge from "node-forge";
-import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-
-defineOptions({
-  username: "Sign-Up",
-});
+const { t } = useI18n();
 
 const authStore = useAuthStore();
 
-// Reactive form inputs
 const username = ref("");
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const errorMessage = ref("");
-
 const usernameError = ref("");
-
+const passwordError = ref("");
 
 const isValid = computed(() => {
   return (
@@ -32,85 +27,51 @@ const isValid = computed(() => {
   );
 });
 
-// Validate username on input
 const validateUsername = () => {
-  // Convert username to lowercase
   username.value = username.value.toLowerCase();
-
-  // Regex to check if it contains only lowercase letters, numbers, or underscores,
-  // doesn't start with a number or an underscore, and is at least 6 characters long
   const regex = /^[a-z][a-z0-9_]{5,}$/;
 
   if (!regex.test(username.value)) {
-    usernameError.value = "Username must be at least 6 characters, start with a letter, and can only contain lowercase letters, numbers, and underscores.";
+    usernameError.value = t('username_rules');
   } else {
     usernameError.value = "";
   }
 };
 
-const passwordError = ref("");
-
-// Validate password on input
 const validatePassword = () => {
-  // Regex to check that the password is at least 6 characters long and doesn't contain spaces
   const regex = /^(?!.*\s).{6,}$/;
 
   if (!regex.test(password.value)) {
-    passwordError.value = "Password must be at least 6 characters and cannot contain spaces.";
+    passwordError.value = t('password_rules');
   } else {
     passwordError.value = "";
   }
 };
 
-
-// Function to encrypt the password using RSA
 async function encryptPassword(password: string): Promise<string> {
   try {
-    const base64Key = await authStore.fetchPublicKey(); // Get the public key from the store
-    console.log('Base64 Public Key:', base64Key);  // Debugging line
-
-    if (!base64Key) {
-      throw new Error("Public key is not available");
-    }
-
-    // Decode the base64 string into bytes using the correct method
-    const keyBytes = forge.util.decode64(base64Key);  // decode64 will give us a binary string
-
-    if (!keyBytes || keyBytes.length === 0) {
-      throw new Error("Invalid Base64 key data");
-    }
-
-    // Convert the decoded bytes into ASN.1 format for RSA
-    const publicKey = forge.pki.publicKeyFromAsn1(forge.asn1.fromDer(keyBytes)); // Create public key from the decoded bytes
-
-    // Encrypt the password using RSA with OAEP padding
-    const encryptedPassword = publicKey.encrypt(password, 'RSA-OAEP');  // Use RSA-OAEP padding for encryption
-
-    // Return the encrypted password as Base64
+    const base64Key = await authStore.fetchPublicKey();
+    const keyBytes = forge.util.decode64(base64Key);
+    const publicKey = forge.pki.publicKeyFromAsn1(forge.asn1.fromDer(keyBytes));
+    const encryptedPassword = publicKey.encrypt(password, 'RSA-OAEP');
     return forge.util.encode64(encryptedPassword);
   } catch (error) {
     console.error("Error during password encryption:", error);
-    throw error;  // Rethrow the error for the caller to handle
+    throw error;
   }
 }
 
-
 async function submitForm() {
-  // Ensure latest validation is run
   validateUsername();
   validatePassword();
 
-  if (!isValid.value) {
-    return; // Stop form submission if validation fails
-  }
+  if (!isValid.value) return;
 
   loading.value = true;
   errorMessage.value = "";
 
   try {
     const encryptedPass = await encryptPassword(password.value);
-    console.debug(encryptedPass);
-
     await authStore.register({
       username: username.value,
       email: email.value,
@@ -123,7 +84,8 @@ async function submitForm() {
     const responseMessage =
         axiosError.response?.data?.error ||
         axiosError.response?.data?.message ||
-        "Signup failed. Please try again.";
+        t('signup.failed');
+
     errorMessage.value = responseMessage;
   } finally {
     loading.value = false;
@@ -134,62 +96,62 @@ async function submitForm() {
 <template>
   <div class="relative group px-6 max-w-xl mx-auto">
     <form @submit.prevent="submitForm" class="relative flex flex-col p-6 space-y-6 overflow-hidden rounded-lg bg-white shadow-lg">
-      <h1 class="text-extrabold text-center text-3xl text-pink-900">Sign Up</h1>
+      <h1 class="text-extrabold text-center text-3xl text-pink-900">{{ t("sign_up") }}</h1>
 
-      <!-- Error Message -->
       <p v-if="errorMessage" class="text-red-500 text-center font-bold">{{ errorMessage }}</p>
 
       <div class="flex flex-col">
-        <label for="username" class="font-bold text-pink-700">Username</label>
+        <label for="username" class="font-bold text-pink-700">{{ t("username") }}</label>
         <input
             v-model="username"
             type="text"
             id="username"
             required
             class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700 invalid:border-red-500"
-            placeholder="Your Username"
+            :placeholder="t('username_placeholder')"
             @input="validateUsername"
         />
-        <p v-if="usernameError" class="text-red-500 text-sm mt-1">{{ usernameError }}</p>
+        <p v-if="usernameError" class="text-red-500 text-sm mt-1">{{ t("username_error") }}</p>
       </div>
 
-      <!-- Email Input -->
       <div class="flex flex-col">
-        <label for="email" class="font-bold text-pink-700">Email</label>
-        <input v-model="email" type="email" id="email" required
-               class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700 invalid:border-red-500"
-               placeholder="Your Email" />
+        <label for="email" class="font-bold text-pink-700">{{ t("email") }}</label>
+        <input
+            v-model="email"
+            type="email"
+            id="email"
+            required
+            class="form-input w-full px-3 py-2 rounded-lg border-2 border-pink-300 focus:border-pink-700 invalid:border-red-500"
+            :placeholder="t('email_placeholder')"
+        />
       </div>
 
-      <!-- Password Input -->
       <div class="flex flex-col">
-        <label for="password" class="font-bold text-pink-700">Password</label>
+        <label for="password" class="font-bold text-pink-700">{{ t("password") }}</label>
         <input
             v-model="password"
             type="password"
             id="password"
             required
             class="w-full px-3 py-2 rounded-lg border-2 border-pink-700 focus:border-pink-700 invalid:border-red-500"
-            placeholder="Your Password"
+            :placeholder="t('password_placeholder')"
             @input="validatePassword"
         />
-        <p v-if="passwordError" class="text-red-500 text-sm mt-1">{{ passwordError }}</p>
+        <p v-if="passwordError" class="text-red-500 text-sm mt-1">{{ t("password_error") }}</p>
       </div>
 
-      <!-- Submit Button -->
       <button
           type="submit"
           :disabled="loading || !isValid"
           class="w-full py-3 font-bold text-white bg-pink-700 rounded-lg hover:bg-pink-600"
       >
-        {{ loading ? "Registering..." : "Register" }}
+        {{ loading ? t("registering") : t("register") }}
       </button>
     </form>
 
-    <!-- Sign-In Section -->
     <div class="text-center my-3">
-      <p class="text-white">Already have an account?</p>
-      <router-link to="/auth/sign-in" class="mt-2 text-pink-700 font-bold hover:underline">Sign In</router-link>
+      <p class="text-white">{{ t("already_have_account") }}</p>
+      <router-link to="/auth/sign-in" class="mt-2 text-pink-700 font-bold hover:underline">{{ t("sign_in") }}</router-link>
     </div>
   </div>
 </template>
