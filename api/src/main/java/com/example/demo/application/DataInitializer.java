@@ -84,6 +84,8 @@ class DataInitializer {
                                 .roles(roles)
                                 .username(username)
                                 .password(passwordEncoder.encode("password"))
+                                .active(true)
+                                .verified(true)
                                 .email(username + "@example.com")
                                 .build();
                             return this.users.create(user);
