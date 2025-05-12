@@ -124,6 +124,57 @@ const messages = {
         confirm_password: "Confirm Password",
         reset_password_button: "Reset Password",
 
+        // Hero Section
+        looking_for_car: "Looking for a new car?",
+        right_place_header: "You're at the right place for best car deals!",
+        company_name: "AutoShift Car Market",
+        get_started: "Get Started",
+        car_image_alt: "Featured car",
+
+        // Features Section
+        cars_only_zone: "Cars Only Zone!",
+        find_best_deals: "Find best car deals",
+        find_best_deals_desc: "Offering a wide range of cars from various vendors. Find the perfect car that fits your needs and budget.",
+        request_specific_car: "Request a specific car",
+        request_specific_car_desc: "If you can't find the car you are looking for, you can request it and we will find the best deal for you.",
+
+        // Dealers Section
+        dealers_title: "Dealers",
+        get_noticed: "Get Noticed",
+        build_profile: "Build your profile",
+        profile_desc: "Create a profile to showcase your cars and services. Get noticed by consumers looking for cars.",
+        get_reached: "Get Reached",
+        no_chase_customers: "No need to chase customers",
+        reached_desc: "Consumers will reach out to you directly. No need to chase customers. Just focus on showcasing your cars.",
+
+        // Pricing Section
+        more_to_come: "More to Come",
+        rentals_title: "Rentals",
+        custom_rentals: "Custom rental requests",
+        notify_providers: "Notify service providers",
+        make_deal: "Make a deal",
+        parts_yard: "Parts Yard",
+        parts_listings: "Parts listings",
+        upgrades_offerings: "Upgrades offerings",
+        parts_requests: "Parts requests",
+        auctions_title: "Auctions",
+        boost_value: "Boost the value of your rare car",
+        unlimited_bids: "Get unlimited bids",
+        fare_deal: "Close a fare deal",
+
+        // CTA Section
+        get_started_now: "Get started now!",
+
+
+        logo_alt: "AutoShift Logo",
+        menu: "Menu",
+        english: "English",
+        arabic: "Arabic"
+
+
+
+
+
 
 
 
@@ -259,6 +310,52 @@ const messages = {
         confirm_password: "تأكيد كلمة المرور",
         reset_password_button: "إعادة تعيين كلمة المرور",
 
+        // Hero Section
+        looking_for_car: "تبحث عن سيارة جديدة؟",
+        right_place_header: "أنت في المكان الصحيح لأفضل صفقات السيارات!",
+        company_name: "سوق أوتو شيفت للسيارات",
+        get_started: "ابدأ الآن",
+        car_image_alt: "سيارة مميزة",
+
+        // Features Section
+        cars_only_zone: "منطقة السيارات فقط!",
+        find_best_deals: "ابحث عن أفضل صفقات السيارات",
+        find_best_deals_desc: "نقدم مجموعة واسعة من السيارات من مختلف البائعين. ابحث عن السيارة المثالية التي تناسب احتياجاتك وميزانيتك.",
+        request_specific_car: "اطلب سيارة محددة",
+        request_specific_car_desc: "إذا لم تجد السيارة التي تبحث عنها، يمكنك طلبها وسنجد لك أفضل صفقة.",
+
+        // Dealers Section
+        dealers_title: "التجار",
+        get_noticed: "احصل على الانتباه",
+        build_profile: "قم ببناء ملفك الشخصي",
+        profile_desc: "قم بإنشاء ملف تعريف لعرض سياراتك وخدماتك. احصل على ملاحظة من المستهلكين الذين يبحثون عن السيارات.",
+        get_reached: "احصل على التواصل",
+        no_chase_customers: "لا حاجة لمطاردة العملاء",
+        reached_desc: "سيتواصل المستهلكون معك مباشرة. لا حاجة لمطاردة العملاء. ركز فقط على عرض سياراتك.",
+
+        // Pricing Section
+        more_to_come: "المزيد قادم",
+        rentals_title: "التأجير",
+        custom_rentals: "طلبات تأجير مخصصة",
+        notify_providers: "إخطار مقدمي الخدمة",
+        make_deal: "إبرام صفقة",
+        parts_yard: "ساحة قطع الغيار",
+        parts_listings: "قوائم قطع الغيار",
+        upgrades_offerings: "عروض الترقيات",
+        parts_requests: "طلبات قطع الغيار",
+        auctions_title: "المزادات",
+        boost_value: "عزز قيمة سيارتك النادرة",
+        unlimited_bids: "احصل على عروض غير محدودة",
+        fare_deal: "أغلق صفقة عادلة",
+
+        // CTA Section
+        get_started_now: "ابدأ الآن!",
+
+
+        logo_alt: "شعار أوتو شيفت",
+        menu: "القائمة",
+        english: "English",
+        arabic: "العربية"
 
 
 
