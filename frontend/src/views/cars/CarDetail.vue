@@ -10,7 +10,6 @@ import SharePost from "../../components/SharePost.vue";
 import {computed, onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
-import {Car} from "../../types/Car.ts";
 import {useAuthStore} from "../../stores/auth.ts";
 import axios from "axios";
 import {useI18n} from "vue-i18n";
@@ -18,6 +17,7 @@ import {config} from "../../../config.ts";
 import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 import {formatRelativeDate} from "../../utils/dateUtils.ts";
 import {Dealer} from "../../types/Dealer.ts";
+import {CarDetailDto} from "../../core/models/CarDetailDto.ts";
 const { t } = useI18n()
 const staticData = useStaticDataStore();
 
@@ -37,7 +37,7 @@ const formatNumber = (number: number): string => {
 const authStore = useAuthStore();
 
 // Car details state
-const car = ref<Car | null>(null);
+const car = ref<CarDetailDto | null>(null);
 const dealer = ref<Dealer | null>(null);
 const loading = ref(true);
 
@@ -82,22 +82,15 @@ const formattedCreatedDate = computed(() =>
 
 onMounted(() => {
   fetchCarDetails();
-  fetchLikeStatus();
+
 });
 
-const hasLiked = ref(false);
+const hasLiked = computed(() => {
+  return car.value?.likedBy?.includes(authStore.userInfo?.name ?? '') ?? false;
+});
 
-const fetchLikeStatus = async () => {
-  try {
-    const response = await axios.get(config.apiBaseUrl+`${carId}/hasLiked`, {
-      params: { username: authStore.userInfo?.name },
-    });
-    hasLiked.value = response.data;
-    console.log("hasLiked", response.data);
-  } catch (error) {
-    console.error("Error fetching like status:", error);
-  }
-};
+
+
 
 const toggleLike = async () => {
   try {
@@ -180,8 +173,8 @@ const toggleLike = async () => {
           </div>
 
           <IconButtonH icon="fa-life-ring" :label="t('car_safety')" />
-          <div v-for="(safetytem, index) in car?.safety" :key="index" class="flex flex-wrap col-span-2 mb-8">
-            <ChipItemCheckedSm :option="staticData.getLocalizedName(staticData.findItemById('safety',safetytem)!)" />
+          <div v-for="(safetyItem, index) in car?.safety" :key="index" class="flex flex-wrap col-span-2 mb-8">
+            <ChipItemCheckedSm :option="staticData.getLocalizedName(staticData.findItemById('safety',safetyItem)!)" />
           </div>
 
           <IconButtonH icon="fa-info" :label="t('description')" />
@@ -207,7 +200,7 @@ const toggleLike = async () => {
 
     </div>
 
-    <div class="w-full md:w-1/5  p-4 text-center text-gray-700 fixed sticky">
+    <div class="w-full md:w-1/5  p-4 text-center text-gray-700 sticky">
       <AdItem/>
 
     </div>

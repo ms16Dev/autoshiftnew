@@ -167,7 +167,6 @@ const saveCar = async () => {
       description: state.description,
       images: imageUrls,
       createdBy: authStore.userInfo?.name!!,
-      lastModifiedDate: 0,
     };
 
 

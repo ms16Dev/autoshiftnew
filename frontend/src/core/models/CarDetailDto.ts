@@ -1,5 +1,5 @@
 // Define CarListDto interface
-export interface Car {
+export interface CarDetailDto {
     coverImage: string;
     price: number;
     currency: string;
@@ -23,4 +23,12 @@ export interface Car {
     description: string;
     images: string[];
     createdBy:string;
+    createdDate: number;
+    lastModifiedDate: number;
+    likeCount: number;
+    likedBy: string[];
+    seenCount: number;
+    shareCount: number;
+    Id: string;
 }
+
