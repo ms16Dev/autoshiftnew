@@ -69,16 +69,16 @@ watch(currentLang, (newLang) => {
               :class="{ '!bg-pink-600': $route.path.startsWith('/cars') }"
 
           />
-          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:-translate-x-1/2 rtl:translate-x-14"
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extra ltr:-translate-x-1/2 rtl:translate-x-14"
                :class="{ 'xl:hidden': !$route.path.match(/^\/cars\/[\w-]+$/) || $route.path === '/cars/add-car'}"
 
-          >> Car Details
+          >{{t('car_details')}}
 
           </div>
-          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:-translate-x-16 rtl:translate-x-16"
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-bold ltr:-translate-x-16 rtl:translate-x-16"
                :class="{ 'xl:hidden': $route.path !== '/cars/add-car' }"
 
-          >> Add Car
+          >{{t('add_car')}}
 
           </div>
           <IconButtonLink
@@ -88,9 +88,9 @@ watch(currentLang, (newLang) => {
               :class="{ '!bg-pink-600': $route.path.startsWith('/dealers') }"
 
           />
-          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-extrabold ltr:translate-x-1/2 rtl:-translate-x-1/2"
+          <div class="hidden xl:block absolute translate-y-12 text-pink-500 font-bold ltr:translate-x-1/2 rtl:-translate-x-1/2"
                :class="{ 'xl:hidden': !$route.path.match(/^\/dealers\/[\w-]+$/) }"
-          >> Dealer Profile
+          >{{t('dealer_profile')}}
           </div>
           <IconButtonLink
               :text="t('more')"
