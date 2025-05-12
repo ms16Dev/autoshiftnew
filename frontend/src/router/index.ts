@@ -71,7 +71,6 @@ const routes: Array<RouteRecordRaw> = [
                         path: ":id",
                         name: 'profile',
                         component: ProfileOverviewVue,
-                        meta: { requiresAuth: true },
                     },
                 ],
             },
