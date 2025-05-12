@@ -63,6 +63,8 @@ public class SecurityConfig {
                                 .pathMatchers(HttpMethod.GET, "/profiles/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/cars/**").hasRole("ADMIN")
                                 .pathMatchers(HttpMethod.DELETE, "/profiles/**").hasRole("ADMIN")
+                                .pathMatchers(HttpMethod.POST, "/cars/**").permitAll()
+
                                 .pathMatchers(HttpMethod.GET, "/images/**").permitAll()
                                 .pathMatchers("/posts/**").authenticated()
                                 .pathMatchers("/cars/**").authenticated()

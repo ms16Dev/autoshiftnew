@@ -9,7 +9,9 @@ import com.example.demo.interfaces.dto.CarSummary;
 import com.example.demo.interfaces.dto.CommentForm;
 import com.example.demo.interfaces.dto.PaginatedResult;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -111,6 +113,19 @@ public class CarController {
     public Mono<Boolean> hasLikedCar(@PathVariable String carId, @RequestParam String username) {
         return cars.hasLikedCar(carId, username);
     }
+
+    @PostMapping("/{carId}/like")
+    public Mono<Boolean> likedCar(@PathVariable String carId, @RequestBody LikeRequest likeRequest) {
+        return cars.likeCar(carId, likeRequest.getUsername());
+    }
+
+    @Setter
+    @Getter
+    public static class LikeRequest {
+        private String username;
+
+    }
+
 
 
 }
