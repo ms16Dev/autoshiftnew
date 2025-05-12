@@ -23,4 +23,5 @@ export interface Car {
     description: string;
     images: string[];
     createdBy:string;
+    lastModifiedDate: number;
 }

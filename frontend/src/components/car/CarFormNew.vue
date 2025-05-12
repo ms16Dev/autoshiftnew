@@ -148,7 +148,7 @@ const saveCar = async () => {
       price: state.price,
       currency: state.currency,
       origin: state.origin.id,
-      make: make.value?.name_en!!,
+      make: make.value?.id!!,
       makeUrl: make.value?.url!!,
       model: state.class.id,
       year: state.year,
@@ -166,7 +166,8 @@ const saveCar = async () => {
       stars: 0,
       description: state.description,
       images: imageUrls,
-      createdBy: authStore.userInfo?.name!!
+      createdBy: authStore.userInfo?.name!!,
+      lastModifiedDate: 0,
     };
 
 
@@ -209,7 +210,7 @@ const saveCar = async () => {
 
 
         <div class="flex flex-col">
-          <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('pricePopUp')">
+          <button class="flex-box bg-pink-700 text-white font-bold text-xl px-2 h-[30px]" @click="togglePopUp('pricePopUp')">
             {{ staticData.getLocalizedName(staticData.getCurrencyById(state.currency)) }} {{state.price > 0 ? formatNumber(state.price) : t('car_price')}}</button>
           <button class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px]" @click="togglePopUp('originPopUp')">{{ staticData.getLocalizedName(state.origin) || t('car_status') }}</button>
         </div>
@@ -217,7 +218,7 @@ const saveCar = async () => {
 
 
         <div class="flex flex-col">
-        <button class="flex-box bg-pink-700 text-white font-extrabold text-xl px-2 h-[30px]" @click="togglePopUp('classPopUp')">{{ staticData.getLocalizedName(state.class) || t('car_class') }}</button>
+        <button class="flex-box bg-pink-700 text-white font-bold text-xl px-2 h-[30px]" @click="togglePopUp('classPopUp')">{{ staticData.getLocalizedName(state.class) || t('car_class') }}</button>
         <button @click="togglePopUp('yearPopUp')" class="w-fit bg-pink-400 text-white font-bold px-2 h-[30px] self-end">{{state.year > 0 ? state.year : t('car_year')}}</button>
         </div>
 
