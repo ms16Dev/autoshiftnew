@@ -39,7 +39,9 @@ public class UserService {
                     User newUser = new User();
                     newUser.setEmail(request.getEmail());
                     newUser.setUsername(request.getUsername());
-                    // Set other properties here (e.g., hashed password, etc.)
+                    newUser.setPassword(passwordEncoder.encode(request.getPassword()));
+                    newUser.setRoles(List.of("ROLE_USER"));
+                    newUser.setActive(true);
 
                     return userRepository.save(newUser)
                             .flatMap(user -> profileService.createEmptyProfile(user.getUsername()).thenReturn(user));
