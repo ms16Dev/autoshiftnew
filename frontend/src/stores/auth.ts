@@ -46,15 +46,6 @@ export const useAuthStore = defineStore(
                     withCredentials: true,
                 });
 
-                const headers = response.headers;
-                const authToken = headers["x-auth-token"] || headers["X-Auth-Token"] || headers["X_AUTH_TOKEN"];
-
-                if (authToken) {
-                    localStorage.setItem("X-AUTH-TOKEN", authToken);
-                    console.log("Token stored:", authToken);
-                } else {
-                    console.warn("No auth token received!");
-                }
 
                 setAuth(response.data);
             } catch (error: any) {
@@ -158,6 +149,6 @@ export const useAuthStore = defineStore(
         };
     },
     {
-        persist: true, // Persist authentication state
+        persist: false
     }
 );
