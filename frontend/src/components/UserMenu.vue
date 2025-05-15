@@ -37,11 +37,23 @@ onMounted(() => {
 onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 
 const userRole = computed(() => {
-  if (store?.userInfo?.roles?.includes("ROLE_ADMIN")) {
+  const roles = store?.userInfo?.roles || [];
+
+  if (roles.includes("ROLE_ADMIN")) {
     return "Admin";
   }
-  return "User"; // Default to "User" if "ROLE_ADMIN" is not found
+
+  if (roles.includes("ROLE_DEALER")) {
+    return "Dealer";
+  }
+
+  if (roles.includes("ROLE_USER")) {
+    return "User";
+  }
+
+  return ""; // Fallback in case no recognized roles are found
 });
+
 
 
 const logout = () => {
@@ -68,12 +80,14 @@ const logout = () => {
             :target="`/users/${store.userInfo?.name ?? ''}`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
-      <li v-if="store.isAuthenticated" class="p-2">
+      <li v-if="store.isAuthenticated && store.userInfo?.roles?.includes('ROLE_ADMIN')" class="p-2">
         <IconButtonLink
             :text="t('admin')"
             icon="fas fa-cogs"
             :target="`/admin`"
-            class="text-pink-500" @click="$emit('close')"/>
+            class="text-pink-500"
+            @click="$emit('close')"
+        />
       </li>
       <li v-if="store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="logout" target="#" text="Logout" icon="fas fa-sign-out"/>
@@ -100,12 +114,14 @@ const logout = () => {
             :target="`/users/${store.userInfo?.name ?? ''}`"
             class="text-pink-500" @click="$emit('close')"/>
       </li>
-      <li v-if="store.isAuthenticated" class="p-2">
+      <li v-if="store.isAuthenticated && store.userInfo?.roles?.includes('ROLE_ADMIN')" class="p-2">
         <IconButtonLink
             :text="t('admin')"
             icon="fas fa-cogs"
             :target="`/admin`"
-            class="text-pink-500" @click="$emit('close')"/>
+            class="text-pink-500"
+            @click="$emit('close')"
+        />
       </li>
       <li v-if="store.isAuthenticated">
         <IconButtonLink  class="text-pink-500" @click="logout" target="#" :text="t('logout')" icon="fas fa-sign-out"/>
