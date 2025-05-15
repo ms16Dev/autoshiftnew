@@ -101,6 +101,7 @@ public class SecurityConfig {
                                                ObjectMapper objectMapper) {
         var filter = new AuthenticationWebFilter(authenticationManager);
         filter.setSecurityContextRepository(serverSecurityContextRepository);
+
         filter.setServerAuthenticationConverter(exchange ->
                 exchange.getRequest().getBody()
                         .cache()
@@ -116,20 +117,34 @@ public class SecurityConfig {
                         })
                         .map(request -> new UsernamePasswordAuthenticationToken(request.username(), request.password()))
         );
+
         filter.setRequiresAuthenticationMatcher(pathMatchers(HttpMethod.POST, "/auth/login"));
+
         filter.setAuthenticationSuccessHandler((webFilterExchange, authentication) -> {
-            webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.OK);
+            var exchange = webFilterExchange.getExchange();
             var user = (UserDetails) authentication.getPrincipal();
-            var data = Map.of("name", user.getUsername(),
-                    "roles", AuthorityUtils.authorityListToSet(user.getAuthorities()));
-            try {
-                var db = new DefaultDataBufferFactory().wrap(objectMapper.writeValueAsBytes(data));
-                return webFilterExchange.getExchange().getResponse().writeWith(Mono.just(db));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return Mono.empty();
-            }
+
+            // ✅ Force session creation and optionally store user info
+            return exchange.getSession()
+                    .doOnNext(session -> {
+                        log.info("Session created with ID: {}", session.getId());
+                        session.getAttributes().put("username", user.getUsername());
+                    })
+                    .then(Mono.defer(() -> {
+                        var data = Map.of(
+                                "name", user.getUsername(),
+                                "roles", AuthorityUtils.authorityListToSet(user.getAuthorities())
+                        );
+                        try {
+                            var db = new DefaultDataBufferFactory().wrap(objectMapper.writeValueAsBytes(data));
+                            return exchange.getResponse().writeWith(Mono.just(db));
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                            return Mono.empty();
+                        }
+                    }));
         });
+
         filter.setAuthenticationFailureHandler((webFilterExchange, e) -> {
             webFilterExchange.getExchange().getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return webFilterExchange.getExchange().getResponse().setComplete();
@@ -137,6 +152,7 @@ public class SecurityConfig {
 
         return filter;
     }
+
 
     @Bean
     public LogoutWebFilter logoutFilter() {

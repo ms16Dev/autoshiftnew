@@ -2,6 +2,7 @@ package com.example.demo.application;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.server.session.CookieWebSessionIdResolver;
 import org.springframework.web.server.session.HeaderWebSessionIdResolver;
 import org.springframework.web.server.session.WebSessionIdResolver;
 
@@ -12,8 +13,6 @@ class SessionConfig {
 
     @Bean
     public WebSessionIdResolver webSessionIdResolver() {
-        var resolver = new HeaderWebSessionIdResolver();
-        resolver.setHeaderName(xAuthToken);
-        return resolver;
+        return new CookieWebSessionIdResolver(); // ✅ Use cookies instead of X-AUTH-TOKEN header
     }
 }

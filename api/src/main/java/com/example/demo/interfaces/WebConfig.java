@@ -15,31 +15,21 @@ import java.util.List;
 @Slf4j
 class WebConfig {
 
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        var corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        var corsConfiguration = new CorsConfiguration();
 
-        // Allow specific origins
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000"));
-
-        // Allow specific headers (including Authorization, Content-Type, etc.)
-        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Auth-Token"));
-
-        // Allow specific methods (GET, POST, PUT, DELETE, OPTIONS)
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000")); // your frontend
+        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowCredentials(true); // this is crucial for cookies
 
-        // Allow credentials if necessary (e.g., cookies, authentication)
-        corsConfiguration.setAllowCredentials(true);
-
-        // 🔥 Explicitly expose the 'X-Auth-Token' header 🔥
-        corsConfiguration.setExposedHeaders(List.of("X-Auth-Token"));
-
+        // You don't need exposed headers unless you're reading custom headers in JS
 
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
 
-        log.info("configured cors: {}", source);
+        log.info("Configured CORS: {}", corsConfiguration);
 
         return source;
     }
