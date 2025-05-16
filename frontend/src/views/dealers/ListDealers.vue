@@ -15,7 +15,7 @@ defineOptions({
 const dealers = ref<DealerListDto[]>([]);
 const count = ref(0);
 const currentPage = ref(1);  // Initialize at page 1
-const itemsPerPage = ref(15); // Number of questions to show per page
+const itemsPerPage = ref(9); // Number of questions to show per page
 const loading = ref(true);
 
 onMounted(async () => {
