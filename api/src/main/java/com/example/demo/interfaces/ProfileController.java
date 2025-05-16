@@ -26,8 +26,8 @@ public class ProfileController {
             @RequestParam(value = "offset", defaultValue = "0") int offset,
             @RequestParam(value = "limit", defaultValue = "10") int limit) {
 
-        return this.profiles.findByCountryAndKeyword(country, q, offset, limit).collectList()
-                .zipWith(this.profiles.countByCountryAndKeyword(country, q), PaginatedResult::new);
+        return this.profiles.findByCountry(country, offset, limit).collectList()
+                .zipWith(this.profiles.countByCountry(country), PaginatedResult::new);
     }
 
 

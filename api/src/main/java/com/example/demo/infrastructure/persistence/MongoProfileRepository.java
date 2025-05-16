@@ -52,15 +52,12 @@ public class MongoProfileRepository implements ProfileRepository {
     }
 
     @Override
-    public Flux<ProfileSummary> findByCountryAndKeyword(String country, String keyword, int offset, int limit) {
+    public Flux<ProfileSummary> findByCountry(String country, int offset, int limit) {
         Query query = new Query();
 
         query.addCriteria(Criteria.where("country").is(country));
+        query.addCriteria(Criteria.where("dealer").is(true));
 
-        // Apply keyword filter only if provided
-        if (keyword != null && !keyword.isBlank()) {
-            query.addCriteria(Criteria.where("name").regex(".*" + keyword + ".*", "i"));
-        }
 
         query.with(Sort.by(Sort.Direction.DESC, "createdDate"));
 
@@ -86,15 +83,12 @@ public class MongoProfileRepository implements ProfileRepository {
 
 
     @Override
-    public Mono<Long> countByCountryAndKeyword(String country, String keyword) {
+    public Mono<Long> countByCountry(String country) {
         Query query = new Query();
 
         query.addCriteria(Criteria.where("country").is(country));
+        query.addCriteria(Criteria.where("dealer").is(true));
 
-        // Apply keyword filter only if provided
-        if (keyword != null && !keyword.isBlank()) {
-            query.addCriteria(Criteria.where("name").regex(".*" + keyword + ".*", "i"));
-        }
 
         return mongoTemplate.count(query, UserProfile.class);
     }

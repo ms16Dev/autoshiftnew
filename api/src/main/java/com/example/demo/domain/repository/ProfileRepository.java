@@ -17,9 +17,9 @@ public interface ProfileRepository {
 
     Flux<UserProfile> findAll();
 
-    Flux<ProfileSummary> findByCountryAndKeyword(String country, String keyword, int offset, int limit);
+    Flux<ProfileSummary> findByCountry(String country, int offset, int limit);
 
-    Mono<Long> countByCountryAndKeyword(String country, String keyword);
+    Mono<Long> countByCountry(String country);
 
 
 
