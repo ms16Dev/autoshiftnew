@@ -16,7 +16,7 @@ import {useI18n} from "vue-i18n";
 import {config} from "../../../config.ts";
 import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 import {formatRelativeDate} from "../../utils/dateUtils.ts";
-import {Dealer} from "../../types/Dealer.ts";
+import {Profile} from "../../types/Profile.ts";
 import {CarDetailDto} from "../../core/models/CarDetailDto.ts";
 const { t } = useI18n()
 const staticData = useStaticDataStore();
@@ -38,7 +38,7 @@ const authStore = useAuthStore();
 
 // Car details state
 const car = ref<CarDetailDto | null>(null);
-const dealer = ref<Dealer | null>(null);
+const dealer = ref<Profile | null>(null);
 const loading = ref(true);
 
 // Get the car ID from the route params

@@ -169,7 +169,28 @@ const messages = {
         logo_alt: "AutoShift Logo",
         menu: "Menu",
         english: "English",
-        arabic: "Arabic"
+        arabic: "Arabic",
+
+        profile_greeting: "Welcome, {username} — please complete your profile.",
+        view_profile: "Complete Profile",
+        select_country: "Select a country",
+        country: "Country",
+
+
+        cover_image: "Cover Image",
+        avatar_image: "Avatar Image",
+        name: "Name",
+        subtitle: "Subtitle",
+        info: "About",
+        contact: "Contact",
+        tel: "Tel",
+
+        website: "Website",
+        edit_profile: "Edit Profile",
+        save: "Save",
+        about: "About",
+        edit: "Edit",
+
 
 
 
@@ -355,7 +376,31 @@ const messages = {
         logo_alt: "شعار أوتو شيفت",
         menu: "القائمة",
         english: "English",
-        arabic: "العربية"
+        arabic: "العربية",
+
+        profile_greeting: "مرحباً، {username} — الرجاء اكمال بيانات البروفايل.",
+        view_profile: "اكمال البروفايل",
+        select_country: "اختر الدولة",
+        country: "الدولة",
+
+
+        cover_image: "صورة الغلاف",
+        avatar_image: "الصورة الرمزية",
+
+        name: "الاسم",
+        subtitle: "اللقب",
+        info: "نبذة",
+        contact: "معلومات الاتصال",
+        tel: "رقم الهاتف",
+
+        website: "الموقع الإلكتروني",
+        edit_profile: "تعديل الملف الشخصي",
+        save: "حفظ",
+        about: "حول المعرض",
+        edit: "تعديل",
+
+
+
 
 
 

@@ -25,7 +25,7 @@
                   class="absolute top-6 end-6 text-sm bg-pink-500 rounded-lg text-white hover:bg-pink-700 font-semibold py-2 px-4 "
                   @click="toggleUpdateProfilePopup">
                 <i class="fas fa-pen"/>
-                Edit
+                {{ t('edit') }}
 
               </button>
             </div>
@@ -57,22 +57,22 @@
               <div v-show="activeTab === 3" class="text-gray-600 pb-4">
                 <div class="flex-col  -px-4 gap-3">
                   <div class="p-6  max-w-md mx-auto space-y-4">
-                    <div class="flex items-center space-x-3 text-gray-700">
+                    <div class="flex items-center gap-3 text-gray-700">
                       <i class="fas fa-phone-alt text-pink-500"></i>
                       <a :href="'tel:' + dealer?.contact[0]" class="hover:underline">{{ dealer?.contact[0] }}</a>
                     </div>
 
-                    <div class="flex items-center space-x-3 text-gray-700">
+                    <div class="flex items-center gap-3 text-gray-700">
                       <i class="fab fa-facebook text-blue-600"></i>
                       <a :href="dealer?.contact[1]" class="hover:underline">{{ dealer?.contact[1] }}</a>
                     </div>
 
-                    <div class="flex items-center space-x-3 text-gray-700">
+                    <div class="flex items-center gap-3 text-gray-700">
                       <i class="fab fa-instagram text-pink-600"></i>
                       <a :href="dealer?.contact[2]" class="hover:underline">{{ dealer?.contact[2] }}</a>
                     </div>
 
-                    <div class="flex items-center space-x-3 text-gray-700">
+                    <div class="flex items-center gap-3 text-gray-700">
                       <i class="fas fa-globe text-green-500"></i>
                       <a :href="dealer?.contact[3]" class="hover:underline">{{ dealer?.contact[3] }}</a>
                     </div>
@@ -135,7 +135,7 @@
 
       <div class="w-full">
 
-        <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> Recent Cars</h1>
+        <h1 class="pt-12 pb-4 text-xl text-pink-500 font-extrabold"> {{ t('recent_cars') }}</h1>
         <RecentCars :cars="cars" />
         <div class="flex justify-end">
           <router-link to="cars" class="py-2  text-pink-500 font-extrabold">
@@ -159,7 +159,7 @@
 import AdItem from "../../components/AdItem.vue";
 
 import {onMounted, ref} from "vue";
-import {Dealer} from "../../types/Dealer.ts";
+import {Profile} from "../../types/Profile.ts";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
 import RecentCars from "../../components/RecentCars.vue";
@@ -167,6 +167,8 @@ import {CarListDto} from "../../core/models/CarListDto.ts";
 import UpdateProfilePopup from "../../components/profile/UpdateProfilePopup.vue";
 import {config} from "../../../config.ts";
 import {useAuthStore} from "../../stores/auth.ts";
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
 
 defineOptions({
   name: 'user-profile'
@@ -177,7 +179,7 @@ const activeTab = ref(1);
 
 
 // Car details state
-const dealer = ref<Dealer | null>(null);
+const dealer = ref<Profile | null>(null);
 const loading = ref(true);
 const profilePopup = ref(false);
 

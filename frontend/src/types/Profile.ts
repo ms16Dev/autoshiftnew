@@ -1,5 +1,5 @@
 // Define CarListDto interface
-export interface Dealer {
+export interface Profile {
     id: string;
     username: string;
     complete: boolean;

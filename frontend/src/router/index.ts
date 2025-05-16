@@ -73,6 +73,16 @@ const routes: Array<RouteRecordRaw> = [
                     },
                 ],
             },
+            {
+                path: "users",
+                children: [
+                    {
+                        path: ":id",
+                        name: 'profile',
+                        component: ProfileOverviewVue,
+                    },
+                ],
+            },
 
             { path: 'more', name: 'more', component: More },
             {

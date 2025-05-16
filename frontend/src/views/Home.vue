@@ -106,11 +106,30 @@ const brands = staticData.makes.map((brand) => {
   };
 });
 
+import {useProfileStore} from "../stores/profileStore.ts";
+import {useAuthStore} from "../stores/auth.ts";
+import ProfileView from "../components/ProfileView.vue";
+
+const profileStore = useProfileStore()
+const authStore = useAuthStore()
+
+onMounted(() => {
+  if (authStore.userInfo?.name) {
+    profileStore.fetchUserProfile(authStore.userInfo.name)
+  }
+})
 
 </script>
 
 <template>
+
   <div class="flex xl:flex-row-reverse flex-wrap w-full">
+    <!-- Only show if profile is NOT complete and data is loaded -->
+    <ProfileView
+        v-if="!profileStore.isProfileComplete && !profileStore.loading && !profileStore.error"
+        class="sticky top-16 z-10 bg-white border-b border-gray-200 h-20 w-full px-6 flex items-center justify-between shadow-sm"
+    />
+
     <div class="w-full xl:w-1/5 p-4 text-center text-gray-400">
       <AdItem/>
 
