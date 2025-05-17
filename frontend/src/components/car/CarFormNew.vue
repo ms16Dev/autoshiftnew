@@ -20,13 +20,12 @@ import {City, DataItem} from "../../types/staticData.ts";
 import {useI18n} from "vue-i18n";
 import DescriptionPopUp from "./DescriptionPopUp.vue";
 import router from "../../router";
+import {formatNumber} from "../../utils/dateUtils.ts";
 const { t } = useI18n()
 
 const staticData = useStaticDataStore()
 
-const formatNumber = (number: number): string => {
-  return new Intl.NumberFormat('en-US').format(number);
-};
+
 
 const make = ref<Make | null>(null);
 const formData1 = ref(new FormData());

@@ -27,3 +27,9 @@ export function formatRelativeDate(dateInput: string | number | Date, lang: 'en'
         return lang === 'ar' ? 'الآن' : 'Just now';
     }
 }
+
+export function formatNumber(value: number | string): string {
+    const num = Number(value);
+    if (isNaN(num)) return ''; // or return value.toString(), or throw an error, depending on your needs
+    return new Intl.NumberFormat('en-US').format(num);
+}
