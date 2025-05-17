@@ -2,7 +2,9 @@
 import {defineProps, withDefaults} from "vue";
 import {DealerListDto} from "../../core/models/DealerListDto";
 import {config} from "../../../config.ts";
+import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 
+const staticData = useStaticDataStore();
 
 // Define props with defaults
 withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
@@ -53,20 +55,13 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
             <!-- Likes -->
             <div class="flex items-center gap-2">
               <i class="fas fa-map-marker text-pink-300"/>
-              <span class="text-sm text-gray-700">{{ dealer.location }}</span>
+              <span class="text-sm text-gray-700">{{ staticData.getLocalizedName(staticData.findItemById('cities',dealer.location)!!) }}</span>
             </div>
 
-            <!-- Name -->
-            <div class="flex items-center gap-2">
-              <i class="fas fa-heart text-pink-300"/>
-              <span class="text-sm text-gray-700">{{ dealer.likeCount }}</span>
-            </div>
+
 
           </div>
         </div>
-
-
-
 
       </div>
     </RouterLink>

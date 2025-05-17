@@ -43,11 +43,7 @@
               <!-- Tab Content -->
               <div v-show="activeTab === 1" class="w-full text-gray-600  pb-4">
 
-                <p class="font-semibold">{{ dealer?.likeCount }} likes</p>
-                <button type="submit" class="flex-row px-1 bg-pink-500 hover:bg-pink-700 text-white py-1 rounded-md transition shadow-md  ">
-                  <i class="fas fa-thumbs-up text-white"></i>
-                  Like
-                </button>
+
               </div>
 
 

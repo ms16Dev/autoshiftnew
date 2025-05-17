@@ -7,6 +7,7 @@ import {config} from "../../../config.ts";
 import axios from "axios";
 import {useStaticDataStore} from "../../stores/staticDataStore.ts";
 import {useI18n} from "vue-i18n";
+import {Country} from "../../types/staticData.ts";
 
 const {t} = useI18n()
 
@@ -108,9 +109,16 @@ const handleClose = () => {
 const selectedCountryId = computed(() => {
   return profile.value.country || staticData.getCurrentCountry().id;
 });
+const selectedCityId = computed(() => {
+  return profile.value.location || staticData.getCurrentCountry().cities[0].id;
+});
 
 const selectCountry = (countryId: string) => {
   profile.value.country = countryId;
+
+};
+const selectCity = (cityId: string) => {
+  profile.value.location = cityId;
 
 };
 
@@ -176,6 +184,23 @@ const selectRole = (roleId: string) => {
             ]"
             >
               {{ staticData.getLocalizedName(country) }}
+            </div>
+          </div>
+        </div>
+        <div class="country-chips my-6">
+          <div class="flex justify-center gap-2">
+            <div
+                v-for="city in (staticData.findItemById('countries', selectedCountryId) as Country).cities.map(c => staticData.findItemById('cities',c))"
+                :key="city?.id"
+                @click="selectCity(city?.id!)"
+                :class="[
+              'px-4 py-2 rounded-full border-2 border-white cursor-pointer transition-colors',
+              selectedCityId === city?.id
+                ? 'bg-pink-500 text-white'
+                : 'bg-pink-700 text-white hover:bg-pink-600'
+            ]"
+            >
+              {{ staticData.getLocalizedName(city!!) }}
             </div>
           </div>
         </div>
