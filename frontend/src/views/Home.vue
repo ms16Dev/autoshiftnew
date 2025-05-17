@@ -126,7 +126,7 @@ onMounted(() => {
   <div class="flex xl:flex-row-reverse flex-wrap w-full">
     <!-- Only show if profile is NOT complete and data is loaded -->
     <ProfileView
-        v-if="!profileStore.isProfileComplete && !profileStore.loading && !profileStore.error"
+        v-if="authStore.isAuthenticated && !profileStore.isProfileComplete && !profileStore.loading && !profileStore.error"
         class="sticky top-16 z-10 bg-white border-b border-gray-200 h-20 w-full px-6 flex items-center justify-between shadow-sm"
     />
 
