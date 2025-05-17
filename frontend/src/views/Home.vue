@@ -176,7 +176,6 @@ onMounted(() => {
 
 
 
-        <ContactSection class="mt-12"/>
 
 
       </div>
