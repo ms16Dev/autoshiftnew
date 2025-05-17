@@ -19,6 +19,7 @@ import apiService from "../../core/services/ApiService.ts";
 import {City, DataItem} from "../../types/staticData.ts";
 import {useI18n} from "vue-i18n";
 import DescriptionPopUp from "./DescriptionPopUp.vue";
+import router from "../../router";
 const { t } = useI18n()
 
 const staticData = useStaticDataStore()
@@ -31,7 +32,7 @@ const make = ref<Make | null>(null);
 const formData1 = ref(new FormData());
 const formData = ref(new FormData());
 const classes = ref<DataItem[]>([])
-
+const loading = ref(false);
 
 const state = reactive({
   price: 0,
@@ -119,6 +120,7 @@ onMounted(() => {
 });
 
 const saveCar = async () => {
+  loading.value = true
   console.log("Cover image  = = = = =",formData1.value)
   console.log("other images  = = = = =",formData.value)
 
@@ -173,15 +175,26 @@ const saveCar = async () => {
     try {
       const response = await ApiService.post("/cars", car);
       console.log(response.data);
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 2-second pause
+
+      loading.value = false
+      await router.push('/cars');
     } catch (err) {
       const error = err as any;
       console.error(error.response?.data.errors || error);
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 2-second pause
+
+      loading.value = false
     }
 
 
   } catch (err) {
     const error = err as any;
     console.error(error.response?.data.errors || error);
+    await new Promise(resolve => setTimeout(resolve, 3000)); // 2-second pause
+
+    loading.value = false
+
   }
 }
 
@@ -383,6 +396,15 @@ const saveCar = async () => {
         @close="state.descriptionPopUp = false"
         :value="state.description"
         ></DescriptionPopUp>
+
+    <div v-if="loading"
+         class="absolute top-0 text-white z-20 w-full h-full bg-pink-700 items-center">
+      <div class="flex flex-col items-center justify-center h-full">
+      <img src="../../assets/imgs/tires.png" alt="Loading" class="w-24 h-24 animate-pulse">
+        <p>{{t('saving_post')}}</p>
+      </div>
+
+    </div>
 
 
   </div>

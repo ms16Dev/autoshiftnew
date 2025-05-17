@@ -190,6 +190,7 @@ const messages = {
         save: "Save",
         about: "About",
         edit: "Edit",
+        saving_post: "Saving post ...",
 
 
 
@@ -398,6 +399,8 @@ const messages = {
         save: "حفظ",
         about: "حول المعرض",
         edit: "تعديل",
+        saving_post: "جارٍ حفظ المنشور ...",
+
 
 
 
