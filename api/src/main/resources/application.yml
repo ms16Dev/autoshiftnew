@@ -8,9 +8,6 @@ spring:
     serialization:
       indent-output: true
 
-  web:
-    resources:
-      static-locations: file:./images/
 
   mail:
     host: smtp.gmail.com

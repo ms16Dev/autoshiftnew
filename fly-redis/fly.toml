@@ -1,0 +1,7 @@
+app = "autoshift-redis"
+primary_region = "ams"
+
+[services]
+[[services.ports]]
+port = 6379
+handlers = ["internal"]

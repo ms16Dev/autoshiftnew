@@ -1,0 +1,11 @@
+app = "autoshift-mongodb"
+primary_region = "ams"
+
+[mounts]
+source = "mongodb_data"
+destination = "/data/db"
+
+[services]
+[[services.ports]]
+port = 27017
+handlers = ["internal"] # accessible only to internal apps

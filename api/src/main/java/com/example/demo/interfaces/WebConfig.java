@@ -19,7 +19,7 @@ class WebConfig {
     CorsConfigurationSource corsConfigurationSource() {
         var corsConfiguration = new CorsConfiguration();
 
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000")); // your frontend
+        corsConfiguration.setAllowedOrigins(List.of("*")); // your frontend
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowCredentials(true); // this is crucial for cookies

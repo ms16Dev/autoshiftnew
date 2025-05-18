@@ -1,28 +1,27 @@
-# Use OpenJDK base image
-FROM openjdk:17-jdk-slim
+# Start with a build image
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 
-# Add MongoDB's official repository and key
-RUN apt update && apt install -y gnupg curl && \
-    curl -fsSL https://www.mongodb.org/static/pgp/server-5.0.asc | tee /etc/apt/trusted.gpg.d/mongodb.asc && \
-    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/5.0 main" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-
-# Install MongoDB and Redis
-RUN apt update && apt install -y mongodb-org redis-server
-
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy the built JAR file into the container
-COPY target/Autoshift-server-0.0.1-SNAPSHOT.jar app.jar
+# Copy the pom and source files
+COPY pom.xml .
+COPY src ./src
 
-# Expose the ports for MongoDB (27017), Redis (6379), and Spring Boot (8080)
-EXPOSE 27017 6379 8080
+# Build the application
+RUN mvn clean package -DskipTests
 
-# Create MongoDB data directory (but the data will be stored in volumes)
-RUN mkdir -p /data/db /data/redis
+# Use a slim JDK image for running the app
+FROM eclipse-temurin:21-jdk-alpine
 
-# Start MongoDB & Redis & then run Spring Boot
-CMD mkdir -p /data/redis /data/db && \
-    redis-server --dir /data/redis && \
-    mongod --fork --logpath /var/log/mongodb.log --dbpath /data/db --bind_ip_all && \
-    java -jar app.jar
+# Set workdir
+WORKDIR /app
+
+# Copy only the jar file from builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
+# Expose the port Spring Boot runs on
+EXPOSE 8080
+
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "app.jar"]
