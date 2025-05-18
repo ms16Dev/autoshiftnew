@@ -24,7 +24,7 @@ export const useProfileStore = defineStore('profileStore', () => {
         loading.value = true
         error.value = null
         try {
-            const response = await axios.get<UserProfile>(`${config.apiBaseUrl}/profiles/${username}`)
+            const response = await axios.get<UserProfile>(`${config.endpoints.api}/profiles/${username}`)
             profile.value = response.data
         } catch (err: any) {
             error.value = err.response?.data?.message ?? 'Failed to fetch profile'

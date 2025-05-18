@@ -1,5 +1,6 @@
 import type { App } from "vue";
 import axios, { AxiosInstance } from "axios";
+import {config} from "../../../config.ts";
 
 class ApiService {
   private static axiosInstance: AxiosInstance;
@@ -7,7 +8,7 @@ class ApiService {
   public static init(app: App<Element>): void {
     // Create Axios instance with base URL
     ApiService.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080/",
+      baseURL: config.endpoints.api,
       withCredentials: true, // Important for session-based authentication
     });
 
