@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
+    base: '/', // This is the default; assets will be resolved relative to /
+
     plugins: [vue()],
     // Optional: You can expose env variables to your client code
     define: {
