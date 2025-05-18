@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://admin:yourStrongPassword@autoshift-mongodb.internal:27017/cars
+      uri: mongodb://admin:yourStrongPassword@autoshift-mongodb.internal:27017/cars?authSource=admin
 
 
   web:

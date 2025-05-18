@@ -8,12 +8,16 @@ image = "mongo:7.0"
 source = "mongodb_data"
 destination = "/data/db"
 
+[processes]
+app = "mongod --bind_ip_all --ipv6 --auth"
+
 [env]
 MONGO_INITDB_DATABASE = "cars"
 MONGO_INITDB_ROOT_USERNAME = "admin"
 MONGO_INITDB_ROOT_PASSWORD = "yourStrongPassword"
 
 [[services]]
+processes = ["app"]
 internal_port = 27017
 protocol = "tcp"
 
@@ -22,7 +26,6 @@ port = 27017
 handlers = []  # internal only, no public access
 
 [experimental]
-# If you want 2 CPUs:
 memory = "2GB"
 
 [[vm]]
