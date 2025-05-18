@@ -22,7 +22,7 @@ onMounted(async () => {
   }
 
   try {
-    await axios.get(`${config.apiBaseUrl}/auth/verify`, {
+    await axios.get(`${config.endpoints.api}/auth/verify`, {
       params: { token }
     })
     isVerified.value = true

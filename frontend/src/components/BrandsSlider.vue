@@ -15,7 +15,7 @@
           class="carousel-item mx-4"
       >
         <img
-            :src="config.apiBaseUrl + slide.image"
+            :src="config.endpoints.api + slide.image"
             class="h-full w-[150px] object-contain"
             @load="updateCarouselSettings"
             alt="brands"

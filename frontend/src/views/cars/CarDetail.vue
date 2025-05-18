@@ -94,7 +94,7 @@ watch([car, () => authStore.userInfo?.name], () => {
 // toggle
 const toggleLike = async () => {
   try {
-    const response = await axios.post(config.apiBaseUrl+`/cars/${carId}/like`, {
+    const response = await axios.post(config.endpoints.api+`/cars/${carId}/like`, {
       username: authStore.userInfo?.name,
     });
 
@@ -128,7 +128,7 @@ const toggleLike = async () => {
           <span>{{staticData.getLocalizedName(staticData.getStatusById(car?.origin!!)) }}</span>
         </div>
         <div class="flex flex-wrap text-xl text-gray-500 col-span-2 text-center items-center gap-2">
-          <UserView :user="{ id: car?.createdBy, name: dealer?.name , date: formattedCreatedDate, avatar: config.apiBaseUrl+dealer?.avatarUrl }" />
+          <UserView :user="{ id: car?.createdBy, name: dealer?.name , date: formattedCreatedDate, avatar: config.endpoints.api+dealer?.avatarUrl }" />
           <div class="ltr:ml-auto rtl:mr-auto ">
             <SharePost />
           </div>

@@ -139,7 +139,7 @@ const toggleMake = () =>{
             <div class="flex justify-between items-center bg-gray-100">
               <div class="flex px-4 text-pink-500 font-bold text-2xl">Classes</div>
               <button  @click="toggleMake" class="rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-x-1/4  overflow-hidden">
-                <img :src="config.apiBaseUrl + selectedMake?.url" alt="">
+                <img :src="config.endpoints.api + selectedMake?.url" alt="">
               </button>
               <div class="flex p-4 text-pink-500 font-bold text-2xl">
                    <IconButton icon="fas fa-plus" label="Add" class="hover:bg-pink-100" @click="toggleAddClass_Popup"/>

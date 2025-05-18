@@ -32,7 +32,7 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
 
           <!-- Cover image-->
           <div class="overflow-hidden">
-            <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer?.coverUrl ? config.apiBaseUrl+dealer?.coverUrl : '/src/assets/cover_placeholder.jpg'" alt="Dealer Cover Image"/>
+            <img class="w-full transition-transform duration-700  group-hover:scale-110" :src="dealer?.coverUrl ? config.endpoints.api+dealer?.coverUrl : '/src/assets/cover_placeholder.jpg'" alt="Dealer Cover Image"/>
 
           </div>
           <!--Divider-->
@@ -40,7 +40,7 @@ withDefaults(defineProps<{ dealer?: DealerListDto }>(), {
           <div class="flex flex-row w-full justify-center">
             <div class="z-10"></div>
             <div class="flex rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/2  overflow-hidden">
-              <img :src="dealer?.avatarUrl ? config.apiBaseUrl+dealer?.avatarUrl : '/src/assets/user.jpeg'" alt="Dealer avatar">
+              <img :src="dealer?.avatarUrl ? config.endpoints.api+dealer?.avatarUrl : '/src/assets/user.jpeg'" alt="Dealer avatar">
             </div>
           </div>
           <div class="flex justify-center -translate-y-12 text-pink-500 font-bold text-2xl ">{{ dealer.name }}</div>

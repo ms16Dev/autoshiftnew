@@ -9,7 +9,7 @@
     <div class="thumbnails flex mt-4 justify-start overflow-x-auto max-w-full space-x-2">
       <!-- Cover photo -->
       <img
-          :src="config.apiBaseUrl+coverPhoto"
+          :src="config.endpoints.api+coverPhoto"
           alt="Cover Image"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(coverPhoto)"
@@ -19,7 +19,7 @@
       <img
           v-for="(image, index) in imageList"
           :key="index"
-          :src="config.apiBaseUrl+image"
+          :src="config.endpoints.api+image"
           alt="Thumbnail"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(image)"
@@ -50,7 +50,7 @@ const currentImage = ref(props.coverPhoto);
 
 // Method to change the current image when a thumbnail is clicked
 const setImage = (imageUrl) => {
-  currentImage.value = config.apiBaseUrl+imageUrl;
+  currentImage.value = config.endpoints.api+imageUrl;
 };
 
 // Watch for changes in coverPhoto and update currentImage when it becomes available

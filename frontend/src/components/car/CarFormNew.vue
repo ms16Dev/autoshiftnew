@@ -217,7 +217,7 @@ const saveCar = async () => {
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
-          <img :src="config.apiBaseUrl+`${make?.url } `" alt="carMake">
+          <img :src="config.endpoints.api+`${make?.url } `" alt="carMake">
         </button>
 
 

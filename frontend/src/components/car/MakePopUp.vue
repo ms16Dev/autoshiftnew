@@ -50,7 +50,7 @@ const saveMake = (value: number) => {
     ]"
   >
     <div class="h-full flex-col grid grid-cols-2 gap-4 overflow-y-scroll scrollbar-none ">
-        <MakeItem  v-for="(make, index) in makes" :key="index" :url="config.apiBaseUrl+make.url" class="h-24 p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
+        <MakeItem  v-for="(make, index) in makes" :key="index" :url="config.endpoints.api+make.url" class="h-24 p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
     </div>
 
 

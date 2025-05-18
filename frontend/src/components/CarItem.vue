@@ -55,7 +55,7 @@ const formattedCreatedDate = computed(() =>
 <!-- Cover image-->
         <div class="overflow-hidden">
           <img class="w-full h-[200px] transition-transform duration-700 object-contain  group-hover:scale-110"
-               :src="config.getImageUrl(car.coverImage)"
+               :src="config.endpoints.api+car.coverImage"
                alt=""/>
 
         </div>

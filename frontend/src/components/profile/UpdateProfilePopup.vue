@@ -161,12 +161,12 @@ const selectRole = (roleId: string) => {
 
         <label for="coverImage" class="block text-white">{{ t('cover_image') }}</label>
 
-        <image-loader @file-selected="(value) => coverImage = value" :bg="config.apiBaseUrl+profile.coverUrl"
+        <image-loader @file-selected="(value) => coverImage = value" :bg="config.endpoints.api+profile.coverUrl"
                       class="w-24 h-24"/>
 
         <label for="avatarImage" class="block text-white">{{ t('avatar_image') }}</label>
 
-        <image-loader @file-selected="(value) => avatarImage = value" :bg="config.apiBaseUrl+profile.avatarUrl"
+        <image-loader @file-selected="(value) => avatarImage = value" :bg="config.endpoints.api+profile.avatarUrl"
                       class="w-24 h-24"/>
 
       </div>

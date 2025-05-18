@@ -148,7 +148,7 @@ const handleImageUpdate = (value: FormData) => {
 
       <label for="makeImage" class="block text-white">Make Image</label>
 
-      <image-loader :bg="config.apiBaseUrl+newUrl" @file-selected="(value) => handleImageUpdate(value)"  class="w-24 h-24"/>
+      <image-loader :bg="config.endpoints.api+newUrl" @file-selected="(value) => handleImageUpdate(value)"  class="w-24 h-24"/>
       <div class="flex gap-3 justify-end">
         <button
             type="submit"
