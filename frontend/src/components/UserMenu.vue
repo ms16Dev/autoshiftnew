@@ -84,7 +84,7 @@ const logout = () => {
         <IconButtonLink
             :text="t('admin')"
             icon="fas fa-cogs"
-            :target="`/admin`"
+            :target="`/admin/users`"
             class="text-pink-500"
             @click="$emit('close')"
         />
@@ -118,7 +118,7 @@ const logout = () => {
         <IconButtonLink
             :text="t('admin')"
             icon="fas fa-cogs"
-            :target="`/admin`"
+            :target="`/admin/users`"
             class="text-pink-500"
             @click="$emit('close')"
         />
