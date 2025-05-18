@@ -1,11 +1,29 @@
 app = "autoshift-mongodb"
 primary_region = "ams"
 
-[mounts]
+[build]
+image = "mongo:7.0"
+
+[[mounts]]
 source = "mongodb_data"
 destination = "/data/db"
 
-[services]
+[env]
+MONGO_INITDB_DATABASE = "cars"
+MONGO_INITDB_ROOT_USERNAME = "admin"
+MONGO_INITDB_ROOT_PASSWORD = "yourStrongPassword"
+
+[[services]]
+internal_port = 27017
+protocol = "tcp"
+
 [[services.ports]]
 port = 27017
-handlers = ["internal"] # accessible only to internal apps
+handlers = []  # internal only, no public access
+
+[experimental]
+# If you want 2 CPUs:
+memory = "2GB"
+
+[[vm]]
+private_network = "440"  # Explicitly use the 440 subnet
