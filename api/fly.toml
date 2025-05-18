@@ -4,7 +4,7 @@ primary_region = "ams"
 [build]
 
 [env]
-SPRING_DATA_MONGODB_URI = "mongodb://autoshift-mongodb.internal:27017/cars"
+SPRING_DATA_MONGODB_URI = "mongodb://admin:yourStrongPassword@autoshift-mongodb.internal:27017/cars"
 SPRING_PROFILES_ACTIVE = "prod,cors"
 SPRING_REDIS_HOST = "autoshift-redis.internal"
 SPRING_REDIS_PORT = "6379"
