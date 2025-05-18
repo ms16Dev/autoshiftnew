@@ -1,6 +1,6 @@
 <script setup lang="ts" xmlns="http://www.w3.org/1999/html">
 
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {useI18n} from "vue-i18n";
 const { t } = useI18n()
 
@@ -19,8 +19,11 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save']);
 
-// Local state for the price input
-const year = ref<number | null>(props.value);
+const year = ref<number>(props.value || 2024);
+
+watch(() => props.value, (newVal) => {
+  year.value = newVal || 2024;
+});
 
 const decYear = () => {
   if (year.value !== null) {
@@ -41,6 +44,8 @@ const saveYear = () => {
     emit('save', year.value);
   }
 };
+
+
 </script>
 
 <template>
@@ -58,7 +63,7 @@ const saveYear = () => {
     <div class="flex flex-col">
       <p class="text-white text-3xl my-12"> {{t('car_year_title') }}</p>
 
-      <div class="flex flex-row items-center justify-between">
+      <div class="flex flex-row items-center justify-between rtl:flex-row-reverse">
         <!-- decrease button -->
         <button
             @click="decYear"
@@ -67,7 +72,7 @@ const saveYear = () => {
           <i class="fas fa-minus"></i>
         </button>
 
-        <h1 class="text-white text-3xl font-bold">{{year ?? 0}}</h1>
+        <h1 class="text-white text-3xl font-bold">{{year}}</h1>
 
         <!-- increase button -->
         <button
@@ -80,7 +85,7 @@ const saveYear = () => {
       </div>
 
 
-      <div class="flex  justify-center ">
+      <div class="flex flex-row-reverse justify-center rtl:flex-row-reverse">
         <!-- Save button -->
         <button
             @click="saveYear"

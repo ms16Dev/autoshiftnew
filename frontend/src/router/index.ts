@@ -68,7 +68,7 @@ const routes: Array<RouteRecordRaw> = [
                     { path: "", name: 'dealers', component: Dealers },
                     {
                         path: ":id",
-                        name: 'profile',
+                        name: 'dealer-profile',
                         component: ProfileOverviewVue,
                     },
                 ],

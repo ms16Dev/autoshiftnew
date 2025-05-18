@@ -4,7 +4,6 @@
 import AdItem from "../components/AdItem.vue";
 import Carousel from "../components/Carousel.vue";
 import RecentCars from "../components/RecentCars.vue";
-import ContactSection from "../components/ContactSection.vue";
 import FeaturedDealers from "../components/FeaturedDealers.vue";
 import BrandsSlider from "../components/BrandsSlider.vue";
 import apiService from "../core/services/ApiService.ts";

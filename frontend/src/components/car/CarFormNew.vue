@@ -307,7 +307,7 @@ const saveCar = async () => {
         @close="state.yearPopUp = false"
         @save="(value) => handleSave('year')(value)"
         position="bottom"
-        :value="state.year + 2024"></YearPopUp>
+        :value="state.year"></YearPopUp>
 
     <OptionsPopUp
         v-if="state.originPopUp"

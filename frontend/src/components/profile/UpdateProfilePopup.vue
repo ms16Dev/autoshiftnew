@@ -110,11 +110,12 @@ const selectedCountryId = computed(() => {
   return profile.value.country || staticData.getCurrentCountry().id;
 });
 const selectedCityId = computed(() => {
-  return profile.value.location || staticData.getCurrentCountry().cities[0].id;
+  return profile.value.location || staticData.getCurrentCountry().cities[0];
 });
 
 const selectCountry = (countryId: string) => {
   profile.value.country = countryId;
+  selectCity((staticData.findItemById('countries',countryId) as Country).cities[0])
 
 };
 const selectCity = (cityId: string) => {
@@ -171,7 +172,7 @@ const selectRole = (roleId: string) => {
       </div>
       <div class="mb-4 text-start">
         <div class="country-chips my-6">
-          <div class="flex justify-center gap-2">
+          <div class="flex justify-center gap-2 overflow-x-scroll">
             <div
                 v-for="country in staticData.data.countries"
                 :key="country.id"
@@ -188,7 +189,7 @@ const selectRole = (roleId: string) => {
           </div>
         </div>
         <div class="country-chips my-6">
-          <div class="flex justify-center gap-2">
+          <div class="flex justify-center gap-2 overflow-x-scroll">
             <div
                 v-for="city in (staticData.findItemById('countries', selectedCountryId) as Country).cities.map(c => staticData.findItemById('cities',c))"
                 :key="city?.id"
