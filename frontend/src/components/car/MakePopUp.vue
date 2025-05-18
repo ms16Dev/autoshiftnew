@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import MakeItem from "./MakeItem.vue";
+import {config} from "../../../config.ts";
 
 // Define the Make interface
 export interface Make {
@@ -49,7 +50,7 @@ const saveMake = (value: number) => {
     ]"
   >
     <div class="h-full flex-col grid grid-cols-2 gap-4 overflow-y-scroll scrollbar-none ">
-        <MakeItem  v-for="(make, index) in makes" :key="index" :url="'http://localhost:8080'+make.url" class="h-24 p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
+        <MakeItem  v-for="(make, index) in makes" :key="index" :url="config.apiBaseUrl+make.url" class="h-24 p-2 hover:bg-white" @click="saveMake(index)"></MakeItem>
     </div>
 
 

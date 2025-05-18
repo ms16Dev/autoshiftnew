@@ -9,7 +9,7 @@
     <div class="thumbnails flex mt-4 justify-start overflow-x-auto max-w-full space-x-2">
       <!-- Cover photo -->
       <img
-          :src="'http://localhost:8080'+coverPhoto"
+          :src="config.apiBaseUrl+coverPhoto"
           alt="Cover Image"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(coverPhoto)"
@@ -19,7 +19,7 @@
       <img
           v-for="(image, index) in imageList"
           :key="index"
-          :src="'http://localhost:8080'+image"
+          :src="config.apiBaseUrl+image"
           alt="Thumbnail"
           class="thumbnail border-2 border-transparent hover:border-pink-500 cursor-pointer w-16 h-16 object-contain"
           @click="setImage(image)"
@@ -31,6 +31,7 @@
 
 <script setup>
 import {onMounted, ref, watch} from 'vue';
+import {config} from "../../config.js";
 
 // Props definition
 const props = defineProps({
@@ -49,7 +50,7 @@ const currentImage = ref(props.coverPhoto);
 
 // Method to change the current image when a thumbnail is clicked
 const setImage = (imageUrl) => {
-  currentImage.value = 'http://localhost:8080'+imageUrl;
+  currentImage.value = config.apiBaseUrl+imageUrl;
 };
 
 // Watch for changes in coverPhoto and update currentImage when it becomes available

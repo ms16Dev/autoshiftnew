@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import apiService from "../../../core/services/ApiService.ts";
 import ImageLoader from "../../ImageLoader.vue";
 import axios from "axios";
+import {config} from "../../../../config.ts";
 
 const props = defineProps<{
   id: string,
@@ -33,7 +34,7 @@ const handleSubmit = async () => {
   try {
 
     if (imageChanged.value){
-      const response1 = await axios.post('http://localhost:8080/media/image', MakeImage.value, {
+      const response1 = await axios.post(config.endpoints.images, MakeImage.value, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -147,7 +148,7 @@ const handleImageUpdate = (value: FormData) => {
 
       <label for="makeImage" class="block text-white">Make Image</label>
 
-      <image-loader :bg="'http://localhost:8080'+newUrl" @file-selected="(value) => handleImageUpdate(value)"  class="w-24 h-24"/>
+      <image-loader :bg="config.apiBaseUrl+newUrl" @file-selected="(value) => handleImageUpdate(value)"  class="w-24 h-24"/>
       <div class="flex gap-3 justify-end">
         <button
             type="submit"

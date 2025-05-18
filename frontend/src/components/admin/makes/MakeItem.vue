@@ -4,7 +4,7 @@
   >
 
       <!-- Avatar -->
-      <img :src="'http://localhost:8080'+props.url" width="100" height="100"/>
+      <img :src="config.apiBaseUrl+props.url" width="100" height="100"/>
 
       <!-- User Name -->
       <span class="text-pink-500 font-lg font-extrabold">{{ props.name_en }}</span>
@@ -17,6 +17,8 @@
 </template>
 
 <script setup lang="ts">
+
+import {config} from "../../../../config.ts";
 
 const props = defineProps<{
   id: string,

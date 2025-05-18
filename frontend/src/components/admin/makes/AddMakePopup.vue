@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import apiService from "../../../core/services/ApiService.ts";
 import ImageLoader from "../../ImageLoader.vue";
 import axios from "axios";
+import {config} from "../../../../config.ts";
 
 const emit = defineEmits(['close', 'role-added']);
 
@@ -15,7 +16,7 @@ const MakeImage = ref(new FormData());
 const handleSubmit = async () => {
   try {
 
-    const response1 = await axios.post('http://localhost:8080/media/image', MakeImage.value, {
+    const response1 = await axios.post(config.endpoints.images, MakeImage.value, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

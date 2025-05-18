@@ -21,6 +21,7 @@ import {useI18n} from "vue-i18n";
 import DescriptionPopUp from "./DescriptionPopUp.vue";
 import router from "../../router";
 import {formatNumber} from "../../utils/dateUtils.ts";
+import {config} from "../../../config.ts";
 const { t } = useI18n()
 
 const staticData = useStaticDataStore()
@@ -124,7 +125,7 @@ const saveCar = async () => {
   console.log("other images  = = = = =",formData.value)
 
   try {
-    const response1 = await axios.post('http://localhost:8080/media/image', formData1.value, {
+    const response1 = await axios.post(config.endpoints.images, formData1.value, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -133,7 +134,7 @@ const saveCar = async () => {
     console.log("Upload success:", response1.data);
     const coverUrl = response1.data.urls[0]
 
-    const response = await axios.post('http://localhost:8080/media/image', formData.value, {
+    const response = await axios.post(config.endpoints.images, formData.value, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -216,7 +217,7 @@ const saveCar = async () => {
       <div class="flex flex-row w-full justify-between -translate-y-1/2">
 
         <button  @click="toggleMake" class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
-          <img :src="`http://localhost:8080${make?.url } `" alt="carMake">
+          <img :src="config.apiBaseUrl+`${make?.url } `" alt="carMake">
         </button>
 
 
