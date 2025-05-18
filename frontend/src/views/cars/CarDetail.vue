@@ -7,7 +7,7 @@ import IconButton from "../../components/IconButton.vue";
 import IconButtonH from "../../components/IconButtonH.vue";
 import ChipItemCheckedSm from "../../components/car/ChipItemCheckedSm.vue";
 import SharePost from "../../components/SharePost.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import apiService from "../../core/services/ApiService.ts";
 import {useAuthStore} from "../../stores/auth.ts";
@@ -84,14 +84,14 @@ onMounted(() => {
   fetchCarDetails();
 
 });
+const hasLiked = ref(false);
 
-const hasLiked = computed(() => {
-  return car.value?.likedBy?.includes(authStore.userInfo?.name ?? '') ?? false;
+// update it when `car` or `authStore.userInfo.name` changes
+watch([car, () => authStore.userInfo?.name], () => {
+  hasLiked.value = car.value?.likedBy?.includes(authStore.userInfo?.name ?? '') ?? false;
 });
 
-
-
-
+// toggle
 const toggleLike = async () => {
   try {
     const response = await axios.post(config.apiBaseUrl+`/cars/${carId}/like`, {

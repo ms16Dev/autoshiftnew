@@ -72,6 +72,7 @@ async function submitForm() {
 
   try {
     const encryptedPass = await encryptPassword(password.value);
+    console.log("Encrypted password:", encryptedPass);
     await authStore.register({
       username: username.value,
       email: email.value,

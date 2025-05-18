@@ -6,6 +6,7 @@ import Class_Item from "../../components/admin/classes/ClassItem.vue";
 import UpdateClass_Popup from "../../components/admin/classes/UpdateClassPopup.vue";
 import AddClass_Popup from "../../components/admin/classes/AddClassPopup.vue";
 import MakePopUp, {Make} from "../../components/car/MakePopUp.vue";
+import {config} from "../../../config.ts";
 
 export interface Class_ {
   id: string;
@@ -15,7 +16,7 @@ export interface Class_ {
 }
 const makePopUp = ref(false)
 const makes = ref<Make[]>([]); // If using Composition API
-const selectedMake = ref<Make>();
+const selectedMake = ref<Make | null>(null); // instead of possibly undefined
 const classes = ref<Class_[]>([]); // If using Composition API
 const selectedClass_ = ref<Class_>()
 
@@ -63,7 +64,9 @@ const toggleAddClass_Popup = () => {
 
 const handleClass_Added = async () => {
   showAddClass_Popup.value = false;
-  await getClasses(selectedMake.value.id)
+  if (selectedMake.value) {
+    await getClasses(selectedMake.value.id)
+  }
 };
 
 
@@ -74,8 +77,9 @@ const toggleUpdateClass_Popup = (class_: Class_) => {
 
 const handleClass_Updated = async () => {
   showUpdateClass_Popup.value = false;
-  await getClasses(selectedMake.value.id)
-
+  if (selectedMake.value) {
+    await getClasses(selectedMake.value.id)
+  }
 };
 
 const setMake = (value: Make) =>{
@@ -113,16 +117,16 @@ const toggleMake = () =>{
         v-if="showAddClass_Popup"
         @close="toggleAddClass_Popup"
         @class-added="handleClass_Added"
-        :id="selectedMake.id"
+        :id="selectedMake?.id!!"
     />
 
     <UpdateClass_Popup
         v-if="showUpdateClass_Popup"
         @close="toggleUpdateClass_Popup"
         @class-updated="handleClass_Updated"
-        :id="selectedClass_.id"
-        :name_en="selectedClass_.name_en"
-        :name_ar="selectedClass_.name_ar"
+        :id="selectedClass_?.id!!"
+        :name_en="selectedClass_?.name_en!!"
+        :name_ar="selectedClass_?.name_ar!!"
 
     />
 
@@ -130,18 +134,18 @@ const toggleMake = () =>{
       <div class="w-full p-4 text-center text-gray-400">
         <div class="relative flex flex-col overflow-hidden rounded-lg bg-white">
           <div class="group flex-col inset-px shadow-md">
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
             <div class="flex justify-between items-center bg-gray-100">
               <div class="flex px-4 text-pink-500 font-bold text-2xl">Classes</div>
               <button  @click="toggleMake" class="rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-x-1/4  overflow-hidden">
-                <img :src="'http://localhost:8080'+ selectedMake?.url">
+                <img :src="config.apiBaseUrl + selectedMake?.url" alt="">
               </button>
               <div class="flex p-4 text-pink-500 font-bold text-2xl">
                    <IconButton icon="fas fa-plus" label="Add" class="hover:bg-pink-100" @click="toggleAddClass_Popup"/>
               </div>
             </div>
-            <!--Devider-->
+            <!--Divider-->
             <div class="w-full border-b-2 border-b-pink-700"></div>
 
             <!-- User Items -->
