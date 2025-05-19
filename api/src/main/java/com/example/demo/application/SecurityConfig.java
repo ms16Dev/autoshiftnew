@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -30,10 +31,13 @@ import org.springframework.security.web.server.authentication.logout.LogoutWebFi
 import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
@@ -55,7 +59,7 @@ public class SecurityConfig {
                 .logout(ServerHttpSecurity.LogoutSpec::disable)
                 .securityContextRepository(serverSecurityContextRepository)
                 .authorizeExchange(it ->
-                        it.pathMatchers("/", "/auth/login", "/auth/logout", "/auth/register","/auth/public-key", "/auth/verify").permitAll()
+                        it.pathMatchers("/", "/auth/login", "/auth/logout", "/auth/register","/auth/verify").permitAll()
                                 .pathMatchers(HttpMethod.GET, "/posts/**").permitAll()
                                 .pathMatchers(HttpMethod.POST, "/posts/**").permitAll()
                                 .pathMatchers(HttpMethod.DELETE, "/posts/**").hasRole("ADMIN")
@@ -205,6 +209,24 @@ public class SecurityConfig {
         String user = request.getPath().toString().split("/")[2]; // Extract the user from the path
         return auth.getName().equals(user);
     }
+
+    @Bean
+    public WebFilter removeEmptySessionCookieFilter() {
+        return (exchange, chain) -> {
+            List<HttpCookie> sessionCookies = exchange.getRequest().getCookies().get("SESSION");
+            if (sessionCookies != null && sessionCookies.stream().anyMatch(cookie -> cookie.getValue().isEmpty())) {
+                ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                        .headers(headers -> headers.remove("Cookie"))
+                        .build();
+
+                ServerWebExchange mutatedExchange = exchange.mutate().request(mutatedRequest).build();
+                return chain.filter(mutatedExchange);
+            }
+
+            return chain.filter(exchange);
+        };
+    }
+
 
 
 }

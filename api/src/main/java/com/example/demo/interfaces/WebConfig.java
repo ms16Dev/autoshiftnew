@@ -1,49 +1,36 @@
 package com.example.demo.interfaces;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.CacheControl;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-import org.springframework.web.reactive.config.ResourceHandlerRegistry;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class WebConfig implements WebFluxConfigurer {
-
-    private static final Logger log = LoggerFactory.getLogger(WebConfig.class);
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("file:/data/images/")
-                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
-
-        log.info("Configured static resources for /images/** serving from file:/data/images/");
-    }
+@Profile("cors")
+@Slf4j
+class WebConfig {
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of(
-                "http://localhost:3000",
-                "https://autoshift-frontend.fly.dev"
-        ));
+    CorsConfigurationSource corsConfigurationSource() {
+        var corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "https://autoshift-frontend.fly.dev")); // your frontend
         corsConfiguration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowCredentials(true);
+        corsConfiguration.setAllowCredentials(true); // this is crucial for cookies
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // You don't need exposed headers unless you're reading custom headers in JS
+
+        var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
 
-        log.info("Configured WebFlux CORS: {}", corsConfiguration);
+        log.info("Configured CORS: {}", corsConfiguration);
 
-        return new CorsWebFilter(source);
+        return source;
     }
 }
