@@ -22,3 +22,4 @@ api/target/*
 *.sln
 *.sw?
 /images/
+/api/carmakes.tar.gz

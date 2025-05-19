@@ -8,10 +8,6 @@ spring:
       ssl: false
 
 
-  web:
-    resources:
-      static-locations: file:/data/images/
-
 
 server:
   address: 0.0.0.0

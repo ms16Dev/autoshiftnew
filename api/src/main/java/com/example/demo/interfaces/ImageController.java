@@ -1,13 +1,13 @@
 package com.example.demo.interfaces;
 
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -34,7 +34,7 @@ public class ImageController {
                     String filenameWithUuid = UUID.randomUUID() + "_" + file.filename();
 
                     // Define the path where the file will be saved
-                    Path path = Paths.get("images/" + filenameWithUuid);
+                    Path path = Paths.get("/data/images/" + filenameWithUuid);
 
                     // Transfer each file to the defined path
                     return file.transferTo(path)
@@ -56,20 +56,23 @@ public class ImageController {
                 });
     }
 
-
-    @GetMapping("/images/{filename}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        Path path = Paths.get("images/" + filename);
-        Resource resource = new FileSystemResource(path);
-
-        if (!resource.exists()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
-    }
+//
+//    @GetMapping("/images/{filename}")
+//    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+//        Path path = Paths.get("/data/images/" + filename);
+//        Resource resource = new FileSystemResource(path);
+//
+//        if (!resource.exists()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        String mimeType = URLConnection.guessContentTypeFromName(filename);
+//        MediaType mediaType = mimeType != null ? MediaType.parseMediaType(mimeType) : MediaType.APPLICATION_OCTET_STREAM;
+//
+//        return ResponseEntity.ok()
+//                .contentType(mediaType)
+//                .body(resource);
+//    }
 
 
 }
