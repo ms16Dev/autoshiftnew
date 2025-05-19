@@ -22,6 +22,8 @@ public class UserService {
         Mono<Boolean> emailExists = userRepository.findByEmail(request.getEmail()).hasElement();
         Mono<Boolean> usernameExists = userRepository.findByUsername(request.getUsername()).hasElement();
 
+        System.out.println("Registering new user with email: " + request.getEmail());
+
         return Mono.zip(emailExists, usernameExists)
                 .flatMap(results -> {
                     boolean emailTaken = results.getT1();

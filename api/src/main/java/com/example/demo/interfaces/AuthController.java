@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -34,18 +36,28 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Mono<ResponseEntity<Map<String, String>>> register(@RequestBody RegisterRequest request) {
+        System.out.println("Register request email: " + request.getEmail());  // Debug log
+
         return userService.registerUser(request)
-                .flatMap(user -> verificationTokenService.generateVerificationToken(user.getUsername())
-                        .flatMap(token -> emailService.sendVerificationEmail(user.getEmail(), token.getToken())
-                                .thenReturn(ResponseEntity.accepted()
-                                        .body(Map.of(
-                                                "message", "Registration successful. Verification email sent.",
-                                                "email", request.getEmail()
-                                        ))))
-                )
+                .flatMap(user -> {
+                    System.out.println("User email after registration: " + user.getEmail());  // Debug log
+
+                    return verificationTokenService.generateVerificationToken(user.getUsername())
+                            .flatMap(token -> {
+                                System.out.println("Token generated: " + token.getToken());
+
+                                return emailService.sendVerificationEmail(user.getEmail(), token.getToken())
+                                        .thenReturn(ResponseEntity.accepted()
+                                                .body(Map.of(
+                                                        "message", "Registration successful. Verification email sent.",
+                                                        "email", user.getEmail()
+                                                )));
+                            });
+                })
                 .onErrorResume(e -> Mono.just(ResponseEntity.badRequest()
                         .body(Map.of("error", e.getMessage()))));
     }
+
 
 
     @GetMapping("/verify")
