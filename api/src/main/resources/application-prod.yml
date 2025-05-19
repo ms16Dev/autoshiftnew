@@ -1,7 +1,11 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://admin:yourStrongPassword@autoshift-mongodb.internal:27017/cars?authSource=admin
+      uri: mongodb://carsUser:carsUserStrongPassword@autoshift-mongodb.internal:27017/cars?authSource=cars
+    redis:
+      host: autoshift-redis.internal
+      port: 6379
+      ssl: false
 
 
   web:
