@@ -16,6 +16,7 @@ import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
@@ -74,9 +75,9 @@ public class SecurityConfig {
                                 .pathMatchers("/cars/**").authenticated()
                                 .pathMatchers("/auth/**").authenticated()
                                 .pathMatchers("/users/{user}/**")
-                                .access(this::adminOrCurrentUserMatches)
+                                .access(adminOrCurrentUserMatches())
                                 .pathMatchers("/profiles/{user}/**")
-                                .access(this::adminOrCurrentUserMatches)
+                                .access(adminOrCurrentUserMatches())
                                 .pathMatchers("/users").hasRole("ADMIN")
                                 .pathMatchers("/ref-data/**").permitAll() // New whitelisted endpoint
 //                                .pathMatchers("/ref-data/**").authenticated() // New whitelisted endpoint
@@ -88,11 +89,34 @@ public class SecurityConfig {
 
     }
 
-    private Mono<AuthorizationDecision> currentUserMatchesPath(Mono<Authentication> authentication, AuthorizationContext context) {
-        return authentication
-                .map(a -> context.getVariables().get("user").equals(a.getName()))
-                .map(AuthorizationDecision::new);
+    public ReactiveAuthorizationManager<AuthorizationContext> adminOrCurrentUserMatches() {
+        return (authenticationMono, context) -> authenticationMono.map(auth -> {
+            boolean isAdmin = isAdmin(auth);
+            boolean isSelf = currentUserMatchesPath(auth, context.getExchange().getRequest());
+            return new AuthorizationDecision(isAdmin || isSelf);
+        });
     }
+
+    private boolean isAdmin(Authentication auth) {
+        return auth.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
+    }
+
+    public boolean currentUserMatchesPath(Authentication authentication, ServerHttpRequest request) {
+        String username = authentication.getName();
+        String path = request.getURI().getPath();
+
+        // Extract the last segment from the path
+        String[] segments = path.split("/");
+        String pathUser = segments.length > 0 ? segments[segments.length - 1] : "";
+
+        System.out.println("Comparing authenticated user '" + username + "' with path segment '" + pathUser + "'");
+
+        return username.equals(pathUser);
+    }
+
+
+
 
     @Bean
     public ServerSecurityContextRepository serverSecurityContextRepository() {
@@ -196,19 +220,12 @@ public class SecurityConfig {
                 .switchIfEmpty(Mono.error(new UsernameNotFoundException(username)));
     }
 
-    public Mono<AuthorizationDecision> adminOrCurrentUserMatches(Mono<Authentication> authentication, AuthorizationContext context) {
-        return authentication
-                .map(auth -> {
-                    boolean isAdmin = auth.getAuthorities().stream()
-                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-                    boolean isUserMatch = currentUserMatchesPath(auth, context.getExchange().getRequest());
-                    return new AuthorizationDecision(isAdmin || isUserMatch);
-                });
-    }
-    private boolean currentUserMatchesPath(Authentication auth, ServerHttpRequest request) {
-        String user = request.getPath().toString().split("/")[2]; // Extract the user from the path
-        return auth.getName().equals(user);
-    }
+
+
+
+
+
+
 
     @Bean
     public WebFilter removeEmptySessionCookieFilter() {
