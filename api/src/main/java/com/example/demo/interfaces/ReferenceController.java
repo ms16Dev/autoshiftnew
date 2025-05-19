@@ -118,19 +118,30 @@ public class ReferenceController {
     }
 
     @PutMapping("makes/{id}")
-    public Mono<ResponseEntity<String>> updateMake(
+    public Mono<ResponseEntity<?>> updateMake(
             @PathVariable String id,
-            @RequestBody Make make) {
+            @RequestBody Make updatedMake) {
 
-        // Set the ID from path variable to ensure we're updating the correct document
-        make.setId(id);
+        Query query = Query.query(Criteria.where("_id").is(id));
 
-        return mongoTemplate.save(make, "makes")
-                .map(savedMake -> ResponseEntity.ok("Make updated successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error updating make: " + e.getMessage())
-                ));
+        Update update = new Update()
+                .set("nameEn", updatedMake.getName_en())
+                .set("nameAr", updatedMake.getName_ar())
+                .set("url", updatedMake.getUrl());
+
+        return mongoTemplate.updateFirst(query, update, Make.class, "makes")
+                .map(result -> {
+                    if (result.getMatchedCount() == 0) {
+                        return ResponseEntity.notFound().build();
+                    }
+                    return ResponseEntity.ok("Make updated successfully");
+                })
+                .onErrorResume(e ->
+                        Mono.just(ResponseEntity.internalServerError()
+                                .body("Error updating make: " + e.getMessage()))
+                );
     }
+
 
     @DeleteMapping("/makes/{id}")
     public Mono<ResponseEntity<String>> deleteMake(@PathVariable String id) {
@@ -766,14 +777,28 @@ public class ReferenceController {
 
 
     @PutMapping("/countries/{id}")
-    public Mono<ResponseEntity<String>> updateCountry(@PathVariable String id, @RequestBody Country country) {
-        country.setId(id);
-        return mongoTemplate.save(country, "countries")
-                .map(saved -> ResponseEntity.ok("Country updated successfully"))
-                .onErrorResume(e -> Mono.just(
-                        ResponseEntity.internalServerError().body("Error: " + e.getMessage()))
+    public Mono<ResponseEntity<?>> updateCountry(@PathVariable String id, @RequestBody Country updatedCountry) {
+
+        Query query = Query.query(Criteria.where("_id").is(id));
+
+        Update update = new Update()
+                .set("nameEn", updatedCountry.getName_en())
+                .set("nameAr", updatedCountry.getName_ar());
+        // Add other fields as needed
+
+        return mongoTemplate.updateFirst(query, update, Country.class, "countries")
+                .map(result -> {
+                    if (result.getMatchedCount() == 0) {
+                        return ResponseEntity.notFound().build();
+                    }
+                    return ResponseEntity.ok("Country updated successfully");
+                })
+                .onErrorResume(e ->
+                        Mono.just(ResponseEntity.internalServerError()
+                                .body("Error: " + e.getMessage()))
                 );
     }
+
 
     @DeleteMapping("/countries/{id}")
     public Mono<ResponseEntity<String>> deleteCountry(@PathVariable String id) {
