@@ -2,7 +2,6 @@
 import { ref, computed } from "vue";
 import router from "../../router";
 import { useAuthStore } from "../../stores/auth.ts";
-import forge from "node-forge";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -48,18 +47,6 @@ const validatePassword = () => {
   }
 };
 
-async function encryptPassword(password: string): Promise<string> {
-  try {
-    const base64Key = await authStore.fetchPublicKey();
-    const keyBytes = forge.util.decode64(base64Key);
-    const publicKey = forge.pki.publicKeyFromAsn1(forge.asn1.fromDer(keyBytes));
-    const encryptedPassword = publicKey.encrypt(password, 'RSA-OAEP');
-    return forge.util.encode64(encryptedPassword);
-  } catch (error) {
-    console.error("Error during password encryption:", error);
-    throw error;
-  }
-}
 
 async function submitForm() {
   validateUsername();
@@ -71,8 +58,7 @@ async function submitForm() {
   errorMessage.value = "";
 
   try {
-    const encryptedPass = await encryptPassword(password.value);
-    console.log("Encrypted password:", encryptedPass);
+
     await authStore.register({
       username: username.value,
       email: email.value,
