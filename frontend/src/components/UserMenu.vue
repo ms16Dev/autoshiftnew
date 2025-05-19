@@ -69,7 +69,7 @@ const logout = () => {
   >
 
     <div class="flex-col p-2">
-      <h1 class="text-white text-center">{{store?.userInfo?.name}}</h1>
+      <h1 class="text-white text-center text-ellipsis max-w-[50px]">{{store?.userInfo?.name}}</h1>
     </div>
 
     <ul class="divide-y divide-gray-200">

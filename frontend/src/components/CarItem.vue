@@ -69,7 +69,7 @@ const formattedCreatedDate = computed(() =>
         </div>
         <div class="absolute rounded-full ring-2 ring-pink-700 h-24 w-24 bg-gray-100 -translate-y-1/4 left-1/2 -translate-x-1/2 overflow-hidden">
           <img class="object-contain w-full h-full"
-               :src="config.getImageUrl(car.makeUrl)"
+               :src="config.endpoints.api+car.makeUrl"
                alt=""/>
         </div>
 
