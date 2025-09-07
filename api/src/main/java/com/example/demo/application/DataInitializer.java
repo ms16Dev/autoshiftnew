@@ -50,21 +50,21 @@ class DataInitializer {
 
     @EventListener(value = ApplicationReadyEvent.class)
     public void init() {
-        initUsers();
-        initRoles();
-        initStatuses();
-        initMakes();
-        initClasses();
-        initFuel();
-        initEngines();
-        initGears();
-        initColors();
-        initShapes();
-        initLuxury();
-        initSafety();
-        initCountries();
-        initCities();
-        initCurrencies();
+//        initUsers();
+//        initRoles();
+//        initStatuses();
+//        initMakes();
+//        initClasses();
+//        initFuel();
+//        initEngines();
+//        initGears();
+//        initColors();
+//        initShapes();
+//        initLuxury();
+//        initSafety();
+//        initCountries();
+//        initCities();
+//        initCurrencies();
     }
 
     private void initUsers() {

@@ -4,4 +4,4 @@ spring:
       uri: mongodb://localhost:27017/blog
   web:
     resources:
-      static-locations: file:./images/
+      static-locations: file:/images/
